@@ -24,8 +24,6 @@ namespace TestStation
         public HomePage()
         {
             InitializeComponent();
-
-            var devices = MainWindow.Conn.GetAllTOSADevices();
         }
 
 
