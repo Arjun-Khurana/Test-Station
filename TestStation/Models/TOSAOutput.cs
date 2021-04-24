@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace TestStation.Models
 {
-    public class TOSAOutput
+    public class TOSAOutput : Device
     {
-        // Database id for this device
-        int id { get; set; }
-
-        // Identifier for internal use and program selection
-        string Part_Number { get; set; }
-
         // User entered
         string Job_Number { get; set; }
 

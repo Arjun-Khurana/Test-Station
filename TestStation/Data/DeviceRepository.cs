@@ -161,6 +161,30 @@ namespace TestStation.Data
             }
         }
 
+        public List<TOSADevice> GetAllTosaDevices()
+        {
+            if (!File.Exists(DbFile)) return null;
+
+            using (var cnn = DataFileConnection())
+            {
+                cnn.Open();
+                List<TOSADevice> result = cnn.Query<TOSADevice>(@"select * from TOSADevice").ToList();
+                return result;
+            }
+        }
+
+        public List<ROSADevice> GetAllRoseDevices()
+        {
+            if (!File.Exists(DbFile)) return null;
+
+            using (var cnn = DataFileConnection())
+            {
+                cnn.Open();
+                List<ROSADevice> result = cnn.Query<ROSADevice>(@"select * from ROSADevice").ToList();
+                return result;
+            }
+        }
+
         public void SaveROSADevice(ROSADevice tosa)
         {
             throw new NotImplementedException();

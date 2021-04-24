@@ -12,35 +12,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Diagnostics;
 
 namespace TestStation
 {
     /// <summary>
-    /// Interaction logic for HomePage.xaml
+    /// Interaction logic for Step1.xaml
     /// </summary>
-    public partial class HomePage : Page
+    public partial class Step1 : Page
     {
-        public HomePage()
+        public Step1()
         {
             InitializeComponent();
-
-            var devices = MainWindow.Conn.GetAllTOSADevices();
         }
 
-
-        private void StartButton(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void DeviceSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Start_Test_Button_Click(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Settings());
         }
     }
 }

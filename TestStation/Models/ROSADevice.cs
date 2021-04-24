@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace TestStation.Models
 {
-    public class ROSADevice
+    public class ROSADevice : Device
     {
-        int id { get; set; }
-        string Part_Number { get; set; }
         double V_Test { get; set; }
         double RESP_Min { get; set; }
         double ICC_Max { get; set; }

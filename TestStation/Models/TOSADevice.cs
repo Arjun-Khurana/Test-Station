@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace TestStation.Models
 {
-    public class TOSADevice
+    public class TOSADevice : Device
     {
-        // Datanase id for this device
-        int id { get; set; }
-
-        // Identifier for internal use and program selection
-        string Part_Number { get; set; }
 
         // Source current for continuity test
         double I_Continuity { get; set; }

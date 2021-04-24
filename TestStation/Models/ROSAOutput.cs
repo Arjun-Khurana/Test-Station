@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace TestStation.Models
 {
-    public class ROSAOutput
+    public class ROSAOutput : Device
     {
-        int id { get; set; }
-        string Part_Number { get; set; }
         string Job_Number { get; set; }
         string Unit_Number { get; set; }
         string Operator { get; set; }
