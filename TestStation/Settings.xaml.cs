@@ -16,14 +16,27 @@ using System.Windows.Shapes;
 namespace TestStation
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Settings.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Settings : Page
     {
-        public MainWindow()
+
+        public Settings()
         {
             InitializeComponent();
-            _mainFrame.Navigate(new HomePage());
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
+
+        private void NewDeviceButtonClick(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void Calibrate_Limits_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }
