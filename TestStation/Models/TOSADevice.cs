@@ -30,8 +30,8 @@ namespace TestStation.Models
         // Stop current for sweep
         double I_Stop { get; set; }
 
-        // Current at which parameters are calculated
-        double I_Test { get; set; }
+        // Power at which parameters are calculated
+        double P_OP { get; set; }
 
         // Minimum current for the range over which RS, SE and Ith is calculated
         double I_OP_Min { get; set; }
@@ -53,12 +53,6 @@ namespace TestStation.Models
 
         // Maximum voltage at I_Test
         double V_OP_Max { get; set; }
-
-        // Minimum power at I_Test
-        double P_OP_Min { get; set; }
-
-        // Maximum power at I_Test
-        double P_OP_Max { get; set; }
 
         // Minimum series resistance
         double RS_Min { get; set; }
