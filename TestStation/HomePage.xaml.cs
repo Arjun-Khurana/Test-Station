@@ -24,8 +24,6 @@ namespace TestStation
         public HomePage()
         {
             InitializeComponent();
-
-            var devices = MainWindow.Conn.GetAllTOSADevices();
         }
 
 
@@ -41,6 +39,16 @@ namespace TestStation
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Settings());
+        }
+
+        private void ROSA_Radio_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TOSA_Radio_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

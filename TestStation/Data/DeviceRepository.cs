@@ -41,7 +41,6 @@ namespace TestStation.Data
                     P_OP                double not null,
                     I_OP_Min            double not null,
                     I_OP_Max            double not null,
-                    P_Test              double not null,
                     Wiggle_Time         double not null,
                     VBR_Test            double not null,
                     V_OP_Min            double not null,
@@ -129,6 +128,69 @@ namespace TestStation.Data
                     Wiggle_pass         boolean not null,
                     Result              boolean not null
                 )");
+
+                cnn.Execute(
+                    @"insert into TOSADevice
+                (                  
+                    Part_Number,         
+                    I_Continuity,        
+                    V_Continuity_Min,    
+                    V_Continuity_Max,    
+                    I_Continuity_Tol,    
+                    I_Start,             
+                    I_Step,              
+                    I_Stop,              
+                    P_OP,                
+                    I_OP_Min,            
+                    I_OP_Max,            
+                    Wiggle_Time,         
+                    VBR_Test,            
+                    V_OP_Min,            
+                    V_OP_Max,            
+                    RS_Min,              
+                    RS_Max,              
+                    SE_Min,              
+                    SE_Max,              
+                    Ith_Min,             
+                    Ith_Max,             
+                    Pwiggle_Max,         
+                    POPCT_Min,           
+                    IBM_Min,             
+                    IBM_Max,             
+                    IBM_Tracking_Min,    
+                    IBM_Tracking_Max,    
+                    IBR_Max,             
+                ) values (
+                    '12345',         
+                    1,        
+                    1,    
+                    3,    
+                    .1,    
+                    .1,             
+                    .1,              
+                    12,              
+                    7,                
+                    5,            
+                    10,                          
+                    10,         
+                    -5,            
+                    1.8,            
+                    2,            
+                    40,              
+                    100,              
+                    .1,              
+                    .6,              
+                    .3,             
+                    2,             
+                    1,         
+                    .65,           
+                    .1,             
+                    .5,             
+                    .2,    
+                    .8,    
+                    100             
+                )
+                ");
             }
         }
 

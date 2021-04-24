@@ -39,9 +39,6 @@ namespace TestStation.Models
         // Maximum current for the range over which RS, SE and Ith is calculated
         double I_OP_Max { get; set; }
 
-        // Power for testing Monitor Photodiode Current 
-        double P_Test { get; set; }
-
         // Time for wiggle test
         double Wiggle_Time { get; set; }
 
