@@ -140,6 +140,19 @@ namespace TestStation
 
         private void Save_ROSA_Device_Button_Click(object sender, RoutedEventArgs e)
         {
+            bool nullsFound = false;
+
+            foreach (TextBox tb in FindVisualChildren<TextBox>(newROSAPanel))
+            {
+                if (String.IsNullOrEmpty(tb.Text))
+                {
+                    tb.Style = (Style)Application.Current.Resources["ErrorTextField"];
+                    nullsFound = true;
+                }
+            }
+
+            if (nullsFound) return;
+
             var rosa = new Models.ROSADevice
             {
                 Part_Number = ROSA_Part_Number_Input.Text,
@@ -173,6 +186,19 @@ namespace TestStation
 
         private void Save_TOSA_Device_Button_Click(object sender, RoutedEventArgs e)
         {
+            bool nullsFound = false; 
+
+            foreach (TextBox tb in FindVisualChildren<TextBox>(newTOSAPanel))
+            {
+                if (String.IsNullOrEmpty(tb.Text))
+                {
+                    tb.Style = (Style)Application.Current.Resources["ErrorTextField"];
+                    nullsFound = true;
+                }
+            }
+
+            if (nullsFound) return;
+
             var tosa = new Models.TOSADevice
             {
                 Part_Number = TOSA_Part_Number_Input.Text,
