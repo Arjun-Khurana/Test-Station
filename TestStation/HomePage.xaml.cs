@@ -24,10 +24,12 @@ namespace TestStation
     public partial class HomePage : Page
     {
         private List<TOSADevice> TOSADevices { get; set; } = new List<TOSADevice>();
+        private List<ROSADevice> ROSADevices { get; set; } = new List<ROSADevice>();
         public HomePage()
         {
             InitializeComponent();
             TOSADevices.AddRange(MainWindow.Conn.GetAllTosaDevices());
+            ROSADevices.AddRange(MainWindow.Conn.GetAllRosaDevices());
         }
 
 
@@ -47,7 +49,7 @@ namespace TestStation
 
         private void ROSA_Radio_Checked(object sender, RoutedEventArgs e)
         {
-
+            DeviceSelector.ItemsSource = ROSADevices;
         }
 
         private void TOSA_Radio_Checked(object sender, RoutedEventArgs e)
