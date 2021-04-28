@@ -256,7 +256,105 @@ namespace TestStation.Data
 
         public void SaveTOSADevice(TOSADevice tosa)
         {
-            throw new NotImplementedException();
+            if (!File.Exists(DbFile)) return;
+            
+            using (var cnn = DataFileConnection())
+            {
+                cnn.Open();
+                cnn.Execute(
+                    @"insert into TOSADevice
+                    (
+	                    I_Continuity,
+	                    V_Continuity_Min,
+	                    V_Continuity_Max,
+	                    I_Continuity_Tol,
+	                    I_Start,
+	                    I_Step,
+	                    I_Stop,
+	                    P_OP,
+	                    I_OP_Min,
+	                    I_OP_Max,
+	                    Wiggle_Time,
+	                    VBR_Test,
+	                    V_OP_Min,
+	                    V_OP_Max,
+	                    RS_Min,
+	                    RS_Max,
+	                    SE_Min,
+	                    SE_Max,
+	                    Ith_Min,
+	                    Ith_Max,
+	                    Pwiggle_Max,
+	                    POPCT_Min,
+	                    IBM_Min,
+	                    IBM_Max,
+	                    IBM_Tracking_Min,
+	                    IBM_Tracking_Max,
+	                    IBR_Max,
+                    )
+                    values
+                    (
+	                    @I_Continuity,
+	                    @V_Continuity_Min,
+	                    @V_Continuity_Max,
+	                    @I_Continuity_Tol,
+	                    @I_Start,
+	                    @I_Step,
+	                    @I_Stop,
+	                    @P_OP,
+	                    @I_OP_Min,
+	                    @I_OP_Max,
+	                    @Wiggle_Time,
+	                    @VBR_Test,
+	                    @V_OP_Min,
+	                    @V_OP_Max,
+	                    @RS_Min,
+	                    @RS_Max,
+	                    @SE_Min,
+	                    @SE_Max,
+	                    @Ith_Min,
+	                    @Ith_Max,
+	                    @Pwiggle_Max,
+	                    @POPCT_Min,
+	                    @IBM_Min,
+	                    @IBM_Max,
+	                    @IBM_Tracking_Min,
+	                    @IBM_Tracking_Max,
+	                    @IBR_Max,
+                    )",
+                    new
+                    {
+                        I_Continuity = tosa.I_Continuity,
+                        V_Continuity_Min = tosa.V_Continuity_Min,
+                        V_Continuity_Max = tosa.V_Continuity_Max,
+                        I_Continuity_Tol = tosa.I_Continuity_Tol,
+                        I_Start = tosa.I_Start,
+                        I_Step = tosa.I_Step,
+                        I_Stop = tosa.I_Stop,
+                        P_OP = tosa.P_OP,
+                        I_OP_Min = tosa.I_OP_Min,
+                        I_OP_Max = tosa.I_OP_Max,
+                        Wiggle_Time = tosa.Wiggle_Time,
+                        VBR_Test = tosa.VBR_Test,
+                        V_OP_Min = tosa.V_OP_Min,
+                        V_OP_Max = tosa.V_OP_Max,
+                        RS_Min = tosa.RS_Min,
+                        RS_Max = tosa.RS_Max,
+                        SE_Min = tosa.SE_Min,
+                        SE_Max = tosa.SE_Max,
+                        Ith_Min = tosa.Ith_Min,
+                        Ith_Max = tosa.Ith_Max,
+                        Pwiggle_Max = tosa.Pwiggle_Max,
+                        POPCT_Min = tosa.POPCT_Min,
+                        IBM_Min = tosa.IBM_Min,
+                        IBM_Max = tosa.IBM_Max,
+                        IBM_Tracking_Min = tosa.IBM_Tracking_Min,
+                        IBM_Tracking_Max = tosa.IBM_Tracking_Max,
+                        IBR_Max = tosa.IBR_Max,
+                    }
+                );
+            }
+            
         }
 
         public void SaveTOSAOutput(TOSAOutput result)
