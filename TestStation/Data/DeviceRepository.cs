@@ -301,6 +301,7 @@ namespace TestStation.Data
                 cnn.Execute(
                     @"insert into TOSADevice
                     (
+                        Part_Number,
 	                    I_Continuity,
 	                    V_Continuity_Min,
 	                    V_Continuity_Max,
@@ -331,6 +332,7 @@ namespace TestStation.Data
                     )
                     values
                     (
+                        @Part_Number,
 	                    @I_Continuity,
 	                    @V_Continuity_Min,
 	                    @V_Continuity_Max,
@@ -361,6 +363,7 @@ namespace TestStation.Data
                     )",
                     new
                     {
+                        Part_Number = tosa.Part_Number,
                         I_Continuity = tosa.I_Continuity,
                         V_Continuity_Min = tosa.V_Continuity_Min,
                         V_Continuity_Max = tosa.V_Continuity_Max,
