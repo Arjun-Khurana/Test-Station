@@ -56,5 +56,23 @@ namespace TestStation
         {
             DeviceSelector.ItemsSource = TOSADevices;
         }
+
+        private void DeviceSelector_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if ((bool)TOSARadio.IsChecked)
+            {
+                TOSADevices.Clear();
+                TOSADevices.AddRange(MainWindow.Conn.GetAllTosaDevices());
+                DeviceSelector.ItemsSource = new List<TOSADevice>();
+                DeviceSelector.ItemsSource = TOSADevices;
+            }
+            else if ((bool)ROSARadio.IsChecked)
+            {
+                ROSADevices.Clear();
+                ROSADevices.AddRange(MainWindow.Conn.GetAllRosaDevices());
+                DeviceSelector.ItemsSource = new List<ROSADevice>();
+                DeviceSelector.ItemsSource = ROSADevices;
+            }
+        }
     }
 }

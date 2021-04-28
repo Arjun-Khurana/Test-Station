@@ -48,8 +48,8 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,0,0,20">
-                <RadioButton Margin="5" Checked="TOSA_Radio_Checked">TOSA</RadioButton>
-                <RadioButton Margin="5" Checked="ROSA_Radio_Checked">ROSA</RadioButton>
+                <RadioButton x:Name="TOSARadio" Margin="5" Checked="TOSA_Radio_Checked">TOSA</RadioButton>
+                <RadioButton x:Name="ROSARadio" Margin="5" Checked="ROSA_Radio_Checked">ROSA</RadioButton>
             </StackPanel>
             <StackPanel 
                 Margin="0,50,0,20"
@@ -67,7 +67,8 @@
                     Width="120"
                     DisplayMemberPath="Part_Number"
                     SelectedValuePath="Id"
-                    SelectionChanged="DeviceSelector_SelectionChanged" />
+                    SelectionChanged="DeviceSelector_SelectionChanged"
+                    MouseEnter="DeviceSelector_MouseEnter"/>
 
             </StackPanel>
 

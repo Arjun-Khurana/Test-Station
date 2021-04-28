@@ -132,7 +132,6 @@ namespace TestStation
             //    Debug.WriteLine("");
             //}
 
-
             newTOSAPanel.Visibility = Visibility.Visible;
             addNewROSAButton.Visibility = Visibility.Collapsed;
             addNewTOSAButton.Visibility = Visibility.Collapsed;
