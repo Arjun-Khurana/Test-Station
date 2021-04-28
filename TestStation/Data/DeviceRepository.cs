@@ -244,9 +244,46 @@ namespace TestStation.Data
             }
         }
 
-        public void SaveROSADevice(ROSADevice tosa)
+        public void SaveROSADevice(ROSADevice rosa)
         {
-            throw new NotImplementedException();
+            if (!File.Exists(DbFile)) return;
+
+            using (var cnn = DataFileConnection())
+            {
+                cnn.Open();
+                cnn.Execute(
+                    @"insert into ROSADevice
+                    (
+                        Part_Number,
+	                    V_Test,
+	                    RESP_Min,
+	                    ICC_Max,
+	                    I_Wiggle_Max,
+	                    Wiggle_Time,
+	                    RSSSI_VPD
+                    )
+                    values
+                    (
+                        @Part_Number,
+	                    @V_Test,
+	                    @RESP_Min,
+	                    @ICC_Max,
+	                    @I_Wiggle_Max,
+	                    @Wiggle_Time,
+	                    @RSSSI_VPD
+                    )",
+                    new
+                    {
+                        Part_Number = rosa.Part_Number,
+                        V_Test = rosa.V_Test,
+                        RESP_Min = rosa.RESP_Min,
+                        ICC_Max = rosa.ICC_Max,
+                        I_Wiggle_Max = rosa.I_Wiggle_Max,
+                        Wiggle_Time = rosa.Wiggle_Time,
+                        RSSSI_VPD = rosa.RSSSI_VPD
+                    }
+                );
+            }
         }
 
         public void SaveROSAOutput(ROSAOutput result)
@@ -290,7 +327,7 @@ namespace TestStation.Data
 	                    IBM_Max,
 	                    IBM_Tracking_Min,
 	                    IBM_Tracking_Max,
-	                    IBR_Max,
+	                    IBR_Max
                     )
                     values
                     (
@@ -320,7 +357,7 @@ namespace TestStation.Data
 	                    @IBM_Max,
 	                    @IBM_Tracking_Min,
 	                    @IBM_Tracking_Max,
-	                    @IBR_Max,
+	                    @IBR_Max
                     )",
                     new
                     {
@@ -350,7 +387,7 @@ namespace TestStation.Data
                         IBM_Max = tosa.IBM_Max,
                         IBM_Tracking_Min = tosa.IBM_Tracking_Min,
                         IBM_Tracking_Max = tosa.IBM_Tracking_Max,
-                        IBR_Max = tosa.IBR_Max,
+                        IBR_Max = tosa.IBR_Max
                     }
                 );
             }

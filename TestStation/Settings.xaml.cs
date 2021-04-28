@@ -34,6 +34,34 @@ namespace TestStation
 
         private void New_Rosa_Button_Click(object sender, RoutedEventArgs e)
         {
+            //string[] inputs =
+            //{
+            //    "V_Test",
+            //    "RESP_Min",
+            //    "ICC_Max",
+            //    "I_Wiggle_Max",
+            //    "Wiggle_Time",
+            //    "RSSSI_VPD"
+            //};
+
+            //Debug.Print("@\"insert into ROSADevice\n(");
+            //foreach (string s in inputs)
+            //{
+            //    Debug.Print("\t{0},", s);
+            //}
+            //Debug.Print(")\nvalues\n(");
+            //foreach (string s in inputs)
+            //{
+            //    Debug.Print("\t@{0},", s);
+            //}
+            //Debug.Print(")\"");
+            //Debug.Print("new {");
+            //foreach (string s in inputs)
+            //{
+            //    Debug.Print("\t{0} = device.{0},", s);
+            //}
+            //Debug.Print("}");
+
             newROSAPanel.Visibility = Visibility.Visible;
             addNewROSAButton.Visibility = Visibility.Collapsed;
             addNewTOSAButton.Visibility = Visibility.Collapsed;
@@ -112,15 +140,22 @@ namespace TestStation
 
         private void Save_ROSA_Device_Button_Click(object sender, RoutedEventArgs e)
         {
+            var rosa = new Models.ROSADevice
+            {
+                Part_Number = ROSA_Part_Number_Input.Text,
+                V_Test = Double.Parse(ROSA_V_Test_Input.Text),
+                RESP_Min = Double.Parse(ROSA_RESP_Min_Input.Text),
+                ICC_Max = Double.Parse(ROSA_ICC_Max_Input.Text),
+                I_Wiggle_Max = Double.Parse(ROSA_I_Wiggle_Max_Input.Text),
+                Wiggle_Time = Double.Parse(ROSA_Wiggle_Time_Input.Text),
+                RSSSI_VPD = Double.Parse(ROSA_RSSSI_VPD_Input.Text)
+            };
+
+            MainWindow.Conn.SaveROSADevice(rosa);
+
             newROSAPanel.Visibility = Visibility.Collapsed;
             addNewROSAButton.Visibility = Visibility.Visible;
             addNewTOSAButton.Visibility = Visibility.Visible;
-
-            foreach (TextBox tb in FindVisualChildren<TextBox>(newROSAPanel))
-            {
-                Debug.WriteLine(tb.Name);
-                
-            }
         }
 
         public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
