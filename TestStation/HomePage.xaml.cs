@@ -28,6 +28,7 @@ namespace TestStation
         public HomePage()
         {
             InitializeComponent();
+
             TOSADevices.AddRange(MainWindow.Conn.GetAllTosaDevices());
             ROSADevices.AddRange(MainWindow.Conn.GetAllRosaDevices());
         }
