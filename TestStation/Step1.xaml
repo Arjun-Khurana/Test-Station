@@ -12,41 +12,81 @@
     <Grid Background="{StaticResource DarkBg}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
-
         <StackPanel Grid.Row="0">
-            <TextBlock Margin="0,0,0,10" FontSize="18" Text="Step 1"></TextBlock>
-            <TextBlock
-                Margin="0,0,0,15"
+            <TextBlock 
                 FontSize="26"
                 FontWeight="Light"
-                Text="Instructions" />
+                Margin="0,0,0,15" 
+                Text="Step 1"></TextBlock>
 
-            <TextBlock
-                TextWrapping="Wrap"
-                FontSize="18"
-                Text="(1) Insert TO into Wand">
-            </TextBlock>
+            <Border 
+                Padding="10"
+                BorderThickness="2"
+                BorderBrush="White"
+                Margin="0,0,0,10"
+                >
+                <StackPanel>
+                    <TextBlock
+                        FontSize="18" 
+                        Margin="0,0,0,5"
+                        Text="Instructions" />
 
-            <TextBlock
-                TextWrapping="Wrap"
-                FontSize="18"
-                Text="(2) Open Bore Fixture">
-            </TextBlock>
+                    <TextBlock
+                        Margin="0,0,0,0"
+                        TextWrapping="Wrap"
+                        FontSize="15"
+                        Text="(1) Insert TO into wand">
+                    </TextBlock>
+                    <TextBlock
+                        Margin="0,0,0,0"
+                        TextWrapping="Wrap"
+                        FontSize="15"
+                        Text="(2) Open bore fixture">
+                    </TextBlock>
+                </StackPanel>
+            </Border>
 
+            <StackPanel 
+                Orientation="Vertical"
+                x:Name="measurementPanel"
+                Visibility="Visible">
+                <StackPanel Orientation="Horizontal">
+                    <Label>Continuity test current:</Label>
+                    <TextBlock x:Name="continuityTestCurrent" VerticalAlignment="Center">0 mA</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Continuity test voltage:</Label>
+                    <TextBlock x:Name="continuityTestVoltage" VerticalAlignment="Center">0 mV</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Sweep progress</Label>
+                    <ProgressBar x:Name="sweepProgress" Width="250" Height="10" Foreground="DarkRed" Value="50"></ProgressBar>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Reverse Breakdown Voltage: </Label>
+                    <TextBlock x:Name="reverseBreakdownVoltage" VerticalAlignment="Center">0 V</TextBlock>
+                </StackPanel>
+                <TextBlock x:Name="testMessage" FontSize="18">Test Status</TextBlock>
+            </StackPanel>
+
+            <StackPanel
+                Orientation="Vertical"
+                x:Name="errorPanel"
+                Visibility="Visible"
+                >
+            </StackPanel>
+            
             <Button
                 HorizontalAlignment="Left"
                 Click="Start_Test_Button_Click"
                 Content="Start test"
                 Margin="0,25,0,15" 
+                x:Name="StartTestButton"
                 >
             </Button>
 
-            <TextBlock x:Name="currentText" Text="" TextWrapping="Wrap"/>
-            <TextBlock x:Name="voltageText" Text="" TextWrapping="Wrap"/>
-            <TextBlock x:Name="powerText" Text="" TextWrapping="Wrap"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2">

@@ -20,14 +20,62 @@ namespace TestStation
     /// </summary>
     public partial class Step1 : Page
     {
+        private int numTries;
         public Step1()
         {
             InitializeComponent();
+            numTries = 0;
         }
 
         private void Start_Test_Button_Click(object sender, RoutedEventArgs e)
         {
+            if (numTries == 3)
+            {
+                NavigationService.Navigate(new HomePage());
+                return;
+            }
+
+            numTries++;
+            TOSAStep1();
+
             
+        }
+
+        private void TOSAStep1()
+        {
+            bool continuityTestResult = false;
+            bool sweepTestResult = true;
+
+            if (continuityTestResult && sweepTestResult)
+            {
+                StartTestButton.Content = "Next step";
+            }
+            else
+            {
+                if (numTries >= 3)
+                {
+                    StartTestButton.Content = "Go home";
+                }
+                else
+                {
+                    StartTestButton.Content = "Retry test";
+                }
+            }
+        }
+
+        private void ROSAStep1()
+        {
+
+        }
+
+        private void ShowErrorPanel()
+        {
+            errorPanel.Visibility = Visibility.Visible;
+        }
+
+        private void HideErrorPanel()
+        {
+            errorPanel.Visibility = Visibility.Collapsed;
         }
     }
 }
