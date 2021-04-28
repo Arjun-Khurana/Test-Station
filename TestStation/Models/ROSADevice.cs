@@ -8,12 +8,12 @@ namespace TestStation.Models
 {
     public class ROSADevice : Device
     {
-        double V_Test { get; set; }
-        double RESP_Min { get; set; }
-        double ICC_Max { get; set; }
-        double I_Wiggle_Max { get; set; }
-        double Wiggle_Time { get; set; }
-        double RSSSI_VPD { get; set; }
+        public double V_Test { get; set; }
+        public double RESP_Min { get; set; }
+        public double ICC_Max { get; set; }
+        public double I_Wiggle_Max { get; set; }
+        public double Wiggle_Time { get; set; }
+        public double RSSSI_VPD { get; set; }
 
     }
 }

@@ -43,7 +43,14 @@
         </Grid>
 
         <StackPanel Grid.Row="1">
-
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,0,0,20">
+                <RadioButton x:Name="TOSARadio" Margin="5" Checked="TOSA_Radio_Checked">TOSA</RadioButton>
+                <RadioButton x:Name="ROSARadio" Margin="5" Checked="ROSA_Radio_Checked">ROSA</RadioButton>
+            </StackPanel>
             <StackPanel 
                 Margin="0,50,0,20"
                 Orientation="Horizontal"
@@ -58,10 +65,10 @@
                     x:Name="DeviceSelector" 
                     Height="auto" 
                     Width="120"
-                    ItemsSource="{Binding TosaDevices}"
                     DisplayMemberPath="Part_Number"
                     SelectedValuePath="Id"
-                    SelectionChanged="DeviceSelector_SelectionChanged" />
+                    SelectionChanged="DeviceSelector_SelectionChanged"
+                    MouseEnter="DeviceSelector_MouseEnter"/>
 
             </StackPanel>
 
