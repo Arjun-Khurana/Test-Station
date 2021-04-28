@@ -62,7 +62,7 @@ namespace TestStation.Data
                 cnn.Execute(
                     @"create table ROSADevice
                 (
-                    id                  integer identity primary key autoincrement,
+                    id                  integer primary key autoincrement,
                     Part_Number         varchar(255) not null,
                     V_Test              double not null,
                     RESP_Min            double not null,
@@ -74,7 +74,7 @@ namespace TestStation.Data
                 cnn.Execute(
                     @"create table TOSAOutput
                 (
-                    id                  integer identity primary key autoincrement,
+                    id                  integer primary key autoincrement,
                     Part_Number         varchar(255) not null,
                     Job_Number          varchar(255) not null,
                     Unit_Number         varchar(255) not null,
@@ -110,7 +110,7 @@ namespace TestStation.Data
                 cnn.Execute(
                     @"create table ROSAOutput
                 (
-                    id                  integer identity primary key autoincrement,
+                    id                  integer primary key autoincrement,
                     Part_Number         varchar(255) not null,
                     Job_Number          varchar(255) not null,
                     Unit_Number         varchar(255) not null,
@@ -159,7 +159,7 @@ namespace TestStation.Data
                     IBM_Max,             
                     IBM_Tracking_Min,    
                     IBM_Tracking_Max,    
-                    IBR_Max,             
+                    IBR_Max             
                 ) values (
                     '12345',         
                     1,        
@@ -232,7 +232,7 @@ namespace TestStation.Data
             }
         }
 
-        public List<ROSADevice> GetAllRoseDevices()
+        public List<ROSADevice> GetAllRosaDevices()
         {
             if (!File.Exists(DbFile)) return null;
 

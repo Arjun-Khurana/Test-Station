@@ -8,7 +8,7 @@ namespace TestStation.Models
 {
     public class Device
     {
-        int id { get; set; }
+        int Id { get; set; }
         string Part_Number { get; set; }
     }
 }

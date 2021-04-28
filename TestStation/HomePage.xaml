@@ -48,7 +48,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,0,0,20">
-                <RadioButton Margin="5" IsChecked="True" Checked="TOSA_Radio_Checked">TOSA</RadioButton>
+                <RadioButton Margin="5" Checked="TOSA_Radio_Checked">TOSA</RadioButton>
                 <RadioButton Margin="5" Checked="ROSA_Radio_Checked">ROSA</RadioButton>
             </StackPanel>
             <StackPanel 
@@ -65,7 +65,6 @@
                     x:Name="DeviceSelector" 
                     Height="auto" 
                     Width="120"
-                    ItemsSource="{Binding TosaDevices}"
                     DisplayMemberPath="Part_Number"
                     SelectedValuePath="Id"
                     SelectionChanged="DeviceSelector_SelectionChanged" />

@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using TestStation.Data;
+using TestStation.Models;
 
 namespace TestStation
 {
@@ -21,9 +23,11 @@ namespace TestStation
     /// </summary>
     public partial class HomePage : Page
     {
+        private List<TOSADevice> TOSADevices { get; set; } = new List<TOSADevice>();
         public HomePage()
         {
             InitializeComponent();
+            TOSADevices.AddRange(MainWindow.Conn.GetAllTosaDevices());
         }
 
 
@@ -48,7 +52,7 @@ namespace TestStation
 
         private void TOSA_Radio_Checked(object sender, RoutedEventArgs e)
         {
-
+            DeviceSelector.ItemsSource = TOSADevices;
         }
     }
 }
