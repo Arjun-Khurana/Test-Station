@@ -53,43 +53,43 @@
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10,0,10,10" Orientation="Vertical">
                         <Label Padding="0,0,0,5" Content="Part Number"></Label>
-                        <TextBox Width="100" x:Name="ROSA_Part_Number_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="String_Input_Text_Changed" x:Name="ROSA_Part_Number_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10,0,10,10" Orientation="Vertical">
                         <Label Padding="0,0,0,5" Content="V Test"></Label>
-                        <TextBox Width="100" x:Name="ROSA_V_Test_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="ROSA_V_Test_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10,0,10,10" Orientation="Vertical">
                         <Label Padding="0,0,0,5" Content="RESP Min"></Label>
-                        <TextBox Width="100" x:Name="ROSA_RESP_Min_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="ROSA_RESP_Min_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10,0,10,10" Orientation="Vertical">
                         <Label Padding="0,0,0,5" Content="ICC Max"></Label>
-                        <TextBox Width="100" x:Name="ROSA_ICC_Max_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="ROSA_ICC_Max_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10,0,10,10" Orientation="Vertical">
                         <Label Padding="0,0,0,5" Content="I Wiggle Max"></Label>
-                        <TextBox Width="100" x:Name="ROSA_I_Wiggle_Max_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="ROSA_I_Wiggle_Max_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10,0,10,10" Orientation="Vertical">
                         <Label Padding="0,0,0,5" Content="Wiggle Time"></Label>
-                        <TextBox Width="100" x:Name="ROSA_Wiggle_Time_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="ROSA_Wiggle_Time_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10,0,10,10" Orientation="Vertical">
                         <Label Padding="0,0,0,5" Content="RSSSI VPD"></Label>
-                        <TextBox Width="100" x:Name="ROSA_RSSSI_VPD_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="ROSA_RSSSI_VPD_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 
@@ -119,160 +119,160 @@
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="Part Number"></Label>
-                        <TextBox Width="100" x:Name="TOSA_Part_Number_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="String_Input_Text_Changed"  x:Name="TOSA_Part_Number_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="I Continuity"></Label>
-                        <TextBox Width="100" x:Name="TOSA_I_Continuity_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_I_Continuity_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="V Continuity Min"></Label>
-                        <TextBox Width="100" x:Name="TOSA_V_Continuity_Min_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_V_Continuity_Min_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="V Continuity Max"></Label>
-                        <TextBox Width="100" x:Name="TOSA_V_Continuity_Max_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_V_Continuity_Max_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="I Continuity Tol"></Label>
-                        <TextBox Width="100" x:Name="TOSA_I_Continuity_Tol_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_I_Continuity_Tol_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="I Start"></Label>
-                        <TextBox Width="100" x:Name="TOSA_I_Start_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_I_Start_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="I Step"></Label>
-                        <TextBox Width="100" x:Name="TOSA_I_Step_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_I_Step_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="I Stop"></Label>
-                        <TextBox Width="100" x:Name="TOSA_I_Stop_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_I_Stop_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="P OP"></Label>
-                        <TextBox Width="100" x:Name="TOSA_P_OP_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_P_OP_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="I OP Min"></Label>
-                        <TextBox Width="100" x:Name="TOSA_I_OP_Min_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_I_OP_Min_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="I OP Max"></Label>
-                        <TextBox Width="100" x:Name="TOSA_I_OP_Max_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_I_OP_Max_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="Wiggle Time"></Label>
-                        <TextBox Width="100" x:Name="TOSA_Wiggle_Time_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_Wiggle_Time_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="VBR Test"></Label>
-                        <TextBox Width="100" x:Name="TOSA_VBR_Test_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_VBR_Test_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="V OP Min"></Label>
-                        <TextBox Width="100" x:Name="TOSA_V_OP_Min_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_V_OP_Min_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="V OP Max"></Label>
-                        <TextBox Width="100" x:Name="TOSA_V_OP_Max_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_V_OP_Max_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="RS Min"></Label>
-                        <TextBox Width="100" x:Name="TOSA_RS_Min_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_RS_Min_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="RS Max"></Label>
-                        <TextBox Width="100" x:Name="TOSA_RS_Max_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_RS_Max_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="SE Min"></Label>
-                        <TextBox Width="100" x:Name="TOSA_SE_Min_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_SE_Min_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="SE Max"></Label>
-                        <TextBox Width="100" x:Name="TOSA_SE_Max_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_SE_Max_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="Ith Min"></Label>
-                        <TextBox Width="100" x:Name="TOSA_Ith_Min_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_Ith_Min_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="Ith Max"></Label>
-                        <TextBox Width="100" x:Name="TOSA_Ith_Max_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_Ith_Max_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="Pwiggle Max"></Label>
-                        <TextBox Width="100" x:Name="TOSA_Pwiggle_Max_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_Pwiggle_Max_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="POPCT Min"></Label>
-                        <TextBox Width="100" x:Name="TOSA_POPCT_Min_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_POPCT_Min_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="IBM Min"></Label>
-                        <TextBox Width="100" x:Name="TOSA_IBM_Min_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_IBM_Min_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="IBM Max"></Label>
-                        <TextBox Width="100" x:Name="TOSA_IBM_Max_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_IBM_Max_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="IBM Tracking Min"></Label>
-                        <TextBox Width="100" x:Name="TOSA_IBM_Tracking_Min_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_IBM_Tracking_Min_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="IBM Tracking Max"></Label>
-                        <TextBox Width="100" x:Name="TOSA_IBM_Tracking_Max_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_IBM_Tracking_Max_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="IBR Max"></Label>
-                        <TextBox Width="100" x:Name="TOSA_IBR_Max_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_IBR_Max_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 

@@ -158,28 +158,14 @@ namespace TestStation
             addNewTOSAButton.Visibility = Visibility.Visible;
         }
 
-        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
-        {
-            if (depObj != null)
-            {
-                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-                {
-                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                    if (child != null && child is T)
-                    {
-                        yield return (T)child;
-                    }
-
-                    foreach (T childOfChild in FindVisualChildren<T>(child))
-                    {
-                        yield return childOfChild;
-                    }
-                }
-            }
-        }
-
         private void Cancel_Rosa_Click(object sender, RoutedEventArgs e)
         {
+            foreach (TextBox tb in FindVisualChildren<TextBox>(newROSAPanel))
+            {
+                tb.Text = null;
+                tb.Style = (Style)Application.Current.Resources["RegularTextField"];
+            }
+
             newROSAPanel.Visibility = Visibility.Collapsed;
             addNewROSAButton.Visibility = Visibility.Visible;
             addNewTOSAButton.Visibility = Visibility.Visible;
@@ -228,9 +214,66 @@ namespace TestStation
 
         private void Cancel_Tosa_Click(object sender, RoutedEventArgs e)
         {
+            foreach (TextBox tb in FindVisualChildren<TextBox>(newTOSAPanel))
+            {
+                tb.Text = null;
+                tb.Style = (Style)Application.Current.Resources["RegularTextField"];
+            }    
+
             newTOSAPanel.Visibility = Visibility.Collapsed;
             addNewROSAButton.Visibility = Visibility.Visible;
             addNewTOSAButton.Visibility = Visibility.Visible;
+        }
+
+        private void String_Input_Text_Changed(object sender, TextChangedEventArgs e)
+        {
+            TextBox t = (TextBox)sender;
+            var empty = String.IsNullOrEmpty(t.Text);
+
+            if (empty)
+            {
+                t.Style = (Style)Application.Current.Resources["ErrorTextField"];
+            }
+            else
+            {
+                t.Style = (Style)Application.Current.Resources["RegularTextField"];
+            }
+        }
+
+        private void Double_Input_Text_Changed(object sender, TextChangedEventArgs e)
+        {
+            double vpd;
+            TextBox t = (TextBox)sender;
+            var parsed = Double.TryParse(t.Text, out vpd);
+
+            if (parsed)
+            {
+
+                t.Style = (Style)Application.Current.Resources["RegularTextField"];
+            }
+            else
+            {
+                t.Style = (Style)Application.Current.Resources["ErrorTextField"];
+            }
+        }
+        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T)
+                    {
+                        yield return (T)child;
+                    }
+
+                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                    {
+                        yield return childOfChild;
+                    }
+                }
+            }
         }
     }
 }
