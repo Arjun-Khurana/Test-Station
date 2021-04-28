@@ -226,5 +226,15 @@
             </Style.Triggers>
         </Style>
 
+        <Style x:Key="ErrorTextField" TargetType="{x:Type TextBox}">
+            <Setter Property="Foreground" Value="#FFF8F8F8"></Setter>
+            <Setter Property="Background" Value="DarkRed"></Setter>
+        </Style>
+
+        <Style x:Key="RegularTextField" TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="#FFF8F8F8"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+        </Style>
+
     </Application.Resources>
 </Application>

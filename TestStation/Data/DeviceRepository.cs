@@ -41,7 +41,6 @@ namespace TestStation.Data
                     P_OP                double not null,
                     I_OP_Min            double not null,
                     I_OP_Max            double not null,
-                    P_Test              double not null,
                     Wiggle_Time         double not null,
                     VBR_Test            double not null,
                     V_OP_Min            double not null,
@@ -63,7 +62,7 @@ namespace TestStation.Data
                 cnn.Execute(
                     @"create table ROSADevice
                 (
-                    id                  integer identity primary key autoincrement,
+                    id                  integer primary key autoincrement,
                     Part_Number         varchar(255) not null,
                     V_Test              double not null,
                     RESP_Min            double not null,
@@ -75,7 +74,7 @@ namespace TestStation.Data
                 cnn.Execute(
                     @"create table TOSAOutput
                 (
-                    id                  integer identity primary key autoincrement,
+                    id                  integer primary key autoincrement,
                     Part_Number         varchar(255) not null,
                     Job_Number          varchar(255) not null,
                     Unit_Number         varchar(255) not null,
@@ -111,7 +110,7 @@ namespace TestStation.Data
                 cnn.Execute(
                     @"create table ROSAOutput
                 (
-                    id                  integer identity primary key autoincrement,
+                    id                  integer primary key autoincrement,
                     Part_Number         varchar(255) not null,
                     Job_Number          varchar(255) not null,
                     Unit_Number         varchar(255) not null,
@@ -129,6 +128,69 @@ namespace TestStation.Data
                     Wiggle_pass         boolean not null,
                     Result              boolean not null
                 )");
+
+                cnn.Execute(
+                    @"insert into TOSADevice
+                (                  
+                    Part_Number,         
+                    I_Continuity,        
+                    V_Continuity_Min,    
+                    V_Continuity_Max,    
+                    I_Continuity_Tol,    
+                    I_Start,             
+                    I_Step,              
+                    I_Stop,              
+                    P_OP,                
+                    I_OP_Min,            
+                    I_OP_Max,            
+                    Wiggle_Time,         
+                    VBR_Test,            
+                    V_OP_Min,            
+                    V_OP_Max,            
+                    RS_Min,              
+                    RS_Max,              
+                    SE_Min,              
+                    SE_Max,              
+                    Ith_Min,             
+                    Ith_Max,             
+                    Pwiggle_Max,         
+                    POPCT_Min,           
+                    IBM_Min,             
+                    IBM_Max,             
+                    IBM_Tracking_Min,    
+                    IBM_Tracking_Max,    
+                    IBR_Max             
+                ) values (
+                    '12345',         
+                    1,        
+                    1,    
+                    3,    
+                    .1,    
+                    .1,             
+                    .1,              
+                    12,              
+                    7,                
+                    5,            
+                    10,                          
+                    10,         
+                    -5,            
+                    1.8,            
+                    2,            
+                    40,              
+                    100,              
+                    .1,              
+                    .6,              
+                    .3,             
+                    2,             
+                    1,         
+                    .65,           
+                    .1,             
+                    .5,             
+                    .2,    
+                    .8,    
+                    100             
+                )
+                ");
             }
         }
 
@@ -170,7 +232,7 @@ namespace TestStation.Data
             }
         }
 
-        public List<ROSADevice> GetAllRoseDevices()
+        public List<ROSADevice> GetAllRosaDevices()
         {
             if (!File.Exists(DbFile)) return null;
 
@@ -182,9 +244,46 @@ namespace TestStation.Data
             }
         }
 
-        public void SaveROSADevice(ROSADevice tosa)
+        public void SaveROSADevice(ROSADevice rosa)
         {
-            throw new NotImplementedException();
+            if (!File.Exists(DbFile)) return;
+
+            using (var cnn = DataFileConnection())
+            {
+                cnn.Open();
+                cnn.Execute(
+                    @"insert into ROSADevice
+                    (
+                        Part_Number,
+	                    V_Test,
+	                    RESP_Min,
+	                    ICC_Max,
+	                    I_Wiggle_Max,
+	                    Wiggle_Time,
+	                    RSSSI_VPD
+                    )
+                    values
+                    (
+                        @Part_Number,
+	                    @V_Test,
+	                    @RESP_Min,
+	                    @ICC_Max,
+	                    @I_Wiggle_Max,
+	                    @Wiggle_Time,
+	                    @RSSSI_VPD
+                    )",
+                    new
+                    {
+                        Part_Number = rosa.Part_Number,
+                        V_Test = rosa.V_Test,
+                        RESP_Min = rosa.RESP_Min,
+                        ICC_Max = rosa.ICC_Max,
+                        I_Wiggle_Max = rosa.I_Wiggle_Max,
+                        Wiggle_Time = rosa.Wiggle_Time,
+                        RSSSI_VPD = rosa.RSSSI_VPD
+                    }
+                );
+            }
         }
 
         public void SaveROSAOutput(ROSAOutput result)
@@ -194,7 +293,108 @@ namespace TestStation.Data
 
         public void SaveTOSADevice(TOSADevice tosa)
         {
-            throw new NotImplementedException();
+            if (!File.Exists(DbFile)) return;
+            
+            using (var cnn = DataFileConnection())
+            {
+                cnn.Open();
+                cnn.Execute(
+                    @"insert into TOSADevice
+                    (
+                        Part_Number,
+	                    I_Continuity,
+	                    V_Continuity_Min,
+	                    V_Continuity_Max,
+	                    I_Continuity_Tol,
+	                    I_Start,
+	                    I_Step,
+	                    I_Stop,
+	                    P_OP,
+	                    I_OP_Min,
+	                    I_OP_Max,
+	                    Wiggle_Time,
+	                    VBR_Test,
+	                    V_OP_Min,
+	                    V_OP_Max,
+	                    RS_Min,
+	                    RS_Max,
+	                    SE_Min,
+	                    SE_Max,
+	                    Ith_Min,
+	                    Ith_Max,
+	                    Pwiggle_Max,
+	                    POPCT_Min,
+	                    IBM_Min,
+	                    IBM_Max,
+	                    IBM_Tracking_Min,
+	                    IBM_Tracking_Max,
+	                    IBR_Max
+                    )
+                    values
+                    (
+                        @Part_Number,
+	                    @I_Continuity,
+	                    @V_Continuity_Min,
+	                    @V_Continuity_Max,
+	                    @I_Continuity_Tol,
+	                    @I_Start,
+	                    @I_Step,
+	                    @I_Stop,
+	                    @P_OP,
+	                    @I_OP_Min,
+	                    @I_OP_Max,
+	                    @Wiggle_Time,
+	                    @VBR_Test,
+	                    @V_OP_Min,
+	                    @V_OP_Max,
+	                    @RS_Min,
+	                    @RS_Max,
+	                    @SE_Min,
+	                    @SE_Max,
+	                    @Ith_Min,
+	                    @Ith_Max,
+	                    @Pwiggle_Max,
+	                    @POPCT_Min,
+	                    @IBM_Min,
+	                    @IBM_Max,
+	                    @IBM_Tracking_Min,
+	                    @IBM_Tracking_Max,
+	                    @IBR_Max
+                    )",
+                    new
+                    {
+                        Part_Number = tosa.Part_Number,
+                        I_Continuity = tosa.I_Continuity,
+                        V_Continuity_Min = tosa.V_Continuity_Min,
+                        V_Continuity_Max = tosa.V_Continuity_Max,
+                        I_Continuity_Tol = tosa.I_Continuity_Tol,
+                        I_Start = tosa.I_Start,
+                        I_Step = tosa.I_Step,
+                        I_Stop = tosa.I_Stop,
+                        P_OP = tosa.P_OP,
+                        I_OP_Min = tosa.I_OP_Min,
+                        I_OP_Max = tosa.I_OP_Max,
+                        Wiggle_Time = tosa.Wiggle_Time,
+                        VBR_Test = tosa.VBR_Test,
+                        V_OP_Min = tosa.V_OP_Min,
+                        V_OP_Max = tosa.V_OP_Max,
+                        RS_Min = tosa.RS_Min,
+                        RS_Max = tosa.RS_Max,
+                        SE_Min = tosa.SE_Min,
+                        SE_Max = tosa.SE_Max,
+                        Ith_Min = tosa.Ith_Min,
+                        Ith_Max = tosa.Ith_Max,
+                        Pwiggle_Max = tosa.Pwiggle_Max,
+                        POPCT_Min = tosa.POPCT_Min,
+                        IBM_Min = tosa.IBM_Min,
+                        IBM_Max = tosa.IBM_Max,
+                        IBM_Tracking_Min = tosa.IBM_Tracking_Min,
+                        IBM_Tracking_Max = tosa.IBM_Tracking_Max,
+                        IBR_Max = tosa.IBR_Max
+                    }
+                );
+            }
+            
         }
 
         public void SaveTOSAOutput(TOSAOutput result)
