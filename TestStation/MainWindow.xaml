@@ -7,6 +7,8 @@
     mc:Ignorable="d"
         Background="{StaticResource DarkBg}"
     Title="MainWindow" Height="450" Width="400">
-
-    <Frame Padding="15" NavigationUIVisibility="Hidden" x:Name="_mainFrame"></Frame>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Background="{StaticResource DarkBg}">
+        <Frame Padding="15" NavigationUIVisibility="Hidden" x:Name="_mainFrame"></Frame>
+    </ScrollViewer>
+    
 </Window>

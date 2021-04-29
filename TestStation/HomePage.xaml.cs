@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using TestStation.Data;
+using TestStation.Models;
 
 namespace TestStation
 {
@@ -21,9 +23,14 @@ namespace TestStation
     /// </summary>
     public partial class HomePage : Page
     {
+        private List<TOSADevice> TOSADevices { get; set; } = new List<TOSADevice>();
+        private List<ROSADevice> ROSADevices { get; set; } = new List<ROSADevice>();
         public HomePage()
         {
             InitializeComponent();
+
+            TOSADevices.AddRange(MainWindow.Conn.GetAllTosaDevices());
+            ROSADevices.AddRange(MainWindow.Conn.GetAllRosaDevices());
         }
 
 
@@ -40,6 +47,34 @@ namespace TestStation
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Settings());
+        }
+
+        private void ROSA_Radio_Checked(object sender, RoutedEventArgs e)
+        {
+            DeviceSelector.ItemsSource = ROSADevices;
+        }
+
+        private void TOSA_Radio_Checked(object sender, RoutedEventArgs e)
+        {
+            DeviceSelector.ItemsSource = TOSADevices;
+        }
+
+        private void DeviceSelector_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if ((bool)TOSARadio.IsChecked)
+            {
+                TOSADevices.Clear();
+                TOSADevices.AddRange(MainWindow.Conn.GetAllTosaDevices());
+                DeviceSelector.ItemsSource = new List<TOSADevice>();
+                DeviceSelector.ItemsSource = TOSADevices;
+            }
+            else if ((bool)ROSARadio.IsChecked)
+            {
+                ROSADevices.Clear();
+                ROSADevices.AddRange(MainWindow.Conn.GetAllRosaDevices());
+                DeviceSelector.ItemsSource = new List<ROSADevice>();
+                DeviceSelector.ItemsSource = ROSADevices;
+            }
         }
     }
 }
