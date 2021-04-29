@@ -36,7 +36,10 @@ namespace TestStation
 
         private void StartButton(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Power: " + Instruments.Instance.GetPower(3));
+            TOSADevice td = (TOSADevice)DeviceSelector.SelectedItem;
+            Step1 step1 = new Step1();
+            step1.tosaDevice = td;
+            NavigationService.Navigate(step1);
         }
 
         private void DeviceSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)

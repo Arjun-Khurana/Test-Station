@@ -20,14 +20,54 @@ namespace TestStation
     /// </summary>
     public partial class Step1 : Page
     {
+        public Models.TOSADevice tosaDevice { get; set; }
         public Step1()
         {
             InitializeComponent();
         }
-
+       
         private void Start_Test_Button_Click(object sender, RoutedEventArgs e)
         {
-            
+            ContinuityTest();
+        }
+
+        private void ContinuityTest()
+        {
+            try
+            {
+                bool continuityTestResult = true;
+                int tries = 0;
+
+                do
+                {
+                    if (continuityTestResult == false)
+                        MessageBox.Show("Reinsert and check orientation");
+
+                    continuityTestResult = TestCalculations.ContinuityTest(tosaDevice.I_Continuity,
+                                                            tosaDevice.V_Continuity_Min,
+                                                            tosaDevice.V_Continuity_Max,
+                                                            tosaDevice.I_Continuity_Tol);
+                    tries++;
+                }
+                while (!continuityTestResult && tries < 3);
+
+                if(continuityTestResult == true)
+                {
+                    MessageBox.Show("Success!");
+                    //NavigationService.Navigate(new Step2());
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("Failure!");
+                    return;
+                }
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Failure!");
+            }
         }
     }
 }

@@ -6,16 +6,25 @@ using System.Threading.Tasks;
 
 namespace TestStation
 {
+    class SweepValue
+    {
+        public List<double> current { get; set; }
+        public List<double> voltage { get; set; }
+        public List<double> power { get; set; }
+        public List<double> ibm { get; set; }
+
+        public SweepValue()
+        {
+            current = new List<double>();
+            voltage = new List<double>();
+            power = new List<double>();
+            ibm = new List<double>();
+        }
+    }
+
     class TestData
     {
-        public List<double> current1;
-        public List<double> voltage1;
-        public List<double> power1;
-        public List<double> ibm1;
-
-        public List<double> current2;
-        public List<double> voltage2;
-        public List<double> power2;
-        public List<double> ibm2;
+        public SweepValue sweep1;
+        public SweepValue sweep2;
     }
 }
