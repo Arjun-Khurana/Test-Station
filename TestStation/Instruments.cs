@@ -55,9 +55,10 @@ namespace TestStation
             return (Double.Parse(ReadSMU("MEAS:CURR? (@" + channel + ")"))) / 1000;
         }
 
-        private double GetPower(int channel)
+        public double GetPower(int channel)
         {
-            return GetCurrent(channel) * GetVoltage(channel);
+            WriteSMU("VOLT 0, (@" + channel + ")");
+            return GetCurrent(channel);
         }
 
         private void ChannelPower(int channel, bool on)

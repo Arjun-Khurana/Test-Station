@@ -29,6 +29,7 @@ namespace TestStation
 
         private void StartButton(object sender, RoutedEventArgs e)
         {
+            Console.WriteLine("Power: " + Instruments.Instance.GetPower(3));
         }
 
         private void DeviceSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
