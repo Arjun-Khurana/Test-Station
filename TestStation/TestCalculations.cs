@@ -141,17 +141,15 @@ namespace TestStation
         public static double IBR(double VBR_Test)
         {
             Instruments.Instance.ChannelPower(1, true);
-            Instruments.Instance.ChannelPower(2, true);
-            Instruments.Instance.SourceCurrent(1, VBR_Test);
+            Instruments.Instance.SourceVoltage(1, VBR_Test);
 
-            double ibr = Instruments.Instance.GetCurrent(2);
+            double ibr = Instruments.Instance.GetCurrent(1);
 
             Instruments.Instance.ChannelPower(1, false);
-            Instruments.Instance.ChannelPower(2, false);
             return ibr;
         }
         
-        public static double Power(double I_Test)
+        public static double P_Total(double I_Test)
         {
             Instruments.Instance.ChannelPower(1, true);
             Instruments.Instance.ChannelPower(3, true);

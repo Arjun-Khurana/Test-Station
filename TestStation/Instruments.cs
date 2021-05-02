@@ -73,5 +73,10 @@ namespace TestStation
         {
             WriteSMU("CURR " + sourceCurrent + ", (@" + channel + ")");
         }
+
+        public void SourceVoltage(int channel, double sourceVoltage)
+        {
+            WriteSMU("VOLT " + sourceVoltage + ", (@" + channel + ")");
+        }
     }
 }
