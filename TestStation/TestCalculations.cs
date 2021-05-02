@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,27 +42,100 @@ namespace TestStation
             return sweepValues;
         }
 
-        public static double Resistance(SweepValue sweepValues, double I_OP_Min, double I_OP_Max)
+        public static double FindSlope(List<double> x, List<double> y, double min, double max)
         {
-            double vMin = sweepValues.voltage.Aggregate((cur, next) => Math.Abs(I_OP_Min - cur) < Math.Abs(I_OP_Min - next) ? cur : next);
-            double vMax = sweepValues.voltage.Aggregate((cur, next) => Math.Abs(I_OP_Max - cur) < Math.Abs(I_OP_Max - next) ? cur : next);
+            double slope;
+            double intercept;
 
-            return (vMax - vMin) / (I_OP_Max - I_OP_Min);
+            int low = x.IndexOf(min);
+            int high = x.IndexOf(max);
+
+            x = x.GetRange(low, high - low);
+            y = y.GetRange(low, high - low);
+
+            List<Point> points = new List<Point>();
+
+            int k = 0;
+            foreach (double i in x)
+            {
+                points.Add(new Point(i, y.ElementAt<double>(k)));
+                k++;
+            }
+
+            double r2 = FindLinearLeastSquaresFit(points, out slope, out intercept);
+
+            return slope;
         }
 
-        public static double SlopeEfficiency(SweepValue sweepValues, double I_OP_Min, double I_OP_Max)
+        public static double FindSlope(List<double> x, List<double> y, double min, double max, out double intercept)
         {
-            double pMin = sweepValues.power.Aggregate((cur, next) => Math.Abs(I_OP_Min - cur) < Math.Abs(I_OP_Min - next) ? cur : next);
-            double pMax = sweepValues.power.Aggregate((cur, next) => Math.Abs(I_OP_Max - cur) < Math.Abs(I_OP_Max - next) ? cur : next);
+            double slope;
 
-            return (pMax - pMin) / (I_OP_Max - I_OP_Min);
+            int low = x.IndexOf(min);
+            int high = x.IndexOf(max);
+
+            x = x.GetRange(low, high - low);
+            y = y.GetRange(low, high - low);
+
+            List<Point> points = new List<Point>();
+
+            int k = 0;
+            foreach (double i in x)
+            {
+                points.Add(new Point(i, y.ElementAt<double>(k)));
+                k++;
+            }
+
+            double r2 = FindLinearLeastSquaresFit(points, out slope, out intercept);
+
+            return slope;
         }
 
-        public static double ThresholdCurrent(SweepValue sweepValues, double se)
+        private static double FindLinearLeastSquaresFit(List<Point> points, out double m, out double b)
         {
-            //x = -b / se
+            // Perform the calculation.
+            // Find the values S1, Sx, Sy, Sxx, and Sxy.
+            double S1 = points.Count;
+            double Sx = 0;
+            double Sy = 0;
+            double Sxx = 0;
+            double Sxy = 0;
+            foreach (Point pt in points)
+            {
+                Sx += pt.X;
+                Sy += pt.Y;
+                Sxx += pt.X * pt.X;
+                Sxy += pt.X * pt.Y;
+            }
 
-            return 0;
+            // Solve for m and b.
+            m = (Sxy * S1 - Sx * Sy) / (Sxx * S1 - Sx * Sx);
+            b = (Sxy * Sx - Sy * Sxx) / (Sx * Sx - S1 * Sxx);
+
+            return Math.Sqrt(ErrorSquared(points, m, b));
+        }
+
+        private static double ErrorSquared(List<Point> points, double m, double b)
+        {
+            double total = 0;
+            foreach (Point pt in points)
+            {
+                double dy = pt.Y - (m * pt.X + b);
+                total += dy * dy;
+            }
+            return total;
+        }
+
+        public static double ThresholdCurrent(SweepValue sweepValues, double I_OP_Min, double I_OP_Max)
+        {
+            List<double> currents = sweepValues.current;
+            List<double> powers = sweepValues.power;
+
+            double b;
+
+            double m = FindSlope(currents, powers, I_OP_Min, I_OP_Max, out b);
+
+            return -b / m;
         }
 
         public static double IBR(double VBR_Test)

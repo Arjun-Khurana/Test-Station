@@ -201,10 +201,9 @@ namespace TestStation
             var tosa = new Models.TOSADevice
             {
                 Part_Number = TOSA_Part_Number_Input.Text,
-                I_Continuity = Double.Parse(TOSA_I_Continuity_Input.Text),
-                V_Continuity_Min = Double.Parse(TOSA_V_Continuity_Min_Input.Text),
-                V_Continuity_Max = Double.Parse(TOSA_V_Continuity_Max_Input.Text),
-                I_Continuity_Tol = Double.Parse(TOSA_I_Continuity_Tol_Input.Text),
+                P_Total_Min = Double.Parse(TOSA_P_Total_Min_Input.Text),
+                P_Total_Max = Double.Parse(TOSA_P_Total_Max_Input.Text),
+                I_Test_Tol = Double.Parse(TOSA_I_Test_Input.Text),
                 I_Start = Double.Parse(TOSA_I_Start_Input.Text),
                 I_Step = Double.Parse(TOSA_I_Step_Input.Text),
                 I_Stop = Double.Parse(TOSA_I_Stop_Input.Text),
