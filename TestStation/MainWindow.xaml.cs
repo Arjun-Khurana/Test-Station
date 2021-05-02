@@ -24,7 +24,7 @@ namespace TestStation
     {
         public static DeviceRepository Conn = new DeviceRepository();
         public Device device;
-        public TOSAOutput tosa_output;
+        public Output output;
         public MainWindow()
         {
             InitializeComponent();

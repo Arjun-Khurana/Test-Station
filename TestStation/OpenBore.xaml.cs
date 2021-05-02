@@ -24,6 +24,7 @@ namespace TestStation
         private int numTries;
         private bool passed;
         private Device d;
+        private Output o;
         public OpenBore()
         {
             InitializeComponent();
@@ -32,6 +33,7 @@ namespace TestStation
 
             var w = Window.GetWindow(this) as MainWindow;
             d = w.device;
+            o = w.output;
         }
 
         private void Start_Test_Button_Click(object sender, RoutedEventArgs e)
@@ -54,7 +56,8 @@ namespace TestStation
         private void TOSAStep1()
         {
             TOSADevice device = d as TOSADevice;
-            bool continuityTestResult = TestCalculations.ContinuityTest(device.I_Continuity, device.V_Continuity_Min, device.V_Continuity_Max, device.I_Continuity_Tol);
+            TOSAOutput output = o as TOSAOutput;
+            bool continuityTestResult = true;
 
             if (continuityTestResult)
             {

@@ -13,6 +13,8 @@ namespace TestStation
         private List<SweepValue> sweep1;
         private List<SweepValue> sweep2;
 
+        private const double RESPONSIVITY = 1;
+
         private static readonly Lazy<Instruments> lazy = new Lazy<Instruments>(() => new Instruments());
         private Instruments()
         {
@@ -58,7 +60,7 @@ namespace TestStation
         public double GetPower(int channel)
         {
             WriteSMU("VOLT 0, (@" + channel + ")");
-            return GetCurrent(channel);
+            return GetCurrent(channel) / RESPONSIVITY;
         }
 
         public void ChannelPower(int channel, bool on)
