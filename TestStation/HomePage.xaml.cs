@@ -41,7 +41,10 @@ namespace TestStation
 
         private void DeviceSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            MainWindow w = Window.GetWindow(this) as MainWindow;
+            Device d = (sender as ComboBox).SelectedItem as Device;
 
+            w.device = d;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

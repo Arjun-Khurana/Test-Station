@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TestStation.Data;
+using TestStation.Models;
 
 namespace TestStation
 {
@@ -22,6 +23,8 @@ namespace TestStation
     public partial class MainWindow : Window
     {
         public static DeviceRepository Conn = new DeviceRepository();
+        public Device device;
+        public Output output;
         public MainWindow()
         {
             InitializeComponent();

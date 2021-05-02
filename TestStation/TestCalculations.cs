@@ -9,55 +9,8 @@ namespace TestStation
 {
     class TestCalculations
     {
-        public static bool ContinuityTest(double Isource, double vmin, double vmax, double Ierror)
-        {
-            try
-            {
-                //Convert to mA and mV
-                Isource /= 1000;
-                vmin /= 1000;
-                vmax /= 1000;
-
-                //Activate channel 1 with source current
-                Instruments.Instance.ChannelPower(1, true);
-                Instruments.Instance.SourceCurrent(1, Isource);
-
-                double voltage = Instruments.Instance.GetVoltage(1);
-                double current = Instruments.Instance.GetCurrent(1);
-
-                //Check voltage is within acceptable range
-                if (voltage < vmin || voltage > vmax)
-                {
-                    return false;
-                }
-
-                //Check current is within acceptable range
-                if (current < Isource * (1 - Ierror) || current > Isource * (1 + Ierror))
-                {
-                    return false;
-                }
-
-            }
-            catch (Exception continuityTestError)
-            {
-                return false;
-            }
-            finally
-            {
-                Instruments.Instance.ChannelPower(1, false);
-            }
-
-            return true;
-        }
-
         public static SweepValue SweepTest(double I_Start, double I_Stop, double I_Step)
         {
-            //Convert to mA
-            I_Start /= 1000;
-            I_Stop /= 1000;
-            I_Step /= 1000;
-
-
             Instruments.Instance.ChannelPower(1, true);
             Instruments.Instance.ChannelPower(2, true);
             Instruments.Instance.ChannelPower(3, true);
@@ -188,25 +141,64 @@ namespace TestStation
         public static double IBR(double VBR_Test)
         {
             Instruments.Instance.ChannelPower(1, true);
+            Instruments.Instance.ChannelPower(2, true);
             Instruments.Instance.SourceCurrent(1, VBR_Test);
 
-            double ibr = Instruments.Instance.GetCurrent(1);
+            double ibr = Instruments.Instance.GetCurrent(2);
 
             Instruments.Instance.ChannelPower(1, false);
+            Instruments.Instance.ChannelPower(2, false);
             return ibr;
         }
         
-        public static double P_Total(double I_Test)
+        public static double Power(double I_Test)
+        {
+            Instruments.Instance.ChannelPower(1, true);
+            Instruments.Instance.ChannelPower(3, true);
+            Instruments.Instance.SourceCurrent(1, I_Test);
+
+            double p_total = Instruments.Instance.GetPower(3);
+
+            Instruments.Instance.ChannelPower(1, false);
+            Instruments.Instance.ChannelPower(3, false);
+
+            return p_total;
+        }
+
+        public static double Voltage(double I_Test)
         {
             Instruments.Instance.ChannelPower(1, true);
             Instruments.Instance.SourceCurrent(1, I_Test);
 
-            double p_total = Instruments.Instance.GetPower(1);
+            double voltage = Instruments.Instance.GetVoltage(1);
 
             Instruments.Instance.ChannelPower(1, false);
-            return p_total;
+
+            return voltage;
         }
 
+        public static double Current(double I_Test)
+        {
+            Instruments.Instance.ChannelPower(1, true);
+            Instruments.Instance.ChannelPower(3, true);
+            Instruments.Instance.SourceCurrent(1, I_Test);
 
+            double current = Instruments.Instance.GetCurrent(3);
+
+            Instruments.Instance.ChannelPower(1, false);
+            Instruments.Instance.ChannelPower(3, false);
+
+            return current;
+        }
+
+        public static double P_IBM(SweepValue sweepValues, double P_Test)
+        {
+            return sweepValues.power.Aggregate((cur, next) => Math.Abs(P_Test - cur) < Math.Abs(P_Test - next) ? cur : next);
+        }
+
+        public static double POPCT(double P_Test, double P_Total)
+        {
+            return P_Test / P_Total;
+        }
     }
 }

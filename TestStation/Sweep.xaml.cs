@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TestStation.Models;
 
 namespace TestStation
 {
@@ -20,9 +21,13 @@ namespace TestStation
     /// </summary>
     public partial class Sweep : Page
     {
+        private Device d;
         public Sweep()
         {
             InitializeComponent();
+
+            var w = Window.GetWindow(this) as MainWindow;
+            d = w.device;
         }
 
         private int numTries;
@@ -47,7 +52,15 @@ namespace TestStation
 
         private void TOSAStep1()
         {
-            bool sweepTestResult = true;
+            TOSADevice device = d as TOSADevice;
+
+            SweepValue sweepValues = TestCalculations.SweepTest(device.I_Start, device.I_Stop, device.I_Step);
+            double resistance = TestCalculations.Resistance(sweepValues, device.I_OP_Min, device.I_OP_Max);
+            double slopeEfficiency = TestCalculations.SlopeEfficiency(sweepValues, device.I_OP_Min, device.I_OP_Max);
+            double threshholdCurrent = TestCalculations.ThresholdCurrent(sweepValues, slopeEfficiency);
+            
+
+            if ()
 
             if (sweepTestResult)
             {

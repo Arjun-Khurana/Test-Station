@@ -24,7 +24,8 @@ namespace TestStation
 
     class TestData
     {
-        public SweepValue sweep1;
-        public SweepValue sweep2;
+        public SweepValue sweep;
+        public double P_Total;
+
     }
 }
