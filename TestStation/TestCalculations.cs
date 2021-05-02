@@ -131,5 +131,29 @@ namespace TestStation
 
             return 0;
         }
+
+        public static double IBR(double VBR_Test)
+        {
+            Instruments.Instance.ChannelPower(1, true);
+            Instruments.Instance.SourceCurrent(1, VBR_Test);
+
+            double ibr = Instruments.Instance.GetCurrent(1);
+
+            Instruments.Instance.ChannelPower(1, false);
+            return ibr;
+        }
+        
+        public static double P_Total(double I_Test)
+        {
+            Instruments.Instance.ChannelPower(1, true);
+            Instruments.Instance.SourceCurrent(1, I_Test);
+
+            double p_total = Instruments.Instance.GetPower(1);
+
+            Instruments.Instance.ChannelPower(1, false);
+            return p_total;
+        }
+
+
     }
 }
