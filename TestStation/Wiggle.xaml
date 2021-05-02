@@ -1,0 +1,82 @@
+﻿<Page x:Class="TestStation.Wiggle"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TestStation"
+      mc:Ignorable="d" 
+      d:Background="{StaticResource DarkBg}"
+      d:DesignHeight="450" d:DesignWidth="400"
+      Title="Step1">
+
+    <Grid Background="{StaticResource DarkBg}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <TextBlock 
+                FontSize="26"
+                FontWeight="Light"
+                Margin="0,0,0,15" 
+                Text="Step 2"></TextBlock>
+
+            <Border 
+                Padding="10"
+                BorderThickness="2"
+                BorderBrush="White"
+                Margin="0,0,0,10"
+                >
+                <StackPanel>
+                    <TextBlock
+                        FontSize="18" 
+                        Margin="0,0,0,5"
+                        Text="Instructions" />
+
+                    <TextBlock
+                        Margin="0,0,0,0"
+                        TextWrapping="Wrap"
+                        FontSize="15"
+                        Text="(1) Connect fiber">
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <StackPanel 
+                Orientation="Vertical"
+                x:Name="measurementPanel"
+                Visibility="Visible">
+                <StackPanel Orientation="Horizontal">
+                    <Label>Sweep progress</Label>
+                    <ProgressBar x:Name="sweepProgress" Width="250" Height="10" Foreground="DarkRed" Value="50"></ProgressBar>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Reverse Breakdown Voltage:</Label>
+                    <TextBlock x:Name="reverseBreakdownVoltage" VerticalAlignment="Center">0 V</TextBlock>
+                </StackPanel>
+                <TextBlock x:Name="testMessage" FontSize="18">Test Status</TextBlock>
+            </StackPanel>
+
+            <StackPanel
+                Orientation="Vertical"
+                x:Name="errorPanel"
+                Visibility="Visible"
+                >
+            </StackPanel>
+
+            <Button
+                HorizontalAlignment="Left"
+                Click="Start_Test_Button_Click"
+                Content="Start test"
+                Margin="0,25,0,15" 
+                x:Name="StartTestButton"
+                >
+            </Button>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="2">
+        </StackPanel>
+    </Grid>
+
+</Page>

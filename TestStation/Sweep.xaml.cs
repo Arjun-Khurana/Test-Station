@@ -16,38 +16,42 @@ using System.Windows.Shapes;
 namespace TestStation
 {
     /// <summary>
-    /// Interaction logic for Step1.xaml
+    /// Interaction logic for Sweep.xaml
     /// </summary>
-    public partial class Step1 : Page
+    public partial class Sweep : Page
     {
-        private int numTries;
-        public Step1()
+        public Sweep()
         {
             InitializeComponent();
-            numTries = 0;
         }
+
+        private int numTries;
+        private bool passed;
 
         private void Start_Test_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (numTries == 3)
+            if (numTries == 3 && !passed)
             {
                 NavigationService.Navigate(new HomePage());
                 return;
+            }
+            else if (numTries < 3 && passed)
+            {
+                NavigationService.Navigate(new Wiggle());
             }
 
             numTries++;
             TOSAStep1();
 
-            
         }
 
         private void TOSAStep1()
         {
-            bool continuityTestResult = false;
             bool sweepTestResult = true;
 
-            if (continuityTestResult && sweepTestResult)
+            if (sweepTestResult)
             {
+                passed = true;
                 StartTestButton.Content = "Next step";
             }
             else

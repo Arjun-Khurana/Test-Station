@@ -1,4 +1,4 @@
-﻿<Page x:Class="TestStation.Step1"
+﻿<Page x:Class="TestStation.OpenBore"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -61,12 +61,12 @@
                     <TextBlock x:Name="continuityTestVoltage" VerticalAlignment="Center">0 mV</TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label>Sweep progress</Label>
-                    <ProgressBar x:Name="sweepProgress" Width="250" Height="10" Foreground="DarkRed" Value="50"></ProgressBar>
+                    <Label>Breakdown test voltage:</Label>
+                    <TextBlock x:Name="reverseBreakdownVoltage" VerticalAlignment="Center">0 mV</TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label>Reverse Breakdown Voltage: </Label>
-                    <TextBlock x:Name="reverseBreakdownVoltage" VerticalAlignment="Center">0 V</TextBlock>
+                    <Label>Breakdown test current:</Label>
+                    <TextBlock x:Name="reverseBreakdownCurrent" VerticalAlignment="Center">0 mV</TextBlock>
                 </StackPanel>
                 <TextBlock x:Name="testMessage" FontSize="18">Test Status</TextBlock>
             </StackPanel>
