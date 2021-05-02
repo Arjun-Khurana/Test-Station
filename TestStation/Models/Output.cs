@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TestStation.Models
+{
+    public class Output
+    {
+        public string Job_Number { get; set; }
+        public string Unit_Number { get; set; }
+        public string Operator { get; set; }
+        public DateTime Timestamp { get; set; }
+        public int Repeat_Number { get; set; }
+    }
+}
