@@ -30,8 +30,17 @@ namespace TestStation.Models
         // Stop current for sweep
         public double I_Stop { get; set; }
 
-        // Power at which parameters are calculated
-        public double P_OP { get; set; }
+        // Current at which parameters are calculated
+        public double I_Test { get; set; }
+
+        // Power at which IBM is calculated
+        public double P_Test { get; set; }
+
+        // Minimum power for the range over which IBM_Tracking is calculated
+        public double P_OP_Min { get; set; }
+
+        //Maximum power for the range over which IBM_Tracking is calculated
+        public double P_OP_Max { get; set; }
 
         // Minimum current for the range over which RS, SE and Ith is calculated
         public double I_OP_Min { get; set; }

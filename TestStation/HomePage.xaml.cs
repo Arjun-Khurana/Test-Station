@@ -36,10 +36,7 @@ namespace TestStation
 
         private void StartButton(object sender, RoutedEventArgs e)
         {
-            TOSADevice td = (TOSADevice)DeviceSelector.SelectedItem;
-            Step1 step1 = new Step1();
-            step1.tosaDevice = td;
-            NavigationService.Navigate(step1);
+            NavigationService.Navigate(new OpenBore());
         }
 
         private void DeviceSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
