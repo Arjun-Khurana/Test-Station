@@ -154,6 +154,14 @@ namespace TestStation
             return p_total;
         }
 
+        public static double P_IBM(SweepValue sweepValues, double P_Test)
+        {
+            return sweepValues.power.Aggregate((cur, next) => Math.Abs(P_Test - cur) < Math.Abs(P_Test - next) ? cur : next);
+        }
 
+        public static double POPCT(double P_Test, double P_Total)
+        {
+            return P_Test / P_Total;
+        }
     }
 }

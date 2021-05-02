@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TestStation.Models;
 
 namespace TestStation
 {
@@ -22,11 +23,15 @@ namespace TestStation
     {
         private int numTries;
         private bool passed;
+        private Device d;
         public OpenBore()
         {
             InitializeComponent();
             numTries = 0;
             passed = false;
+
+            var w = Window.GetWindow(this) as MainWindow;
+            d = w.device;
         }
 
         private void Start_Test_Button_Click(object sender, RoutedEventArgs e)
@@ -48,7 +53,8 @@ namespace TestStation
 
         private void TOSAStep1()
         {
-            bool continuityTestResult = true;
+            TOSADevice device = d as TOSADevice;
+            bool continuityTestResult = TestCalculations.ContinuityTest(device.I_Continuity, device.V_Continuity_Min, device.V_Continuity_Max, device.I_Continuity_Tol);
 
             if (continuityTestResult)
             {
