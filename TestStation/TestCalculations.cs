@@ -149,7 +149,7 @@ namespace TestStation
             return ibr;
         }
         
-        public static double P_Total(double I_Test)
+        public static double Power(double I_Test)
         {
             Instruments.Instance.ChannelPower(1, true);
             Instruments.Instance.ChannelPower(3, true);
@@ -163,7 +163,7 @@ namespace TestStation
             return p_total;
         }
 
-        public static double Voltage(double I_Test)
+        public static double V_OP(double I_Test)
         {
             Instruments.Instance.ChannelPower(1, true);
             Instruments.Instance.SourceCurrent(1, I_Test);
@@ -173,6 +173,15 @@ namespace TestStation
             Instruments.Instance.ChannelPower(1, false);
 
             return voltage;
+        }
+
+        public static double IBM(SweepValue sweepValues, double P_IBM)
+        {
+            List<double> powers = sweepValues.power;
+            List<double> currents = sweepValues.current;
+
+            int i = powers.IndexOf(P_IBM);
+            return currents.ElementAt(i);
         }
 
         public static double Current(double I_Test)
