@@ -54,30 +54,29 @@ namespace TestStation
         {
             TOSADevice device = d as TOSADevice;
 
-            SweepValue sweepValues = TestCalculations.SweepTest(device.I_Start, device.I_Stop, device.I_Step);
-            double resistance = TestCalculations.Resistance(sweepValues, device.I_OP_Min, device.I_OP_Max);
-            double slopeEfficiency = TestCalculations.SlopeEfficiency(sweepValues, device.I_OP_Min, device.I_OP_Max);
-            double threshholdCurrent = TestCalculations.ThresholdCurrent(sweepValues, slopeEfficiency);
+            //SweepValue sweepValues = TestCalculations.SweepTest(device.I_Start, device.I_Stop, device.I_Step);
+            //double resistance = TestCalculations.Resistance(sweepValues, device.I_OP_Min, device.I_OP_Max);
+            //double slopeEfficiency = TestCalculations.SlopeEfficiency(sweepValues, device.I_OP_Min, device.I_OP_Max);
+            //double threshholdCurrent = TestCalculations.ThresholdCurrent(sweepValues, slopeEfficiency);
             
 
-            if ()
-
-            if (sweepTestResult)
-            {
-                passed = true;
-                StartTestButton.Content = "Next step";
-            }
-            else
-            {
-                if (numTries >= 3)
-                {
-                    StartTestButton.Content = "Go home";
-                }
-                else
-                {
-                    StartTestButton.Content = "Retry test";
-                }
-            }
+            
+            //if (sweepTestResult)
+            //{
+            //    passed = true;
+            //    StartTestButton.Content = "Next step";
+            //}
+            //else
+            //{
+            //    if (numTries >= 3)
+            //    {
+            //        StartTestButton.Content = "Go home";
+            //    }
+            //    else
+            //    {
+            //        StartTestButton.Content = "Retry test";
+            //    }
+            //}
         }
 
         private void ROSAStep1()

@@ -184,16 +184,16 @@ namespace TestStation
             return currents.ElementAt(i);
         }
 
-        public static double Current(double I_Test)
+        public static double Current(double I_Test, int channel)
         {
             Instruments.Instance.ChannelPower(1, true);
-            Instruments.Instance.ChannelPower(3, true);
+            Instruments.Instance.ChannelPower(channel, true);
             Instruments.Instance.SourceCurrent(1, I_Test);
 
-            double current = Instruments.Instance.GetCurrent(3);
+            double current = Instruments.Instance.GetCurrent(channel);
 
             Instruments.Instance.ChannelPower(1, false);
-            Instruments.Instance.ChannelPower(3, false);
+            Instruments.Instance.ChannelPower(channel, false);
 
             return current;
         }
