@@ -31,10 +31,9 @@ namespace TestStation.Data
                 (
                     id                  integer primary key autoincrement,
                     Part_Number         varchar(255) not null,
-                    I_Continuity        double not null,
-                    V_Continuity_Min    double not null,
-                    V_Continuity_Max    double not null,
-                    I_Continuity_Tol    double not null,
+                    P_Total_Min         double not null,
+                    P_Total_Max         double not null,
+                    I_Test_Tol          double not null,
                     I_Start             double not null,
                     I_Step              double not null,
                     I_Stop              double not null,
@@ -136,10 +135,9 @@ namespace TestStation.Data
                     @"insert into TOSADevice
                 (                  
                     Part_Number,         
-                    I_Continuity,        
-                    V_Continuity_Min,    
-                    V_Continuity_Max,    
-                    I_Continuity_Tol,    
+                    P_Total_Min,    
+                    P_Total_Max,    
+                    I_Test_Tol,    
                     I_Start,             
                     I_Step,              
                     I_Stop,              
@@ -168,9 +166,8 @@ namespace TestStation.Data
                     IBR_Max             
                 ) values (
                     'Device 1',         
-                    1,        
+                    .2,    
                     1,    
-                    3,    
                     .1,    
                     .1,             
                     .1,              
@@ -311,10 +308,9 @@ namespace TestStation.Data
                     @"insert into TOSADevice
                     (
                         Part_Number,
-	                    I_Continuity,
-	                    V_Continuity_Min,
-	                    V_Continuity_Max,
-	                    I_Continuity_Tol,
+	                    P_Total_Min,
+	                    P_Total_Max,
+	                    I_Test_Tol,
 	                    I_Start,
 	                    I_Step,
 	                    I_Stop,
@@ -345,10 +341,9 @@ namespace TestStation.Data
                     values
                     (
                         @Part_Number,
-	                    @I_Continuity,
-	                    @V_Continuity_Min,
-	                    @V_Continuity_Max,
-	                    @I_Continuity_Tol,
+	                    @P_Total_Min,
+	                    @P_Total_Max,
+	                    @I_Test_Tol,
 	                    @I_Start,
 	                    @I_Step,
 	                    @I_Stop,
@@ -379,10 +374,9 @@ namespace TestStation.Data
                     new
                     {
                         Part_Number = tosa.Part_Number,
-                        I_Continuity = tosa.I_Continuity,
-                        V_Continuity_Min = tosa.V_Continuity_Min,
-                        V_Continuity_Max = tosa.V_Continuity_Max,
-                        I_Continuity_Tol = tosa.I_Continuity_Tol,
+                        P_Total_Min = tosa.P_Total_Min,
+                        P_Total_Max = tosa.P_Total_Max,
+                        I_Test_Tol = tosa.I_Test_Tol,
                         I_Start = tosa.I_Start,
                         I_Step = tosa.I_Step,
                         I_Stop = tosa.I_Stop,
