@@ -8,18 +8,14 @@ namespace TestStation.Models
 {
     public class TOSADevice : Device
     {
-
-        // Source current for continuity test
-        public double I_Continuity { get; set; }
-
         // Minimum voltage for continuity test
-        public double V_Continuity_Min { get; set; }
+        public double P_Total_Min { get; set; }
 
         // Maximum voltage for continuity test
-        public double V_Continuity_Max { get; set; }
+        public double P_Total_Max { get; set; }
 
         // Current tolerance for continuity test
-        public double I_Continuity_Tol { get; set; }
+        public double I_Test_Tol { get; set; }
 
         // Start current for sweep
         public double I_Start { get; set; }
