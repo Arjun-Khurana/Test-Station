@@ -19,7 +19,7 @@
                 FontSize="26"
                 FontWeight="Light"
                 Margin="0,0,0,15" 
-                Text="Step 2"></TextBlock>
+                Text="Step 3"></TextBlock>
 
             <Border 
                 Padding="10"
@@ -37,7 +37,7 @@
                         Margin="0,0,0,0"
                         TextWrapping="Wrap"
                         FontSize="15"
-                        Text="(1) Connect fiber">
+                        Text="(1) Insert part into wiggle fixture">
                     </TextBlock>
                 </StackPanel>
             </Border>
@@ -47,12 +47,20 @@
                 x:Name="measurementPanel"
                 Visibility="Visible">
                 <StackPanel Orientation="Horizontal">
-                    <Label>Sweep progress</Label>
-                    <ProgressBar x:Name="sweepProgress" Width="250" Height="10" Foreground="DarkRed" Value="50"></ProgressBar>
+                    <Label>Wiggle test progress</Label>
+                    <ProgressBar x:Name="wiggleProgress" Width="250" Height="10" Foreground="DarkRed" Value="50"></ProgressBar>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label>Reverse Breakdown Voltage:</Label>
-                    <TextBlock x:Name="reverseBreakdownVoltage" VerticalAlignment="Center">0 V</TextBlock>
+                    <Label>Wiggle test minimum power:</Label>
+                    <TextBlock x:Name="wiggleMin" VerticalAlignment="Center">0 mW</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Wiggle test maximum power:</Label>
+                    <TextBlock x:Name="wiggleMax" VerticalAlignment="Center">0 mW</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Wiggle test average power:</Label>
+                    <TextBlock x:Name="wiggleAvg" VerticalAlignment="Center">0 mW</TextBlock>
                 </StackPanel>
                 <TextBlock x:Name="testMessage" FontSize="18">Test Status</TextBlock>
             </StackPanel>
