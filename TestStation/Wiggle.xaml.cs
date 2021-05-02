@@ -16,18 +16,17 @@ using System.Windows.Shapes;
 namespace TestStation
 {
     /// <summary>
-    /// Interaction logic for Step1.xaml
+    /// Interaction logic for Wiggle.xaml
     /// </summary>
-    public partial class Step1 : Page
+    public partial class Wiggle : Page
     {
-        public Step1()
+        public Wiggle()
         {
             InitializeComponent();
         }
-
         private void Start_Test_Button_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
     }
 }

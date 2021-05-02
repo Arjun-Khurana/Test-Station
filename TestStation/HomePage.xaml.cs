@@ -36,6 +36,7 @@ namespace TestStation
 
         private void StartButton(object sender, RoutedEventArgs e)
         {
+            NavigationService.Navigate(new OpenBore());
         }
 
         private void DeviceSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
