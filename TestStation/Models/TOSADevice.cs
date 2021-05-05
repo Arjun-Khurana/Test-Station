@@ -8,15 +8,6 @@ namespace TestStation.Models
 {
     public class TOSADevice : Device
     {
-        // Minimum voltage for continuity test
-        public double P_Total_Min { get; set; }
-
-        // Maximum voltage for continuity test
-        public double P_Total_Max { get; set; }
-
-        // Current tolerance for continuity test
-        public double I_Test_Tol { get; set; }
-
         // Start current for sweep
         public double I_Start { get; set; }
 
@@ -29,14 +20,35 @@ namespace TestStation.Models
         // Current at which parameters are calculated
         public double I_Test { get; set; }
 
-        // Power at which IBM is calculated
-        public double P_Test { get; set; }
+        // Current tolerance for continuity test
+        public double I_Test_Tol { get; set; }
+
+        // Minimum voltage for continuity test
+        public double P_Test_OB_Min { get; set; }
+
+        // Maximum voltage for continuity test
+        public double P_Test_OB_Max { get; set; }
+
+        // Minimum voltage at I_Test
+        public double V_Test_Min { get; set; }
+
+        // Maximum voltage at I_Test
+        public double V_Test_Max { get; set; }
+
+        // Test point for reverse breakdown
+        public double VBR_Test { get; set; }
+
+        // Minimum monitor current at P_Test
+        public double IBM_Min { get; set; }
+
+        // Maxmimum monitor current at P_Test
+        public double IBM_Max { get; set; }
 
         // Minimum power for the range over which IBM_Tracking is calculated
-        public double P_OP_Min { get; set; }
+        public double P_Test_FC_Min { get; set; }
 
         //Maximum power for the range over which IBM_Tracking is calculated
-        public double P_OP_Max { get; set; }
+        public double P_Test_FC_Max { get; set; }
 
         // Minimum current for the range over which RS, SE and Ith is calculated
         public double I_OP_Min { get; set; }
@@ -44,21 +56,21 @@ namespace TestStation.Models
         // Maximum current for the range over which RS, SE and Ith is calculated
         public double I_OP_Max { get; set; }
 
-        // Time for wiggle test
-        public double Wiggle_Time { get; set; }
+        // Power at which IBM is calculated
+        public double P_BM_Test { get; set; }
 
-        // Test point for reverse breakdown
-        public double VBR_Test { get; set; }
+        // Minumum coupling efficiency including wiggle at I_Test
+        public double POPCT_Min { get; set; }
 
-        // Minimum voltage at I_Test
-        public double V_OP_Min { get; set; }
+        // Minimum monitor current tracking
+        public double IBM_Tracking_Min { get; set; }
 
-        // Maximum voltage at I_Test
-        public double V_OP_Max { get; set; }
+        // Maximum monitor current tracking
+        public double IBM_Tracking_Max { get; set; }
 
         // Minimum series resistance
         public double RS_Min { get; set; }
-        
+
         // Maximum series resistance
         public double RS_Max { get; set; }
 
@@ -74,24 +86,12 @@ namespace TestStation.Models
         // Maximum threshold current
         public double Ith_Max { get; set; }
 
+        // Time for wiggle test
+        public double Wiggle_Time { get; set; }
+
         // Maximum allowed wiggle at I_Test
         public double Pwiggle_Max { get; set; }
-
-        // Minumum coupling efficiency including wiggle at I_Test
-        public double POPCT_Min { get; set; }
-
-        // Minimum monitor current at P_Test
-        public double IBM_Min { get; set; }
-
-        // Maxmimum monitor current at P_Test
-        public double IBM_Max { get; set; }
-
-        // Minimum monitor current tracking
-        public double IBM_Tracking_Min { get; set; }
-
-        // Maximum monitor current tracking
-        public double IBM_Tracking_Max { get; set; }
-
+        
         // Maximum reverse breakdown current at VBR_Test
         public double IBR_Max { get; set; }
     }

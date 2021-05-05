@@ -71,32 +71,34 @@ namespace TestStation
         {
             //string[] inputs =
             //{
-            //    "I_Continuity",
-            //    "V_Continuity_Min",
-            //    "V_Continuity_Max",
-            //    "I_Continuity_Tol",
+            //    "Part_Number",
             //    "I_Start",
             //    "I_Step",
             //    "I_Stop",
-            //    "P_OP",
+            //    "I_Test",
+            //    "P_Test_OB_Min",
+            //    "P_Test_OB_Max",
+            //    "V_Test_Min",
+            //    "V_Test_Max",
+            //    "VBR_Test",
+            //    "IBM_Min",
+            //    "IBM_Max",
+            //    "P_Test_FC_Min",
+            //    "P_Test_FC_Max",
             //    "I_OP_Min",
             //    "I_OP_Max",
-            //    "Wiggle_Time",
-            //    "VBR_Test",
-            //    "V_OP_Min",
-            //    "V_OP_Max",
+            //    "P_BM_Test",
+            //    "POPCT_Min",
+            //    "IBM_Tracking_Min",
+            //    "IBM_Tracking_Max",
             //    "RS_Min",
             //    "RS_Max",
             //    "SE_Min",
             //    "SE_Max",
             //    "Ith_Min",
             //    "Ith_Max",
+            //    "Wiggle_Time",
             //    "Pwiggle_Max",
-            //    "POPCT_Min",
-            //    "IBM_Min",
-            //    "IBM_Max",
-            //    "IBM_Tracking_Min",
-            //    "IBM_Tracking_Max",
             //    "IBR_Max"
             //};
 
@@ -120,7 +122,7 @@ namespace TestStation
 
             //foreach (string s in inputs)
             //{
-            //    Debug.Print("{0} = Double.Parse(TOSA_{0}_Input.Text),",s);
+            //    Debug.Print("{0} = tosa.{0},", s);
             //}
 
             //foreach (string s in inputs)
@@ -201,35 +203,34 @@ namespace TestStation
             var tosa = new Models.TOSADevice
             {
                 Part_Number = TOSA_Part_Number_Input.Text,
-                P_Total_Min = Double.Parse(TOSA_P_Total_Min_Input.Text),
-                P_Total_Max = Double.Parse(TOSA_P_Total_Max_Input.Text),
-                I_Test_Tol = Double.Parse(TOSA_I_Test_Input.Text),
                 I_Start = Double.Parse(TOSA_I_Start_Input.Text),
                 I_Step = Double.Parse(TOSA_I_Step_Input.Text),
                 I_Stop = Double.Parse(TOSA_I_Stop_Input.Text),
                 I_Test = Double.Parse(TOSA_I_Test_Input.Text),
-                P_OP_Min = Double.Parse(TOSA_P_OP_Min_Input.Text),
-                P_OP_Max = Double.Parse(TOSA_P_OP_Max_Input.Text),
-                P_Test = Double.Parse(TOSA_P_Test_Input.Text),
+                P_Test_OB_Min = Double.Parse(TOSA_P_Test_OB_Min_Input.Text),
+                P_Test_OB_Max = Double.Parse(TOSA_P_Test_OB_Max_Input.Text),
+                V_Test_Min = Double.Parse(TOSA_V_Test_Min_Input.Text),
+                V_Test_Max = Double.Parse(TOSA_V_Test_Max_Input.Text),
+                VBR_Test = Double.Parse(TOSA_VBR_Test_Input.Text),
+                IBM_Min = Double.Parse(TOSA_IBM_Min_Input.Text),
+                IBM_Max = Double.Parse(TOSA_IBM_Max_Input.Text),
+                P_Test_FC_Min = Double.Parse(TOSA_P_Test_FC_Min_Input.Text),
+                P_Test_FC_Max = Double.Parse(TOSA_P_Test_FC_Max_Input.Text),
                 I_OP_Min = Double.Parse(TOSA_I_OP_Min_Input.Text),
                 I_OP_Max = Double.Parse(TOSA_I_OP_Max_Input.Text),
-                Wiggle_Time = Double.Parse(TOSA_Wiggle_Time_Input.Text),
-                VBR_Test = Double.Parse(TOSA_VBR_Test_Input.Text),
-                V_OP_Min = Double.Parse(TOSA_V_OP_Min_Input.Text),
-                V_OP_Max = Double.Parse(TOSA_V_OP_Max_Input.Text),
+                P_BM_Test = Double.Parse(TOSA_P_BM_Test_Input.Text),
+                POPCT_Min = Double.Parse(TOSA_POPCT_Min_Input.Text),
+                IBM_Tracking_Min = Double.Parse(TOSA_IBM_Tracking_Min_Input.Text),
+                IBM_Tracking_Max = Double.Parse(TOSA_IBM_Tracking_Max_Input.Text),
                 RS_Min = Double.Parse(TOSA_RS_Min_Input.Text),
                 RS_Max = Double.Parse(TOSA_RS_Max_Input.Text),
                 SE_Min = Double.Parse(TOSA_SE_Min_Input.Text),
                 SE_Max = Double.Parse(TOSA_SE_Max_Input.Text),
                 Ith_Min = Double.Parse(TOSA_Ith_Min_Input.Text),
                 Ith_Max = Double.Parse(TOSA_Ith_Max_Input.Text),
+                Wiggle_Time = Double.Parse(TOSA_Wiggle_Time_Input.Text),
                 Pwiggle_Max = Double.Parse(TOSA_Pwiggle_Max_Input.Text),
-                POPCT_Min = Double.Parse(TOSA_POPCT_Min_Input.Text),
-                IBM_Min = Double.Parse(TOSA_IBM_Min_Input.Text),
-                IBM_Max = Double.Parse(TOSA_IBM_Max_Input.Text),
-                IBM_Tracking_Min = Double.Parse(TOSA_IBM_Tracking_Min_Input.Text),
-                IBM_Tracking_Max = Double.Parse(TOSA_IBM_Tracking_Max_Input.Text),
-                IBR_Max = Double.Parse(TOSA_IBR_Max_Input.Text)
+                IBR_Max = Double.Parse(TOSA_IBR_Max_Input.Text),
             };
 
             MainWindow.Conn.SaveTOSADevice(tosa);
