@@ -124,14 +124,14 @@
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="P Total Min"></Label>
-                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_P_Total_Min_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_P_Test_OB_Min_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="P Total Max"></Label>
-                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_P_Total_Max_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_P_Test_OB_Max_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
@@ -165,17 +165,17 @@
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="P OP Min"></Label>
-                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_P_OP_Min_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_P_Test_FC_Min_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="P OP Max"></Label>
-                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_P_OP_Max_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_P_Test_FC_Max_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="P Test"></Label>
-                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_P_Test_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_P_BM_Test_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 
@@ -204,12 +204,12 @@
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="V OP Min"></Label>
-                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_V_OP_Min_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_V_Test_Min_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
                         <Label Padding="0, 0, 0, 5" Content="V OP Max"></Label>
-                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_V_OP_Max_Input"></TextBox>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_V_Test_Max_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 

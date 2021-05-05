@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TestStation.Models;
+using System.Diagnostics;
 
 namespace TestStation
 {
@@ -22,19 +23,27 @@ namespace TestStation
     public partial class Sweep : Page
     {
         private Device d;
+        private Output o;
+        private int numTries;
+        private bool passed;
         public Sweep()
         {
             InitializeComponent();
-
-            var w = Window.GetWindow(this) as MainWindow;
-            d = w.device;
+            numTries = 0;
+            passed = false;
         }
 
-        private int numTries;
-        private bool passed;
+        
 
         private void Start_Test_Button_Click(object sender, RoutedEventArgs e)
         {
+            if (numTries == 0)
+            {
+                var w = Window.GetWindow(this) as MainWindow;
+                d = w.device;
+                o = w.output;
+            }
+
             if (numTries == 3 && !passed)
             {
                 NavigationService.Navigate(new HomePage());
@@ -47,20 +56,35 @@ namespace TestStation
 
             numTries++;
             TOSAStep1();
-
         }
 
-        private void TOSAStep1()
+        private async void TOSAStep1()
         {
             TOSADevice device = d as TOSADevice;
+            TOSAOutput output = o as TOSAOutput;
 
-            //SweepValue sweepValues = TestCalculations.SweepTest(device.I_Start, device.I_Stop, device.I_Step);
-            //double resistance = TestCalculations.Resistance(sweepValues, device.I_OP_Min, device.I_OP_Max);
-            //double slopeEfficiency = TestCalculations.SlopeEfficiency(sweepValues, device.I_OP_Min, device.I_OP_Max);
+            bool sweepTestResult = true;
+
+            SweepValue sweepValues = await TestCalculations.SweepTest(device.I_Start, device.I_Stop, device.I_Step, sweepProgress);
+            double r = TestCalculations.FindSlope(sweepValues.current, sweepValues.voltage, device.I_OP_Min, device.I_OP_Max);
+            //Debug.Print("Resistance: {0}", resistance);
+            output.RS = r;
+            resistance.Text = r.ToString() + " Ω";
+
+            double se = TestCalculations.FindSlope(sweepValues.current, sweepValues.power, device.I_OP_Min, device.I_OP_Max);
+            //Debug.Print("SE: {0}", slopeEfficiency);
+            output.SE = se;
+            slopeEfficiency.Text = se.ToString();
+
+            double ith = TestCalculations.ThresholdCurrent(sweepValues, device.I_OP_Min, device.I_OP_Max);
+            //Debug.Print("Ith: {0}", thresholdCurrent);
+            output.Ith = ith;
+            thresholdCurrent.Text = ith.ToString() + " mA";
+
             //double threshholdCurrent = TestCalculations.ThresholdCurrent(sweepValues, slopeEfficiency);
-            
 
-            
+
+
             //if (sweepTestResult)
             //{
             //    passed = true;

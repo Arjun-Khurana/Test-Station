@@ -48,11 +48,19 @@
                 Visibility="Visible">
                 <StackPanel Orientation="Horizontal">
                     <Label>Sweep progress</Label>
-                    <ProgressBar x:Name="sweepProgress" Width="250" Height="10" Foreground="DarkRed" Value="50"></ProgressBar>
+                    <ProgressBar x:Name="sweepProgress" Width="250" Height="10" Foreground="DarkRed" Value="0"></ProgressBar>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label>Reverse Breakdown Voltage:</Label>
-                    <TextBlock x:Name="reverseBreakdownVoltage" VerticalAlignment="Center">0 V</TextBlock>
+                    <Label>Resistance:</Label>
+                    <TextBlock x:Name="resistance" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Slope efficiency:</Label>
+                    <TextBlock x:Name="slopeEfficiency" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Threshold current:</Label>
+                    <TextBlock x:Name="thresholdCurrent" VerticalAlignment="Center"></TextBlock>
                 </StackPanel>
                 <TextBlock x:Name="testMessage" FontSize="18">Test Status</TextBlock>
             </StackPanel>

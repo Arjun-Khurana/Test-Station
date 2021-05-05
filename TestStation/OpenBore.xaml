@@ -53,20 +53,28 @@
                 x:Name="measurementPanel"
                 Visibility="Visible">
                 <StackPanel Orientation="Horizontal">
-                    <Label>Continuity test current:</Label>
-                    <TextBlock x:Name="continuityTestCurrent" VerticalAlignment="Center">0 mA</TextBlock>
+                    <Label>Test current:</Label>
+                    <TextBlock x:Name="testCurrent" VerticalAlignment="Center"></TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label>Continuity test voltage:</Label>
-                    <TextBlock x:Name="continuityTestVoltage" VerticalAlignment="Center">0 mV</TextBlock>
+                    <Label>Test voltage:</Label>
+                    <TextBlock x:Name="testVoltage" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Test power:</Label>
+                    <TextBlock x:Name="testPower" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Monitor current:</Label>
+                    <TextBlock x:Name="monitorCurrent" VerticalAlignment="Center"></TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label>Breakdown test voltage:</Label>
-                    <TextBlock x:Name="reverseBreakdownVoltage" VerticalAlignment="Center">0 mV</TextBlock>
+                    <TextBlock x:Name="reverseBreakdownVoltage" VerticalAlignment="Center"></TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label>Breakdown test current:</Label>
-                    <TextBlock x:Name="reverseBreakdownCurrent" VerticalAlignment="Center">0 mV</TextBlock>
+                    <TextBlock x:Name="reverseBreakdownCurrent" VerticalAlignment="Center"></TextBlock>
                 </StackPanel>
                 <TextBlock x:Name="testMessage" FontSize="18">Test Status</TextBlock>
             </StackPanel>

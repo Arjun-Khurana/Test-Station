@@ -12,9 +12,11 @@ namespace TestStation
         public List<double> voltage { get; set; }
         public List<double> power { get; set; }
         public List<double> ibm { get; set; }
+        public List<double> setcurrent { get; set; }
 
         public SweepValue()
         {
+            setcurrent = new List<double>();
             current = new List<double>();
             voltage = new List<double>();
             power = new List<double>();
