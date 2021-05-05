@@ -44,6 +44,15 @@ namespace TestStation
             MainWindow w = Window.GetWindow(this) as MainWindow;
             Device d = (sender as ComboBox).SelectedItem as Device;
 
+            if (d is TOSADevice)
+            {
+                w.output = new TOSAOutput();
+            }
+            else
+            {
+                w.output = new ROSAOutput();
+            }
+
             w.device = d;
         }
 

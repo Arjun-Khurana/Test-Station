@@ -4,13 +4,17 @@ using System.Windows;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Windows.Controls;
 
 namespace TestStation
 {
     class TestCalculations
     {
-        public static SweepValue SweepTest(double I_Start, double I_Stop, double I_Step)
+        public async static Task<SweepValue> SweepTest(double I_Start, double I_Stop, double I_Step, ProgressBar pb)
         {
+            var progress = new Progress<double>(value => pb.Value = value);
+
             Instruments.Instance.ChannelPower(1, true);
             Instruments.Instance.ChannelPower(2, true);
             Instruments.Instance.ChannelPower(3, true);
@@ -19,21 +23,41 @@ namespace TestStation
             int count = (int)((I_Stop - I_Start) / I_Step);
 
             double current_Iterator = I_Start;
-            for (int i = 0; i <= count; i++)
+
+            await Task.Run(() =>
             {
-                Instruments.Instance.SourceCurrent(1, current_Iterator);
-                //Debug.WriteLine("Source Current: " + current_Iterator);
+                for (int i = 0; i <= count; i++)
+                {
+                    ((IProgress<double>)progress).Report(100*((double)i/(double)count));
+                    Instruments.Instance.SourceCurrent(1, current_Iterator);
+                    Instruments.Instance.SourceVoltage(2, 0);
+                    Instruments.Instance.SourceVoltage(3, 0);
+                    //Debug.WriteLine("Source Current: " + current_Iterator);
 
-                double c = Instruments.Instance.GetCurrent(1);
-                double v = Instruments.Instance.GetVoltage(1);
+                    double c = Instruments.Instance.GetCurrent(1);
+                    //Debug.Print("Source Current: {0}", c);
+                    double v = Instruments.Instance.GetVoltage(1);
+                    //Debug.Print("Voltage: {0}", v);
 
-                sweepValues.current.Add(c);
-                sweepValues.voltage.Add(v);
-                sweepValues.power.Add(Instruments.Instance.GetPower(3));
-                sweepValues.ibm.Add(Instruments.Instance.GetCurrent(2));
+                    sweepValues.setcurrent.Add(current_Iterator);
+                    sweepValues.current.Add(c * 1000);
+                    sweepValues.voltage.Add(v);
 
-                current_Iterator += I_Step;
-            }
+                    double p = Instruments.Instance.GetCurrent(3);
+                    //Debug.Print("Power: {0}", p);
+                    double ibm = Instruments.Instance.GetCurrent(2);
+                    //Debug.Print("ibm: {0}", ibm);
+
+                    Debug.Print("{0}, {1}, {2}, {3}, {4},", current_Iterator, c, v, p, ibm);
+
+                    sweepValues.power.Add(p * 1000);
+                    sweepValues.ibm.Add(ibm * 1000);
+
+                    //Debug.Print("");
+
+                    current_Iterator += I_Step;
+                }
+            });
 
             Instruments.Instance.ChannelPower(1, false);
             Instruments.Instance.ChannelPower(2, false);
@@ -47,8 +71,8 @@ namespace TestStation
             double slope;
             double intercept;
 
-            int low = x.IndexOf(min);
-            int high = x.IndexOf(max);
+            int low = x.IndexOf(x.Aggregate((cur, next) => Math.Abs(min - cur) < Math.Abs(min - next) ? cur : next));
+            int high = x.IndexOf(x.Aggregate((cur, next) => Math.Abs(max - cur) < Math.Abs(max - next) ? cur : next));
 
             x = x.GetRange(low, high - low);
             y = y.GetRange(low, high - low);
@@ -71,8 +95,8 @@ namespace TestStation
         {
             double slope;
 
-            int low = x.IndexOf(min);
-            int high = x.IndexOf(max);
+            int low = x.IndexOf(x.Aggregate((cur, next) => Math.Abs(min - cur) < Math.Abs(min - next) ? cur : next));
+            int high = x.IndexOf(x.Aggregate((cur, next) => Math.Abs(max - cur) < Math.Abs(max - next) ? cur : next));
 
             x = x.GetRange(low, high - low);
             y = y.GetRange(low, high - low);
@@ -146,24 +170,25 @@ namespace TestStation
             double ibr = Instruments.Instance.GetCurrent(1);
 
             Instruments.Instance.ChannelPower(1, false);
+
             return ibr;
         }
         
-        public static double Power(double I_Test)
+        public static double Power(double I_Test, int channel)
         {
             Instruments.Instance.ChannelPower(1, true);
-            Instruments.Instance.ChannelPower(3, true);
+            Instruments.Instance.ChannelPower(channel, true);
             Instruments.Instance.SourceCurrent(1, I_Test);
 
-            double p_total = Instruments.Instance.GetPower(3);
+            double p_total = Instruments.Instance.GetPower(channel);
 
             Instruments.Instance.ChannelPower(1, false);
-            Instruments.Instance.ChannelPower(3, false);
+            Instruments.Instance.ChannelPower(channel, false);
 
             return p_total;
         }
 
-        public static double V_OP(double I_Test)
+        public static double Voltage(double I_Test)
         {
             Instruments.Instance.ChannelPower(1, true);
             Instruments.Instance.SourceCurrent(1, I_Test);
@@ -182,6 +207,19 @@ namespace TestStation
 
             int i = powers.IndexOf(P_IBM);
             return currents.ElementAt(i);
+        }
+
+        public static double IBM_Test(double I_Test)
+        {
+            Instruments.Instance.ChannelPower(1, true);
+            Instruments.Instance.ChannelPower(2, true);
+            Instruments.Instance.SourceCurrent(1, I_Test);
+
+            double ibm = Instruments.Instance.GetCurrent(2);
+
+            Instruments.Instance.ChannelPower(1, false);
+            Instruments.Instance.ChannelPower(2, false);
+            return ibm;
         }
 
         public static double Current(double I_Test, int channel)

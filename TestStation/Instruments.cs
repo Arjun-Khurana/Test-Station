@@ -10,8 +10,6 @@ namespace TestStation
     class Instruments
     {
         private UsbSession SourceMeasureUnit;
-        private List<SweepValue> sweep1;
-        private List<SweepValue> sweep2;
 
         private const double RESPONSIVITY = 1;
 
@@ -29,11 +27,37 @@ namespace TestStation
                 }
 
                 SourceMeasureUnit = (UsbSession)resourceManager.Open(name);
+                SetLimits();
             }
         }
+
+        ~Instruments()
+        {
+            SourceMeasureUnit.Dispose();
+        }
+
         public static Instruments Instance
         {
             get { return lazy.Value; }
+        }
+
+        public void SetLimits()
+        {
+            WriteSMU("CURR:RANG R120mA, (@1)");
+            WriteSMU("CURR:RANG R10mA, (@2)");
+            WriteSMU("CURR:RANG R10mA, (@3)");
+
+            WriteSMU("VOLT:RANG R20V, (@1)");
+            WriteSMU("VOLT:RANG R2V, (@2)");
+            WriteSMU("VOLT:RANG R2V, (@3)");
+
+            WriteSMU("CURR:LIM .02, (@1)");
+            WriteSMU("CURR:LIM .005, (@2)");
+            WriteSMU("CURR:LIM .005, (@3)");
+
+            WriteSMU("VOLT:LIM 4, (@1)");
+            WriteSMU("VOLT:LIM 1, (@2)");
+            WriteSMU("VOLT:LIM 1, (@3)");
         }
 
         private void WriteSMU(string command)
@@ -41,7 +65,7 @@ namespace TestStation
             SourceMeasureUnit.RawIO.Write(command);
         }
 
-        private string ReadSMU(string command)
+        public string QuerySMU(string command)
         {
             SourceMeasureUnit.RawIO.Write(command);
             return SourceMeasureUnit.RawIO.ReadString();
@@ -49,12 +73,12 @@ namespace TestStation
 
         public double GetVoltage(int channel)
         {
-            return (Double.Parse(ReadSMU("MEAS:VOLT? (@" + channel + ")")));
+            return (Double.Parse(QuerySMU("MEAS:VOLT? (@" + channel + ")")));
         }
 
         public double GetCurrent(int channel)
         {
-            return (Double.Parse(ReadSMU("MEAS:CURR? (@" + channel + ")")));
+            return (Double.Parse(QuerySMU("MEAS:CURR? (@" + channel + ")")));
         }
 
         public double GetPower(int channel)
@@ -71,6 +95,7 @@ namespace TestStation
 
         public void SourceCurrent(int channel, double sourceCurrent)
         {
+            sourceCurrent = sourceCurrent / 1000;
             WriteSMU("CURR " + sourceCurrent + ", (@" + channel + ")");
         }
 

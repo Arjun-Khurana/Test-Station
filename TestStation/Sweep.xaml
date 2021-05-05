@@ -48,7 +48,7 @@
                 Visibility="Visible">
                 <StackPanel Orientation="Horizontal">
                     <Label>Sweep progress</Label>
-                    <ProgressBar x:Name="sweepProgress" Width="250" Height="10" Foreground="DarkRed" Value="50"></ProgressBar>
+                    <ProgressBar x:Name="sweepProgress" Width="250" Height="10" Foreground="DarkRed" Value="10"></ProgressBar>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label>Reverse Breakdown Voltage:</Label>
