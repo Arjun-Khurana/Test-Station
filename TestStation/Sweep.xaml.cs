@@ -66,14 +66,20 @@ namespace TestStation
             bool sweepTestResult = true;
 
             SweepValue sweepValues = await TestCalculations.SweepTest(device.I_Start, device.I_Stop, device.I_Step, sweepProgress);
-            double resistance = TestCalculations.FindSlope(sweepValues.current, sweepValues.voltage, device.I_OP_Min, device.I_OP_Max);
-            Debug.Print("Resistance: {0}", resistance);
+            double r = TestCalculations.FindSlope(sweepValues.current, sweepValues.voltage, device.I_OP_Min, device.I_OP_Max);
+            //Debug.Print("Resistance: {0}", resistance);
+            output.RS = r;
+            resistance.Text = r.ToString() + " Ω";
 
-            double slopeEfficiency = TestCalculations.FindSlope(sweepValues.current, sweepValues.power, device.I_OP_Min, device.I_OP_Max);
-            Debug.Print("SE: {0}", slopeEfficiency);
+            double se = TestCalculations.FindSlope(sweepValues.current, sweepValues.power, device.I_OP_Min, device.I_OP_Max);
+            //Debug.Print("SE: {0}", slopeEfficiency);
+            output.SE = se;
+            slopeEfficiency.Text = se.ToString();
 
-            double thresholdCurrent = TestCalculations.ThresholdCurrent(sweepValues, device.I_OP_Min, device.I_OP_Max);
-            Debug.Print("Ith: {0}", thresholdCurrent);
+            double ith = TestCalculations.ThresholdCurrent(sweepValues, device.I_OP_Min, device.I_OP_Max);
+            //Debug.Print("Ith: {0}", thresholdCurrent);
+            output.Ith = ith;
+            thresholdCurrent.Text = ith.ToString() + " mA";
 
             //double threshholdCurrent = TestCalculations.ThresholdCurrent(sweepValues, slopeEfficiency);
 
