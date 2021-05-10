@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestStation
 {
-    class SweepValue
+    class SweepData
     {
         public List<double> current { get; set; }
         public List<double> voltage { get; set; }
@@ -14,7 +14,7 @@ namespace TestStation
         public List<double> ibm { get; set; }
         public List<double> setcurrent { get; set; }
 
-        public SweepValue()
+        public SweepData()
         {
             setcurrent = new List<double>();
             current = new List<double>();
@@ -24,10 +24,18 @@ namespace TestStation
         }
     }
 
-    class TestData
+    class WiggleData
     {
-        public SweepValue sweep;
-        public double P_Total;
+        public double max { get; set; }
+        public double min { get; set; }
+        public double avg { get; set; }
 
+        public WiggleData()
+        {
+            max = 0;
+            min = 0;
+            avg = 0;
+        }
     }
+
 }

@@ -52,20 +52,21 @@ namespace TestStation
             else if (numTries < 3 && passed)
             {
                 NavigationService.Navigate(new Wiggle());
+                return;
             }
 
             numTries++;
-            TOSAStep1();
+            TOSAStep2();
         }
 
-        private async void TOSAStep1()
+        private async void TOSAStep2()
         {
             TOSADevice device = d as TOSADevice;
             TOSAOutput output = o as TOSAOutput;
 
             bool sweepTestResult = true;
 
-            SweepValue sweepValues = await TestCalculations.SweepTest(device.I_Start, device.I_Stop, device.I_Step, sweepProgress);
+            SweepData sweepValues = await TestCalculations.SweepTest(device.I_Start, device.I_Stop, device.I_Step, sweepProgress);
             double r = TestCalculations.FindSlope(sweepValues.current, sweepValues.voltage, device.I_OP_Min, device.I_OP_Max);
             //Debug.Print("Resistance: {0}", resistance);
             output.RS = r;
@@ -85,22 +86,22 @@ namespace TestStation
 
 
 
-            //if (sweepTestResult)
-            //{
-            //    passed = true;
-            //    StartTestButton.Content = "Next step";
-            //}
-            //else
-            //{
-            //    if (numTries >= 3)
-            //    {
-            //        StartTestButton.Content = "Go home";
-            //    }
-            //    else
-            //    {
-            //        StartTestButton.Content = "Retry test";
-            //    }
-            //}
+            if (sweepTestResult)
+            {
+                passed = true;
+                StartTestButton.Content = "Next step";
+            }
+            else
+            {
+                if (numTries >= 3)
+                {
+                    StartTestButton.Content = "Go home";
+                }
+                else
+                {
+                    StartTestButton.Content = "Retry test";
+                }
+            }
         }
 
         private void ROSAStep1()
