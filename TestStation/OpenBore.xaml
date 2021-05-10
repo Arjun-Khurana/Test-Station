@@ -51,7 +51,7 @@
             <StackPanel 
                 Orientation="Vertical"
                 x:Name="measurementPanel"
-                Visibility="Visible">
+                Visibility="Collapsed">
                 <StackPanel Orientation="Horizontal">
                     <Label>Test current:</Label>
                     <TextBlock x:Name="testCurrent" VerticalAlignment="Center"></TextBlock>
@@ -82,7 +82,7 @@
             <StackPanel
                 Orientation="Vertical"
                 x:Name="errorPanel"
-                Visibility="Visible"
+                Visibility="Collapsed"
                 >
             </StackPanel>
             

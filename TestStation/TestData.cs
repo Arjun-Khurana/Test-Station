@@ -38,4 +38,23 @@ namespace TestStation
         }
     }
 
+    class OBData
+    {
+        public double p_test { get; set; }
+        public double v_test { get; set; }
+        public double ibm_test { get; set; }
+        public double ibr { get; set; }
+
+        public double i_test { get; set; }
+
+        public OBData()
+        {
+            p_test = 0;
+            v_test = 0;
+            ibm_test = 0;
+            ibr = 0;
+            i_test = 0;
+        }
+    }
+
 }

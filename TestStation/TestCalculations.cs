@@ -12,6 +12,7 @@ namespace TestStation
 {
     class TestCalculations
     {
+        private const double RESPONSIVITY = 0.52;
         public async static Task<SweepData> SweepTest(double I_Start, double I_Stop, double I_Step, ProgressBar pb)
         {
             var progress = new Progress<double>(value => pb.Value = value);
@@ -97,6 +98,36 @@ namespace TestStation
                 max = powers.Max(),
                 avg = powers.Average()
             };
+        }
+
+        public static OBData OpenBoreTest(double I_Test, double VBR_Test)
+        {
+            OBData ob = new OBData();
+
+            Instruments.Instance.ChannelPower(1, true);
+            Instruments.Instance.ChannelPower(2, true);
+            Instruments.Instance.ChannelPower(3, true);
+
+            Instruments.Instance.SourceCurrent(1, I_Test);
+            Instruments.Instance.SourceVoltage(2, 0);
+            Instruments.Instance.SourceVoltage(3, 0);
+
+            ob.p_test = Instruments.Instance.GetCurrent(3) / RESPONSIVITY * 1000;
+            ob.v_test = Instruments.Instance.GetVoltage(1);
+            ob.ibm_test = Instruments.Instance.GetCurrent(2) * 1000;
+            ob.i_test = Instruments.Instance.GetCurrent(1) * 1000;
+
+            Instruments.Instance.ChannelPower(1, false);
+            Instruments.Instance.ChannelPower(2, false);
+            Instruments.Instance.ChannelPower(3, false);
+
+            Instruments.Instance.ChannelPower(1, true);
+            Instruments.Instance.SourceVoltage(1, VBR_Test);
+            ob.ibr = Instruments.Instance.GetCurrent(1) * 1000000;
+
+            Instruments.Instance.ChannelPower(1, false);
+
+            return ob;
         }
 
         public static double FindSlope(List<double> x, List<double> y, double min, double max)
@@ -195,79 +226,81 @@ namespace TestStation
             return -b / m;
         }
 
-        public static double IBR(double VBR_Test)
-        {
-            Instruments.Instance.ChannelPower(1, true);
-            Instruments.Instance.SourceVoltage(1, VBR_Test);
+        //public static double IBR(double VBR_Test)
+        //{
+        //    Instruments.Instance.ChannelPower(1, true);
+        //    Instruments.Instance.SourceVoltage(1, VBR_Test);
 
-            double ibr = Instruments.Instance.GetCurrent(1);
+        //    double ibr = Instruments.Instance.GetCurrent(1);
 
-            Instruments.Instance.ChannelPower(1, false);
+        //    Instruments.Instance.ChannelPower(1, false);
 
-            return ibr;
-        }
+        //    return ibr;
+        //}
         
-        public static double Power(double I_Test, int channel)
-        {
-            Instruments.Instance.ChannelPower(1, true);
-            Instruments.Instance.ChannelPower(channel, true);
-            Instruments.Instance.SourceCurrent(1, I_Test);
+        //public static double Power(double I_Test)
+        //{
+        //    Instruments.Instance.ChannelPower(1, true);
+        //    Instruments.Instance.ChannelPower(3, true);
+        //    Instruments.Instance.SourceCurrent(1, I_Test);
+        //    Instruments.Instance.SourceVoltage(3, 0);
 
-            double p_total = Instruments.Instance.GetPower(channel);
+        //    double p = Instruments.Instance.GetCurrent(3);
 
-            Instruments.Instance.ChannelPower(1, false);
-            Instruments.Instance.ChannelPower(channel, false);
+        //    Instruments.Instance.ChannelPower(1, false);
+        //    Instruments.Instance.ChannelPower(3, false);
 
-            return p_total;
-        }
+        //    return p * 1000;
+        //}
 
-        public static double Voltage(double I_Test)
-        {
-            Instruments.Instance.ChannelPower(1, true);
-            Instruments.Instance.SourceCurrent(1, I_Test);
+        //public static double Voltage(double I_Test)
+        //{
+        //    Instruments.Instance.ChannelPower(1, true);
+        //    Instruments.Instance.SourceCurrent(1, I_Test);
 
-            double voltage = Instruments.Instance.GetVoltage(1);
+        //    double voltage = Instruments.Instance.GetVoltage(1);
 
-            Instruments.Instance.ChannelPower(1, false);
+        //    Instruments.Instance.ChannelPower(1, false);
 
-            return voltage;
-        }
+        //    return voltage;
+        //}
 
-        public static double IBM(SweepData sweepValues, double P_IBM)
-        {
-            List<double> powers = sweepValues.power;
-            List<double> currents = sweepValues.current;
+        //public static double IBM(SweepData sweepValues, double P_IBM)
+        //{
+        //    List<double> powers = sweepValues.power;
+        //    List<double> currents = sweepValues.current;
 
-            int i = powers.IndexOf(P_IBM);
-            return currents.ElementAt(i);
-        }
+        //    int i = powers.IndexOf(P_IBM);
+        //    return currents.ElementAt(i);
+        //}
 
-        public static double IBM_Test(double I_Test)
-        {
-            Instruments.Instance.ChannelPower(1, true);
-            Instruments.Instance.ChannelPower(2, true);
-            Instruments.Instance.SourceCurrent(1, I_Test);
+        //public static double IBM_Test(double I_Test)
+        //{
+        //    Instruments.Instance.ChannelPower(1, true);
+        //    Instruments.Instance.ChannelPower(2, true);
+        //    Instruments.Instance.SourceCurrent(1, I_Test);
+        //    Instruments.Instance.SourceVoltage(2, 0);
 
-            double ibm = Instruments.Instance.GetCurrent(2);
+        //    double ibm = Instruments.Instance.GetCurrent(2);
 
-            Instruments.Instance.ChannelPower(1, false);
-            Instruments.Instance.ChannelPower(2, false);
-            return ibm;
-        }
+        //    Instruments.Instance.ChannelPower(1, false);
+        //    Instruments.Instance.ChannelPower(2, false);
+        //    return ibm;
+        //}
 
-        public static double Current(double I_Test, int channel)
-        {
-            Instruments.Instance.ChannelPower(1, true);
-            Instruments.Instance.ChannelPower(channel, true);
-            Instruments.Instance.SourceCurrent(1, I_Test);
+        //public static double Current(double I_Test, int channel)
+        //{
+        //    Instruments.Instance.ChannelPower(1, true);
+        //    Instruments.Instance.ChannelPower(channel, true);
+        //    Instruments.Instance.SourceCurrent(1, I_Test);
 
-            double current = Instruments.Instance.GetCurrent(channel);
+        //    double current = Instruments.Instance.GetCurrent(channel);
 
-            Instruments.Instance.ChannelPower(1, false);
-            Instruments.Instance.ChannelPower(channel, false);
+        //    Instruments.Instance.ChannelPower(1, false);
+        //    Instruments.Instance.ChannelPower(channel, false);
 
-            return current;
-        }
+        //    return current;
+        //}
 
         public static double P_IBM(SweepData sweepValues, double P_Test)
         {

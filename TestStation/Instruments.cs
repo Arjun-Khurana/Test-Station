@@ -81,11 +81,11 @@ namespace TestStation
             return (Double.Parse(QuerySMU("MEAS:CURR? (@" + channel + ")")));
         }
 
-        public double GetPower(int channel)
-        {
-            WriteSMU("VOLT 0, (@" + channel + ")");
-            return GetCurrent(channel) / RESPONSIVITY;
-        }
+        //public double GetPower(int channel)
+        //{
+        //    WriteSMU("VOLT 0, (@" + channel + ")");
+        //    return GetCurrent(channel) / RESPONSIVITY;
+        //}
 
         public void ChannelPower(int channel, bool on)
         {

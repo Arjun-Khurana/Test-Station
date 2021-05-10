@@ -197,7 +197,7 @@ namespace TestStation.Data
                     2,
                     10,
                     1,
-                    100
+                    10
                 )
                 ");
             }
