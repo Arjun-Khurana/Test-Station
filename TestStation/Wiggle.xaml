@@ -48,7 +48,7 @@
                 Visibility="Visible">
                 <StackPanel Orientation="Horizontal">
                     <Label>Wiggle test progress</Label>
-                    <ProgressBar x:Name="wiggleProgress" Width="250" Height="10" Foreground="DarkRed" Value="50"></ProgressBar>
+                    <ProgressBar x:Name="wiggleProgress" Width="250" Height="10" Foreground="DarkRed" Value="0"></ProgressBar>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label>Wiggle test minimum power:</Label>

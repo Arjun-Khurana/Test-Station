@@ -6,19 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Windows.Controls;
+using System.Threading;
 
 namespace TestStation
 {
     class TestCalculations
     {
-        public async static Task<SweepValue> SweepTest(double I_Start, double I_Stop, double I_Step, ProgressBar pb)
+        public async static Task<SweepData> SweepTest(double I_Start, double I_Stop, double I_Step, ProgressBar pb)
         {
             var progress = new Progress<double>(value => pb.Value = value);
 
             Instruments.Instance.ChannelPower(1, true);
             Instruments.Instance.ChannelPower(2, true);
             Instruments.Instance.ChannelPower(3, true);
-            SweepValue sweepValues = new SweepValue();
+            SweepData sweepValues = new SweepData();
 
             int count = (int)((I_Stop - I_Start) / I_Step);
 
@@ -64,6 +65,38 @@ namespace TestStation
             Instruments.Instance.ChannelPower(3, false);
 
             return sweepValues;
+        }
+
+        public async static Task<WiggleData> WiggleTest(int sec, ProgressBar pb)
+        {
+            var progress = new Progress<double>(value => pb.Value = value);
+            int ms = sec * 1000;
+            int increment = 100;
+
+            Instruments.Instance.ChannelPower(1, true);
+            Instruments.Instance.ChannelPower(3, true);
+            Instruments.Instance.SourceCurrent(1, 6);
+            Instruments.Instance.SourceVoltage(3, 0);
+
+            List<double> powers = new List<double>();
+
+            await Task.Run(() =>
+            {
+                for (int i = 0; i <= ms; i += increment)
+                {
+                    powers.Add(Instruments.Instance.GetCurrent(3));
+                    Thread.Sleep(increment);
+                    ((IProgress<double>)progress).Report(100 * ((double)i / (double)ms));
+                }
+            });
+            
+
+            return new WiggleData
+            {
+                min = powers.Min(),
+                max = powers.Max(),
+                avg = powers.Average()
+            };
         }
 
         public static double FindSlope(List<double> x, List<double> y, double min, double max)
@@ -150,7 +183,7 @@ namespace TestStation
             return total;
         }
 
-        public static double ThresholdCurrent(SweepValue sweepValues, double I_OP_Min, double I_OP_Max)
+        public static double ThresholdCurrent(SweepData sweepValues, double I_OP_Min, double I_OP_Max)
         {
             List<double> currents = sweepValues.current;
             List<double> powers = sweepValues.power;
@@ -200,7 +233,7 @@ namespace TestStation
             return voltage;
         }
 
-        public static double IBM(SweepValue sweepValues, double P_IBM)
+        public static double IBM(SweepData sweepValues, double P_IBM)
         {
             List<double> powers = sweepValues.power;
             List<double> currents = sweepValues.current;
@@ -236,7 +269,7 @@ namespace TestStation
             return current;
         }
 
-        public static double P_IBM(SweepValue sweepValues, double P_Test)
+        public static double P_IBM(SweepData sweepValues, double P_Test)
         {
             return sweepValues.power.Aggregate((cur, next) => Math.Abs(P_Test - cur) < Math.Abs(P_Test - next) ? cur : next);
         }
