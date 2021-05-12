@@ -20,7 +20,7 @@ namespace TestStation
             Instruments.Instance.ChannelPower(1, true);
             Instruments.Instance.ChannelPower(2, true);
             Instruments.Instance.ChannelPower(3, true);
-            SweepData sweepValues = new SweepData();
+            SweepData sweepData = new SweepData();
 
             int count = (int)((I_Stop - I_Start) / I_Step);
 
@@ -41,19 +41,19 @@ namespace TestStation
                     double v = Instruments.Instance.GetVoltage(1);
                     //Debug.Print("Voltage: {0}", v);
 
-                    sweepValues.setcurrent.Add(current_Iterator);
-                    sweepValues.current.Add(c * 1000);
-                    sweepValues.voltage.Add(v);
+                    sweepData.setcurrents.Add(current_Iterator);
+                    sweepData.currents.Add(c * 1000);
+                    sweepData.voltages.Add(v);
 
-                    double p = Instruments.Instance.GetCurrent(3);
+                    double p = Instruments.Instance.GetCurrent(3) / RESPONSIVITY;
                     //Debug.Print("Power: {0}", p);
                     double ibm = Instruments.Instance.GetCurrent(2);
                     //Debug.Print("ibm: {0}", ibm);
 
-                    Debug.Print("{0}, {1}, {2}, {3}, {4},", current_Iterator, c, v, p, ibm);
+                    //Debug.Print("{0}, {1}, {2}, {3}, {4},", current_Iterator, c, v, p, ibm);
 
-                    sweepValues.power.Add(p * 1000);
-                    sweepValues.ibm.Add(ibm * 1000);
+                    sweepData.powers.Add(p * 1000);
+                    sweepData.ibms.Add(ibm * 1000);
 
                     //Debug.Print("");
 
@@ -65,7 +65,7 @@ namespace TestStation
             Instruments.Instance.ChannelPower(2, false);
             Instruments.Instance.ChannelPower(3, false);
 
-            return sweepValues;
+            return sweepData;
         }
 
         public async static Task<WiggleData> WiggleTest(int sec, ProgressBar pb)
@@ -214,10 +214,10 @@ namespace TestStation
             return total;
         }
 
-        public static double ThresholdCurrent(SweepData sweepValues, double I_OP_Min, double I_OP_Max)
+        public static double ThresholdCurrent(SweepData sweepData, double I_OP_Min, double I_OP_Max)
         {
-            List<double> currents = sweepValues.current;
-            List<double> powers = sweepValues.power;
+            List<double> currents = sweepData.currents;
+            List<double> powers = sweepData.powers;
 
             double b;
 
@@ -226,90 +226,12 @@ namespace TestStation
             return -b / m;
         }
 
-        //public static double IBR(double VBR_Test)
-        //{
-        //    Instruments.Instance.ChannelPower(1, true);
-        //    Instruments.Instance.SourceVoltage(1, VBR_Test);
-
-        //    double ibr = Instruments.Instance.GetCurrent(1);
-
-        //    Instruments.Instance.ChannelPower(1, false);
-
-        //    return ibr;
-        //}
-        
-        //public static double Power(double I_Test)
-        //{
-        //    Instruments.Instance.ChannelPower(1, true);
-        //    Instruments.Instance.ChannelPower(3, true);
-        //    Instruments.Instance.SourceCurrent(1, I_Test);
-        //    Instruments.Instance.SourceVoltage(3, 0);
-
-        //    double p = Instruments.Instance.GetCurrent(3);
-
-        //    Instruments.Instance.ChannelPower(1, false);
-        //    Instruments.Instance.ChannelPower(3, false);
-
-        //    return p * 1000;
-        //}
-
-        //public static double Voltage(double I_Test)
-        //{
-        //    Instruments.Instance.ChannelPower(1, true);
-        //    Instruments.Instance.SourceCurrent(1, I_Test);
-
-        //    double voltage = Instruments.Instance.GetVoltage(1);
-
-        //    Instruments.Instance.ChannelPower(1, false);
-
-        //    return voltage;
-        //}
-
-        //public static double IBM(SweepData sweepValues, double P_IBM)
-        //{
-        //    List<double> powers = sweepValues.power;
-        //    List<double> currents = sweepValues.current;
-
-        //    int i = powers.IndexOf(P_IBM);
-        //    return currents.ElementAt(i);
-        //}
-
-        //public static double IBM_Test(double I_Test)
-        //{
-        //    Instruments.Instance.ChannelPower(1, true);
-        //    Instruments.Instance.ChannelPower(2, true);
-        //    Instruments.Instance.SourceCurrent(1, I_Test);
-        //    Instruments.Instance.SourceVoltage(2, 0);
-
-        //    double ibm = Instruments.Instance.GetCurrent(2);
-
-        //    Instruments.Instance.ChannelPower(1, false);
-        //    Instruments.Instance.ChannelPower(2, false);
-        //    return ibm;
-        //}
-
-        //public static double Current(double I_Test, int channel)
-        //{
-        //    Instruments.Instance.ChannelPower(1, true);
-        //    Instruments.Instance.ChannelPower(channel, true);
-        //    Instruments.Instance.SourceCurrent(1, I_Test);
-
-        //    double current = Instruments.Instance.GetCurrent(channel);
-
-        //    Instruments.Instance.ChannelPower(1, false);
-        //    Instruments.Instance.ChannelPower(channel, false);
-
-        //    return current;
-        //}
-
-        public static double P_IBM(SweepData sweepValues, double P_Test)
+        public static double IBM_PBM(SweepData sweepData, double P_Test)
         {
-            return sweepValues.power.Aggregate((cur, next) => Math.Abs(P_Test - cur) < Math.Abs(P_Test - next) ? cur : next);
+            double PBM = sweepData.powers.Aggregate((cur, next) => Math.Abs(P_Test - cur) < Math.Abs(P_Test - next) ? cur : next);
+            int i = sweepData.powers.IndexOf(PBM);
+            return sweepData.ibms.ElementAt(i);
         }
 
-        public static double POPCT(double P_Test, double P_Total)
-        {
-            return P_Test / P_Total;
-        }
     }
 }

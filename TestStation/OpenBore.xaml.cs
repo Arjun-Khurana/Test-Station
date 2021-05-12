@@ -51,7 +51,7 @@ namespace TestStation
                 NavigationService.Navigate(new HomePage());
                 return;
             }
-            else if (numTries < 3 && passed)
+            else if (numTries <= 3 && passed)
             {
                 NavigationService.Navigate(new Sweep());
                 return;
@@ -133,6 +133,7 @@ namespace TestStation
             }
 
             output.IBR = ob.ibr;
+            output.IBR_Pass = IBR_Pass;
 
             measurementPanel.Visibility = Visibility.Visible;
 

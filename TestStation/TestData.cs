@@ -8,19 +8,19 @@ namespace TestStation
 {
     class SweepData
     {
-        public List<double> current { get; set; }
-        public List<double> voltage { get; set; }
-        public List<double> power { get; set; }
-        public List<double> ibm { get; set; }
-        public List<double> setcurrent { get; set; }
+        public List<double> currents { get; set; }
+        public List<double> voltages { get; set; }
+        public List<double> powers { get; set; }
+        public List<double> ibms { get; set; }
+        public List<double> setcurrents { get; set; }
 
         public SweepData()
         {
-            setcurrent = new List<double>();
-            current = new List<double>();
-            voltage = new List<double>();
-            power = new List<double>();
-            ibm = new List<double>();
+            setcurrents = new List<double>();
+            currents = new List<double>();
+            voltages = new List<double>();
+            powers = new List<double>();
+            ibms = new List<double>();
         }
     }
 
