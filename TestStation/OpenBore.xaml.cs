@@ -51,81 +51,118 @@ namespace TestStation
                 NavigationService.Navigate(new HomePage());
                 return;
             }
-            else if (numTries < 3 && passed)
+            else if (numTries <= 3 && passed)
             {
                 NavigationService.Navigate(new Sweep());
                 return;
             }
 
             numTries++;
-            TOSAStep1();
+            TOSAOpenBore();
             
         }
 
-        private void TOSAStep1()
+        private void TOSAOpenBore()
         {
             TOSADevice device = d as TOSADevice;
             TOSAOutput output = o as TOSAOutput;
 
-            bool result = true;
+            bool openBoreResult = true;
 
-            Debug.Print(Instruments.Instance.QuerySMU("CURR:RANG? (@2)"));
+            OBData ob = TestCalculations.OpenBoreTest(device.I_Test, device.VBR_Test);
 
-            double P_Test_OB = TestCalculations.Power(device.I_Test, 3);
-
-            testPower.Text = P_Test_OB.ToString();
-            output.P_Test_OB = P_Test_OB;
-            //Debug.Print("P_Total: {0}", P_Total);
-            //output.P_Total = P_Total;
-
-            double I = TestCalculations.Current(device.I_Test, 1);
-            double V = TestCalculations.Voltage(device.I_Test);
-
-            //Debug.Print("I: {0}", I);
-            testCurrent.Text = I.ToString();
-            testVoltage.Text = V.ToString();
-            output.I_Test = I;
-            output.V_Test = V;
-
-            double IBM_Test = TestCalculations.IBM_Test(device.I_Test);
-            monitorCurrent.Text = IBM_Test.ToString();
-            output.IBM_Test_OB = IBM_Test;
-
-            double IBR = TestCalculations.IBR(device.VBR_Test);
-
-            //Debug.Print("IBR: {0}", IBR);
-            reverseBreakdownCurrent.Text = IBR.ToString();
-            reverseBreakdownVoltage.Text = device.VBR_Test.ToString();
-            output.IBR = IBR;
-
-            if (Math.Abs(device.I_Test - I) > device.I_Test_Tol)
+            foreach(TextBlock tb in FindVisualChildren<TextBlock>(measurementPanel))
             {
-                //result = false;
+                tb.Foreground = Brushes.White;
+            }
+           
+            testCurrent.Text = ob.i_test.ToString("F") + " mA";
+            output.I_Test = ob.i_test;
+
+            bool I_Test_Pass = (Math.Abs(device.I_Test - ob.i_test) / device.I_Test <= device.I_Test_Tol);
+
+            if (!I_Test_Pass)
+            {
+                testCurrent.Foreground = Brushes.OrangeRed;
+                openBoreResult = false;
             }
 
-            if (P_Test_OB < device.P_Test_OB_Min || P_Test_OB > device.P_Test_OB_Max)
+            testPower.Text = ob.p_test.ToString("F") + " mW";
+            
+            bool P_Test_OB_Pass = (ob.p_test >= device.P_Test_OB_Min && ob.p_test <= device.P_Test_OB_Max);
+            
+            output.P_Test_OB = ob.p_test;
+            output.P_OB_Pass = P_Test_OB_Pass;
+            
+            if (!P_Test_OB_Pass)
             {
-                //result = false;
+                testPower.Foreground = Brushes.OrangeRed;
+                openBoreResult = false;
+            }
+            
+            testVoltage.Text = ob.v_test.ToString("F") + " V";
+
+            bool V_Test_OB_Pass = (ob.v_test >= device.V_Test_Min && ob.v_test <= device.V_Test_Max);
+
+            output.V_Test = ob.v_test;
+            output.V_Test_Pass = V_Test_OB_Pass;
+
+            if (!V_Test_OB_Pass)
+            {
+                testVoltage.Foreground = Brushes.OrangeRed;
+                openBoreResult = false;
             }
 
-            if (IBR > device.IBR_Max)
+            monitorCurrent.Text = ob.ibm_test.ToString("F") + " mA";
+
+            bool IBM_Test_Pass = (ob.ibm_test >= device.IBM_Min && ob.ibm_test <= device.IBM_Max);
+
+            if (!IBM_Test_Pass)
             {
-                //result = false;
+                monitorCurrent.Foreground = Brushes.OrangeRed;
+                openBoreResult = false;
             }
 
-            if (result)
+            output.IBM_Test_OB = ob.ibm_test;
+            output.IBM_Pass = IBM_Test_Pass;
+
+            reverseBreakdownCurrent.Text = ob.ibr.ToString("F") + " µA";
+            reverseBreakdownVoltage.Text = device.VBR_Test.ToString("F") + " V";
+
+            bool IBR_Pass = (Math.Abs(ob.ibr) <= device.IBR_Max);
+
+            if (!IBR_Pass)
+            {
+                reverseBreakdownCurrent.Foreground = Brushes.OrangeRed;
+                openBoreResult = false;
+            }
+
+            output.IBR = ob.ibr;
+            output.IBR_Pass = IBR_Pass;
+
+            measurementPanel.Visibility = Visibility.Visible;
+            var w = Window.GetWindow(this) as MainWindow;
+
+            if (openBoreResult)
             {
                 passed = true;
+                testMessage.Text = "Test Passed";
+                testMessage.Foreground = Brushes.ForestGreen;
                 StartTestButton.Content = "Next step";
-                var w = Window.GetWindow(this) as MainWindow;
                 d = device;
+                o = output;
                 w.device = d;
+                w.output = o;
             }
             else
             {
+                testMessage.Text = "Test Failed";
+                testMessage.Foreground = Brushes.OrangeRed;
                 if (numTries >= 3)
                 {
                     StartTestButton.Content = "Go home";
+                    output.Result = false;
+                    MainWindow.Conn.SaveTOSAOutput(output);
                 }
                 else
                 {
@@ -138,15 +175,24 @@ namespace TestStation
         {
 
         }
-
-        private void ShowErrorPanel()
+        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
         {
-            errorPanel.Visibility = Visibility.Visible;
-        }
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T)
+                    {
+                        yield return (T)child;
+                    }
 
-        private void HideErrorPanel()
-        {
-            errorPanel.Visibility = Visibility.Collapsed;
+                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                    {
+                        yield return childOfChild;
+                    }
+                }
+            }
         }
     }
 }

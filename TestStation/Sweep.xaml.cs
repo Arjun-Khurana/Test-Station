@@ -33,8 +33,6 @@ namespace TestStation
             passed = false;
         }
 
-        
-
         private void Start_Test_Button_Click(object sender, RoutedEventArgs e)
         {
             if (numTries == 0)
@@ -49,53 +47,150 @@ namespace TestStation
                 NavigationService.Navigate(new HomePage());
                 return;
             }
-            else if (numTries < 3 && passed)
+            else if (numTries <= 3 && passed)
             {
                 NavigationService.Navigate(new Wiggle());
                 return;
             }
 
             numTries++;
-            TOSAStep2();
+            TOSASweep();
         }
 
-        private async void TOSAStep2()
+        private async void TOSASweep()
         {
             TOSADevice device = d as TOSADevice;
             TOSAOutput output = o as TOSAOutput;
 
-            bool sweepTestResult = true;
+            bool sweepResult = true;
 
-            SweepData sweepValues = await TestCalculations.SweepTest(device.I_Start, device.I_Stop, device.I_Step, sweepProgress);
-            double r = TestCalculations.FindSlope(sweepValues.current, sweepValues.voltage, device.I_OP_Min, device.I_OP_Max);
-            //Debug.Print("Resistance: {0}", resistance);
+            SweepData sweepData = await TestCalculations.SweepTest(device.I_Start, device.I_Stop, device.I_Step, sweepProgress);
+
+            double r = TestCalculations.FindSlope(sweepData.currents, sweepData.voltages, device.I_OP_Min, device.I_OP_Max) * 1000;
+            resistance.Text = r.ToString("F") + " Ω";
+            bool R_Pass = (r >= device.RS_Min && r <= device.RS_Max);
+
             output.RS = r;
-            resistance.Text = r.ToString() + " Ω";
+            output.RS_Pass = R_Pass;
 
-            double se = TestCalculations.FindSlope(sweepValues.current, sweepValues.power, device.I_OP_Min, device.I_OP_Max);
-            //Debug.Print("SE: {0}", slopeEfficiency);
+            if (!R_Pass)
+            {
+                resistance.Foreground = Brushes.OrangeRed;
+                sweepResult = false;
+            }
+
+            double se = TestCalculations.FindSlope(sweepData.currents, sweepData.powers, device.I_OP_Min, device.I_OP_Max);
+            slopeEfficiency.Text = se.ToString("F");
+
+            bool SE_Pass = (se >= device.SE_Min && se <= device.SE_Max);
+
             output.SE = se;
-            slopeEfficiency.Text = se.ToString();
+            output.SE_Pass = SE_Pass;            
 
-            double ith = TestCalculations.ThresholdCurrent(sweepValues, device.I_OP_Min, device.I_OP_Max);
-            //Debug.Print("Ith: {0}", thresholdCurrent);
+            if (!SE_Pass)
+            {
+                slopeEfficiency.Foreground = Brushes.OrangeRed;
+                sweepResult = false;
+            }    
+
+            double ith = TestCalculations.ThresholdCurrent(sweepData, device.I_OP_Min, device.I_OP_Max);
+            thresholdCurrent.Text = ith.ToString("F") + " mA";
+            bool ITH_Pass = (ith >= device.Ith_Min && ith <= device.Ith_Max);
+            
             output.Ith = ith;
-            thresholdCurrent.Text = ith.ToString() + " mA";
+            output.Ith_Pass = ITH_Pass;
 
-            //double threshholdCurrent = TestCalculations.ThresholdCurrent(sweepValues, slopeEfficiency);
+            measurementPanel.Visibility = Visibility.Visible;
+
+            if (!ITH_Pass)
+            {
+                thresholdCurrent.Foreground = Brushes.OrangeRed;
+                sweepResult = false;
+            }
+
+            double p_test = sweepData.powers.ElementAt(sweepData.setcurrents.IndexOf(device.I_Test));
+            testPower.Text = p_test.ToString("F") + " mW";
+            bool P_Test_Pass = (p_test >= device.P_Test_FC_Min && p_test <= device.P_Test_FC_Max);
+
+            output.P_Test_FC = p_test;
+            output.P_Test_FC_Pass = P_Test_Pass;
+
+            if (!P_Test_Pass)
+            {
+                testPower.Foreground = Brushes.OrangeRed;
+                sweepResult = false;
+            }
+
+            double popct = p_test/output.P_Test_OB;
+            POPCT.Text = (100*popct).ToString("F") + " %";
+            bool POPCT_Pass = (popct >= device.POPCT_Min);
+
+            output.POPCT = popct;
+            output.POPCT_Pass = POPCT_Pass;
+
+            if (!POPCT_Pass)
+            {
+                testPower.Foreground = Brushes.OrangeRed;
+                sweepResult = false;
+            }
+
+            double ibm = TestCalculations.IBM_PBM(sweepData, device.P_BM_Test);
+            monitorCurrent.Text = ibm.ToString("F") + " mA";
+            bool IBM_Pass = (ibm >= device.IBM_Min && ibm <= device.IBM_Max);
+
+            output.I_BM_P_BM_Test = ibm;
+            output.I_BM_P_BM_Test_Pass = IBM_Pass;
+
+            if (!IBM_Pass)
+            {
+                monitorCurrent.Foreground = Brushes.OrangeRed;
+                sweepResult = false;
+            }
+
+            double pmin = sweepData.powers.ElementAt(sweepData.setcurrents.IndexOf(device.I_OP_Min));
+            double pmax = sweepData.powers.ElementAt(sweepData.setcurrents.IndexOf(device.I_OP_Max));
 
 
+            double ibmslope = TestCalculations.FindSlope(sweepData.powers, sweepData.ibms, pmin, pmax);
+            ibmSlope.Text = ibmslope.ToString("F") + " A/W";
+            output.I_BM_Slope = ibmslope;
 
-            if (sweepTestResult)
+            double ibmtrack = TestCalculations.IBM_Track(sweepData, device.I_OP_Min, device.I_OP_Max);
+            ibmTrack.Text = ibmtrack.ToString("F");
+            bool IBM_Track_Pass = (ibmtrack >= device.IBM_Tracking_Min && ibmtrack <= device.IBM_Tracking_Max);
+
+            output.IBM_Track = ibmtrack;
+            output.I_BM_Track_Pass = IBM_Track_Pass;
+
+            if (!IBM_Track_Pass)
+            {
+                ibmTrack.Foreground = Brushes.OrangeRed;
+                sweepResult = false;
+            }
+
+            measurementPanel.Visibility = Visibility.Visible;
+            var w = Window.GetWindow(this) as MainWindow;
+
+            if (sweepResult)
             {
                 passed = true;
+                testMessage.Text = "Test Passed";
+                testMessage.Foreground = Brushes.ForestGreen;
                 StartTestButton.Content = "Next step";
+                d = device;
+                o = output;
+                w.device = d;
+                w.output = o;
             }
             else
             {
+                testMessage.Text = "Test Failed";
+                testMessage.Foreground = Brushes.OrangeRed;
                 if (numTries >= 3)
                 {
                     StartTestButton.Content = "Go home";
+                    output.Result = false;
+                    MainWindow.Conn.SaveTOSAOutput(output);
                 }
                 else
                 {

@@ -60,6 +60,11 @@ namespace TestStation
             WriteSMU("VOLT:LIM 1, (@3)");
         }
 
+        public void BreakdownLimits()
+        {
+            WriteSMU("CURR:RANG R10uA, (@1)");
+        }
+
         private void WriteSMU(string command)
         {
             SourceMeasureUnit.RawIO.Write(command);
@@ -81,11 +86,11 @@ namespace TestStation
             return (Double.Parse(QuerySMU("MEAS:CURR? (@" + channel + ")")));
         }
 
-        public double GetPower(int channel)
-        {
-            WriteSMU("VOLT 0, (@" + channel + ")");
-            return GetCurrent(channel) / RESPONSIVITY;
-        }
+        //public double GetPower(int channel)
+        //{
+        //    WriteSMU("VOLT 0, (@" + channel + ")");
+        //    return GetCurrent(channel) / RESPONSIVITY;
+        //}
 
         public void ChannelPower(int channel, bool on)
         {

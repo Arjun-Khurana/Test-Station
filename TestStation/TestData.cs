@@ -8,19 +8,19 @@ namespace TestStation
 {
     class SweepData
     {
-        public List<double> current { get; set; }
-        public List<double> voltage { get; set; }
-        public List<double> power { get; set; }
-        public List<double> ibm { get; set; }
-        public List<double> setcurrent { get; set; }
+        public List<double> currents { get; set; }
+        public List<double> voltages { get; set; }
+        public List<double> powers { get; set; }
+        public List<double> ibms { get; set; }
+        public List<double> setcurrents { get; set; }
 
         public SweepData()
         {
-            setcurrent = new List<double>();
-            current = new List<double>();
-            voltage = new List<double>();
-            power = new List<double>();
-            ibm = new List<double>();
+            setcurrents = new List<double>();
+            currents = new List<double>();
+            voltages = new List<double>();
+            powers = new List<double>();
+            ibms = new List<double>();
         }
     }
 
@@ -35,6 +35,25 @@ namespace TestStation
             max = 0;
             min = 0;
             avg = 0;
+        }
+    }
+
+    class OBData
+    {
+        public double p_test { get; set; }
+        public double v_test { get; set; }
+        public double ibm_test { get; set; }
+        public double ibr { get; set; }
+
+        public double i_test { get; set; }
+
+        public OBData()
+        {
+            p_test = 0;
+            v_test = 0;
+            ibm_test = 0;
+            ibr = 0;
+            i_test = 0;
         }
     }
 

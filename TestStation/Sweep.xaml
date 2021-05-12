@@ -41,15 +41,17 @@
                     </TextBlock>
                 </StackPanel>
             </Border>
-
+            
+            <StackPanel Orientation="Horizontal">
+                <Label>Sweep progress</Label>
+                <ProgressBar x:Name="sweepProgress" Width="250" Height="10" Foreground="DarkRed" Value="0"></ProgressBar>
+            </StackPanel>
+            
             <StackPanel 
                 Orientation="Vertical"
                 x:Name="measurementPanel"
-                Visibility="Visible">
-                <StackPanel Orientation="Horizontal">
-                    <Label>Sweep progress</Label>
-                    <ProgressBar x:Name="sweepProgress" Width="250" Height="10" Foreground="DarkRed" Value="0"></ProgressBar>
-                </StackPanel>
+                Visibility="Collapsed">
+                
                 <StackPanel Orientation="Horizontal">
                     <Label>Resistance:</Label>
                     <TextBlock x:Name="resistance" VerticalAlignment="Center"></TextBlock>
@@ -62,13 +64,34 @@
                     <Label>Threshold current:</Label>
                     <TextBlock x:Name="thresholdCurrent" VerticalAlignment="Center"></TextBlock>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Test Power:</Label>
+                    <TextBlock x:Name="testPower" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>POPCT:</Label>
+                    <TextBlock x:Name="POPCT" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Monitor current:</Label>
+                    <TextBlock x:Name="monitorCurrent" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Monitor current slope:</Label>
+                    <TextBlock x:Name="ibmSlope" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Monitor current track:</Label>
+                    <TextBlock x:Name="ibmTrack" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+                
                 <TextBlock x:Name="testMessage" FontSize="18">Test Status</TextBlock>
             </StackPanel>
 
             <StackPanel
                 Orientation="Vertical"
                 x:Name="errorPanel"
-                Visibility="Visible"
+                Visibility="Collapsed"
                 >
             </StackPanel>
 

@@ -59,7 +59,8 @@ namespace TestStation.Data
                     Ith_Max             double not null,
                     Wiggle_Time         double not null,
                     Pwiggle_Max         double not null,
-                    IBR_Max             double not null
+                    IBR_Max             double not null,
+                    POPCT_Wiggle_Min    double not null
                 )");
                 cnn.Execute(
                     @"create table ROSADevice
@@ -79,7 +80,7 @@ namespace TestStation.Data
                     id                      integer primary key autoincrement,
                     Part_Number             varchar(255) not null,
                     Job_Number              varchar(255) not null,
-                    Unit_Number             varchar(255) not null,
+                    Unit_Number             integer not null,
                     Operator                varchar(255) not null,
                     Timestamp               datetime not null,
                     Repeat_Number           integer not null,
@@ -110,7 +111,9 @@ namespace TestStation.Data
                     I_BM_Track_Pass         boolean not null,
                     POPCT_Wiggle_Min        double not null,
                     POPCT_Wiggle_Min_Pass   boolean not null,
-                    Wiggle_dB               double not null
+                    Wiggle_dB               double not null,
+                    Wiggle_dB_Pass          boolean not null,
+                    Result                  boolean not null
                 )");
                 cnn.Execute(
                     @"create table ROSAOutput
@@ -118,7 +121,7 @@ namespace TestStation.Data
                     id                  integer primary key autoincrement,
                     Part_Number         varchar(255) not null,
                     Job_Number          varchar(255) not null,
-                    Unit_Number         varchar(255) not null,
+                    Unit_Number         integer not null,
                     Operator            varchar(255) not null,
                     Timestamp           datetime not null,
                     Repeat_Number       integer not null,
@@ -166,38 +169,40 @@ namespace TestStation.Data
                     Ith_Max,
                     Wiggle_Time,
                     Pwiggle_Max,
-                    IBR_Max    
+                    IBR_Max,
+                    POPCT_Wiggle_Min
                 ) values (
-                    'Device 1',         
-                    .1,
-                    .1,
-                    12,
+                    'HFE4192-911',         
+                    2,
+                    .5,
+                    10,
                     7,
                     .1,
-                    .5,
-                    1.5,
-                    1.8,
+                    .3,
+                    1,
+                    1,
                     2,
                     -5,
                     .1,
-                    .5,
-                    .5,
-                    1.5,
+                    1,
+                    .1,
+                    .7,
                     6,
                     8,
-                    1,
-                    .65,
+                    .4,
+                    .7,
                     .8,
-                    .2,
-                    40,
-                    100,
-                    .1,
-                    .6,
-                    .8,
+                    1.2,
+                    25,
+                    50,
+                    .05,
+                    .15,
+                    .5,
                     2,
-                    10,
+                    30,
                     1,
-                    100
+                    10,
+                    .55
                 )
                 ");
             }
@@ -338,7 +343,8 @@ namespace TestStation.Data
                     Ith_Max,
                     Wiggle_Time,
                     Pwiggle_Max,
-                    IBR_Max    
+                    IBR_Max,
+                    POPCT_Wiggle_Min,
                 ) values (
                     @Part_Number,
                     @I_Start,
@@ -368,7 +374,8 @@ namespace TestStation.Data
                     @Ith_Max,
                     @Wiggle_Time,
                     @Pwiggle_Max,
-                    @IBR_Max   
+                    @IBR_Max,
+                    @POPCT_Wiggle_Min
                 )
                 ",
                     new
@@ -401,16 +408,168 @@ namespace TestStation.Data
                         Ith_Max = tosa.Ith_Max,
                         Wiggle_Time = tosa.Wiggle_Time,
                         Pwiggle_Max = tosa.Pwiggle_Max,
-                        IBR_Max = tosa.IBR_Max
+                        IBR_Max = tosa.IBR_Max,
+                        POPCT_Wiggle_Min = tosa.POPCT_Wiggle_Min
                     }
                 );
             }
             
         }
 
-        public void SaveTOSAOutput(TOSAOutput result)
+        public void SaveTOSAOutput(TOSAOutput output)
         {
-            throw new NotImplementedException();
+            if (!File.Exists(DbFile)) return;
+
+            using (var cnn = DataFileConnection())
+            {
+                cnn.Open();
+                cnn.Execute(
+                    @" insert into TOSAOutput 
+                (                      
+                    Part_Number,             
+                    Job_Number,            
+                    Unit_Number,             
+                    Operator,                
+                    Timestamp,               
+                    Repeat_Number,           
+                    I_Test,                  
+                    P_Test_OB,               
+                    P_OB_Pass,              
+                    V_Test,                  
+                    V_Test_Pass,             
+                    IBM_Test_OB,             
+                    IBM_Pass,                
+                    VBR_Test,                
+                    IBR,                    
+                    IBR_Pass,                
+                    P_Test_FC,               
+                    P_Test_FC_Pass,          
+                    RS,                      
+                    RS_Pass,                 
+                    SE,                      
+                    SE_Pass,                 
+                    Ith,                     
+                    Ith_Pass,                
+                    POPCT,                   
+                    POPCT_Pass,              
+                    I_BM_Slope,              
+                    I_BM_P_BM_Test,          
+                    I_BM_P_BM_Test_Pass,     
+                    IBM_Track,               
+                    I_BM_Track_Pass,         
+                    POPCT_Wiggle_Min,        
+                    POPCT_Wiggle_Min_Pass,   
+                    Wiggle_dB,               
+                    Wiggle_dB_Pass,          
+                    Result
+                ) values (                    
+                    @Part_Number,             
+                    @Job_Number,            
+                    @Unit_Number,             
+                    @Operator,                
+                    @Timestamp,               
+                    @Repeat_Number,           
+                    @I_Test,                  
+                    @P_Test_OB,               
+                    @P_OB_Pass,              
+                    @V_Test,                  
+                    @V_Test_Pass,             
+                    @IBM_Test_OB,             
+                    @IBM_Pass,                
+                    @VBR_Test,                
+                    @IBR,                    
+                    @IBR_Pass,                
+                    @P_Test_FC,               
+                    @P_Test_FC_Pass,          
+                    @RS,                      
+                    @RS_Pass,                 
+                    @SE,                      
+                    @SE_Pass,                 
+                    @Ith,                     
+                    @Ith_Pass,                
+                    @POPCT,                   
+                    @POPCT_Pass,              
+                    @I_BM_Slope,              
+                    @I_BM_P_BM_Test,          
+                    @I_BM_P_BM_Test_Pass,     
+                    @IBM_Track,               
+                    @I_BM_Track_Pass,         
+                    @POPCT_Wiggle_Min,        
+                    @POPCT_Wiggle_Min_Pass,   
+                    @Wiggle_dB,               
+                    @Wiggle_dB_Pass,          
+                    @Result
+                )
+                ",
+                    new
+                    {
+                        Part_Number = output.Part_Number,
+                        Job_Number = output.Job_Number,
+                        Unit_Number = output.Unit_Number,
+                        Operator = output.Operator,
+                        Timestamp = output.Timestamp,
+                        Repeat_Number = output.Repeat_Number,
+                        I_Test = output.I_Test,
+                        P_Test_OB = output.P_Test_OB,
+                        P_OB_Pass = output.P_OB_Pass,
+                        V_Test = output.V_Test,
+                        V_Test_Pass = output.V_Test_Pass,
+                        IBM_Test_OB = output.IBM_Test_OB,
+                        IBM_Pass = output.IBM_Pass,
+                        VBR_Test = output.VBR_Test,
+                        IBR = output.IBR,
+                        IBR_Pass = output.IBR_Pass,
+                        P_Test_FC = output.P_Test_FC,
+                        P_Test_FC_Pass = output.P_Test_FC_Pass,
+                        RS = output.RS,
+                        RS_Pass = output.RS_Pass,
+                        SE = output.SE,
+                        SE_Pass = output.SE_Pass,
+                        Ith = output.Ith,
+                        Ith_Pass = output.Ith_Pass,
+                        POPCT = output.POPCT,
+                        POPCT_Pass = output.POPCT_Pass,
+                        I_BM_Slope = output.I_BM_Slope,
+                        I_BM_P_BM_Test = output.I_BM_P_BM_Test,
+                        I_BM_P_BM_Test_Pass = output.I_BM_P_BM_Test_Pass,
+                        IBM_Track = output.IBM_Track,
+                        I_BM_Track_Pass = output.I_BM_Track_Pass,
+                        POPCT_Wiggle_Min = output.POPCT_Wiggle_Min,
+                        POPCT_Wiggle_Min_Pass = output.POPCT_Wiggle_Min_Pass,
+                        Wiggle_dB = output.Wiggle_dB,
+                        Wiggle_dB_Pass = output.Wiggle_dB_Pass,
+                        Result = output.Result
+                    }
+                );
+            }
+
         }
+
+        public int GetMaxTOSAUnitNumber(string jobNumber)
+        {
+            using (var conn = DataFileConnection())
+            {
+                conn.Open();
+
+                int? num = conn.Query<int?>(
+                    @"select max(Unit_Number) from TOSAOutput where Job_Number = @jobNumber", new { jobNumber }).FirstOrDefault();
+
+                return (int)(num == null ? 0 : num);
+            }
+        }
+
+        public int GetMaxROSAUnitNumber(string jobNumber)
+        {
+            using (var conn = DataFileConnection())
+            {
+                conn.Open();
+
+                int? num = conn.Query<int?>(
+                    @"select max(Unit_Number) from ROSAOutput where Job_Number = @jobNumber", new { jobNumber }).FirstOrDefault();
+
+                return (int)(num == null ? 0 : num);
+            }
+        }
+
     }
 }

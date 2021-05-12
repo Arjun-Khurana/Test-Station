@@ -46,11 +46,25 @@ namespace TestStation
 
             if (d is TOSADevice)
             {
-                w.output = new TOSAOutput();
+                w.output = new TOSAOutput
+                {
+                    Part_Number = d.Part_Number,
+                    Job_Number = jobNumber.Text,
+                    Operator = operatorName.Text,
+                    Unit_Number = MainWindow.Conn.GetMaxTOSAUnitNumber(jobNumber.Text),
+                    Timestamp = DateTime.Now
+                };
             }
             else
             {
-                w.output = new ROSAOutput();
+                w.output = new ROSAOutput
+                {
+                    Part_Number = d.Part_Number,
+                    Job_Number = jobNumber.Text,
+                    Operator = operatorName.Text,
+                    Unit_Number = MainWindow.Conn.GetMaxTOSAUnitNumber(jobNumber.Text),
+                    Timestamp = DateTime.Now
+                };
             }
 
             w.device = d;
