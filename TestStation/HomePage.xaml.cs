@@ -51,7 +51,7 @@ namespace TestStation
                     Part_Number = d.Part_Number,
                     Job_Number = jobNumber.Text,
                     Operator = operatorName.Text,
-                    Unit_Number = MainWindow.Conn.GetMaxTOSAUnitNumber(jobNumber.Text),
+                    Unit_Number = MainWindow.Conn.GetMaxTOSAUnitNumber(jobNumber.Text)+1,
                     Timestamp = DateTime.Now
                 };
             }
@@ -62,7 +62,7 @@ namespace TestStation
                     Part_Number = d.Part_Number,
                     Job_Number = jobNumber.Text,
                     Operator = operatorName.Text,
-                    Unit_Number = MainWindow.Conn.GetMaxTOSAUnitNumber(jobNumber.Text),
+                    Unit_Number = MainWindow.Conn.GetMaxTOSAUnitNumber(jobNumber.Text)+1,
                     Timestamp = DateTime.Now
                 };
             }

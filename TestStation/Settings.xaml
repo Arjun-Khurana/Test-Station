@@ -76,8 +76,8 @@
 
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10,0,10,10" Orientation="Vertical">
-                        <Label Padding="0,0,0,5" Content="I Wiggle Max"></Label>
-                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="ROSA_I_Wiggle_Max_Input"></TextBox>
+                        <Label Padding="0,0,0,5" Content="PD Wiggle Max"></Label>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="ROSA_PD_Wiggle_Max_Input"></TextBox>
                     </StackPanel>
 
                     <StackPanel Margin="10,0,10,10" Orientation="Vertical">
@@ -88,8 +88,8 @@
 
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="10,0,10,10" Orientation="Vertical">
-                        <Label Padding="0,0,0,5" Content="RSSSI VPD"></Label>
-                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="ROSA_RSSSI_VPD_Input"></TextBox>
+                        <Label Padding="0,0,0,5" Content="RSSI VPD"></Label>
+                        <TextBox Width="100" TextChanged="String_Input_Text_Changed" x:Name="ROSA_RSSI_VPD_Input"></TextBox>
                     </StackPanel>
                 </StackPanel>
 

@@ -166,10 +166,10 @@ namespace TestStation
                 Part_Number = ROSA_Part_Number_Input.Text,
                 V_Test = Double.Parse(ROSA_V_Test_Input.Text),
                 RESP_Min = Double.Parse(ROSA_RESP_Min_Input.Text),
-                ICC_Max = Double.Parse(ROSA_ICC_Max_Input.Text),
-                I_Wiggle_Max = Double.Parse(ROSA_I_Wiggle_Max_Input.Text),
+                I_TIA_Max = Double.Parse(ROSA_ICC_Max_Input.Text),
+                PD_Wiggle_Max = Double.Parse(ROSA_PD_Wiggle_Max_Input.Text),
                 Wiggle_Time = Double.Parse(ROSA_Wiggle_Time_Input.Text),
-                RSSSI_VPD = Double.Parse(ROSA_RSSSI_VPD_Input.Text)
+                RSSI_VPD = ROSA_RSSI_VPD_Input.Text
             };
 
             MainWindow.Conn.SaveROSADevice(rosa);
