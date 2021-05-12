@@ -169,6 +169,7 @@ namespace TestStation
             }
 
             measurementPanel.Visibility = Visibility.Visible;
+            var w = Window.GetWindow(this) as MainWindow;
 
             if (sweepResult)
             {
@@ -176,9 +177,10 @@ namespace TestStation
                 testMessage.Text = "Test Passed";
                 testMessage.Foreground = Brushes.ForestGreen;
                 StartTestButton.Content = "Next step";
-                var w = Window.GetWindow(this) as MainWindow;
                 d = device;
+                o = output;
                 w.device = d;
+                w.output = o;
             }
             else
             {
@@ -187,6 +189,8 @@ namespace TestStation
                 if (numTries >= 3)
                 {
                     StartTestButton.Content = "Go home";
+                    output.Result = false;
+                    MainWindow.Conn.SaveTOSAOutput(output);
                 }
                 else
                 {

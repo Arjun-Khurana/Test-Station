@@ -17,6 +17,5 @@ namespace TestStation.Models
         public bool I_TIA_Pass { get; set; }
         public bool RESP_Pass { get; set; }
         public bool Wiggle_Pass { get; set; }
-        public bool Result { get; set; }
     }
 }

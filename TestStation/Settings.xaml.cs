@@ -69,38 +69,45 @@ namespace TestStation
 
         private void New_Tosa_Button_Click(object sender, RoutedEventArgs e)
         {
-            //string[] inputs =
-            //{
-            //    "Part_Number",
-            //    "I_Start",
-            //    "I_Step",
-            //    "I_Stop",
-            //    "I_Test",
-            //    "P_Test_OB_Min",
-            //    "P_Test_OB_Max",
-            //    "V_Test_Min",
-            //    "V_Test_Max",
-            //    "VBR_Test",
-            //    "IBM_Min",
-            //    "IBM_Max",
-            //    "P_Test_FC_Min",
-            //    "P_Test_FC_Max",
-            //    "I_OP_Min",
-            //    "I_OP_Max",
-            //    "P_BM_Test",
-            //    "POPCT_Min",
-            //    "IBM_Tracking_Min",
-            //    "IBM_Tracking_Max",
-            //    "RS_Min",
-            //    "RS_Max",
-            //    "SE_Min",
-            //    "SE_Max",
-            //    "Ith_Min",
-            //    "Ith_Max",
-            //    "Wiggle_Time",
-            //    "Pwiggle_Max",
-            //    "IBR_Max"
-            //};
+            string[] inputs =
+            {
+                "Part_Number",
+                "Job_Number",
+                "Unit_Number",
+                "Operator",
+                "Timestamp",
+                "Repeat_Number",
+                "I_Test",
+                "P_Test_OB",
+                "P_OB_Pass",
+                "V_Test",
+                "V_Test_Pass",
+                "IBM_Test_OB",
+                "IBM_Pass",
+                "VBR_Test",
+                "IBR",
+                "IBR_Pass",
+                "P_Test_FC",
+                "P_Test_FC_Pass",
+                "RS",
+                "RS_Pass",
+                "SE",
+                "SE_Pass",
+                "Ith",
+                "Ith_Pass",
+                "POPCT",
+                "POPCT_Pass",
+                "I_BM_Slope",
+                "I_BM_P_BM_Test",
+                "I_BM_P_BM_Test_Pass",
+                "IBM_Track",
+                "I_BM_Track_Pass",
+                "POPCT_Wiggle_Min",
+                "POPCT_Wiggle_Min_Pass",
+                "Wiggle_dB",
+                "Wiggle_dB_Pass",
+                "Result"
+            };
 
             //Debug.Print("@\"insert into TOSADevice\n(");
             //foreach (string s in inputs)
@@ -120,10 +127,10 @@ namespace TestStation
             //}
             //Debug.Print("}");
 
-            //foreach (string s in inputs)
-            //{
-            //    Debug.Print("{0} = tosa.{0},", s);
-            //}
+            foreach (string s in inputs)
+            {
+                Debug.Print("{0} = result.{0},", s);
+            }
 
             //foreach (string s in inputs)
             //{

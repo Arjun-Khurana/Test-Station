@@ -121,11 +121,15 @@ namespace TestStation
             Instruments.Instance.ChannelPower(2, false);
             Instruments.Instance.ChannelPower(3, false);
 
+            Instruments.Instance.BreakdownLimits();
+
             Instruments.Instance.ChannelPower(1, true);
             Instruments.Instance.SourceVoltage(1, VBR_Test);
             ob.ibr = Instruments.Instance.GetCurrent(1) * 1000000;
 
             Instruments.Instance.ChannelPower(1, false);
+
+            Instruments.Instance.SetLimits();
 
             return ob;
         }

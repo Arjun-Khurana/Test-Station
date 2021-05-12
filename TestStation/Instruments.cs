@@ -60,6 +60,11 @@ namespace TestStation
             WriteSMU("VOLT:LIM 1, (@3)");
         }
 
+        public void BreakdownLimits()
+        {
+            WriteSMU("CURR:RANG R10uA, (@1)");
+        }
+
         private void WriteSMU(string command)
         {
             SourceMeasureUnit.RawIO.Write(command);
