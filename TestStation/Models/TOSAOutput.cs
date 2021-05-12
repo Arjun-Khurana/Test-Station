@@ -37,5 +37,7 @@ namespace TestStation.Models
         public bool POPCT_Wiggle_Min_Pass { get; set; }
         public double Wiggle_dB { get; set; }
 
+        public bool Wiggle_dB_Pass { get; set; }
+
     }
 }

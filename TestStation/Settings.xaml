@@ -126,6 +126,11 @@
                         <Label Padding="0, 0, 0, 5" Content="P Total Min (mW)"></Label>
                         <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_P_Test_OB_Min_Input"></TextBox>
                     </StackPanel>
+
+                    <StackPanel Margin="10, 0, 10, 10" Orientation="Vertical">
+                        <Label Padding="0, 0, 0, 5" Content="POPCT Wiggle Min (%)"></Label>
+                        <TextBox Width="100" TextChanged="Double_Input_Text_Changed" x:Name="TOSA_POPCT_Wiggle_Min_Input"></TextBox>
+                    </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">

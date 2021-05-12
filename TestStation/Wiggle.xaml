@@ -42,14 +42,15 @@
                 </StackPanel>
             </Border>
 
+            <StackPanel Orientation="Horizontal">
+                <Label>Wiggle test progress</Label>
+                <ProgressBar x:Name="wiggleProgress" Width="250" Height="10" Foreground="DarkRed" Value="0"></ProgressBar>
+            </StackPanel>
+
             <StackPanel 
                 Orientation="Vertical"
                 x:Name="measurementPanel"
-                Visibility="Visible">
-                <StackPanel Orientation="Horizontal">
-                    <Label>Wiggle test progress</Label>
-                    <ProgressBar x:Name="wiggleProgress" Width="250" Height="10" Foreground="DarkRed" Value="0"></ProgressBar>
-                </StackPanel>
+                Visibility="Collapsed">
                 <StackPanel Orientation="Horizontal">
                     <Label>Wiggle test minimum power:</Label>
                     <TextBlock x:Name="wiggleMin" VerticalAlignment="Center">0 mW</TextBlock>
@@ -61,6 +62,14 @@
                 <StackPanel Orientation="Horizontal">
                     <Label>Wiggle test average power:</Label>
                     <TextBlock x:Name="wiggleAvg" VerticalAlignment="Center">0 mW</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Wiggle minimum coupling:</Label>
+                    <TextBlock x:Name="popctWiggle" VerticalAlignment="Center">0 mW</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Wiggle deviation:</Label>
+                    <TextBlock x:Name="wiggleDb" VerticalAlignment="Center">0 mW</TextBlock>
                 </StackPanel>
                 <TextBlock x:Name="testMessage" FontSize="18">Test Status</TextBlock>
             </StackPanel>

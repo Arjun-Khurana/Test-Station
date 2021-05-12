@@ -231,6 +231,7 @@ namespace TestStation
                 Wiggle_Time = Double.Parse(TOSA_Wiggle_Time_Input.Text),
                 Pwiggle_Max = Double.Parse(TOSA_Pwiggle_Max_Input.Text),
                 IBR_Max = Double.Parse(TOSA_IBR_Max_Input.Text),
+                POPCT_Wiggle_Min = Double.Parse(TOSA_POPCT_Wiggle_Min_Input.Text)
             };
 
             MainWindow.Conn.SaveTOSADevice(tosa);

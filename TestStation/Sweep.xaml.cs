@@ -121,12 +121,12 @@ namespace TestStation
                 sweepResult = false;
             }
 
-            double popct = 100*output.P_Test_OB / p_test;
-            POPCT.Text = popct.ToString("F") + " %";
-            bool POPCT_Pass = (popct >= device.P_Test_FC_Min && popct <= device.P_Test_FC_Max);
+            double popct = p_test/output.P_Test_OB;
+            POPCT.Text = (100*popct).ToString("F") + " %";
+            bool POPCT_Pass = (popct >= device.POPCT_Min);
 
-            output.P_Test_FC = popct;
-            output.P_Test_FC_Pass = POPCT_Pass;
+            output.POPCT = popct;
+            output.POPCT_Pass = POPCT_Pass;
 
             if (!POPCT_Pass)
             {
@@ -138,13 +138,37 @@ namespace TestStation
             monitorCurrent.Text = ibm.ToString("F") + " mA";
             bool IBM_Pass = (ibm >= device.IBM_Min && ibm <= device.IBM_Max);
 
+            output.I_BM_P_BM_Test = ibm;
+            output.I_BM_P_BM_Test_Pass = IBM_Pass;
+
             if (!IBM_Pass)
             {
                 monitorCurrent.Foreground = Brushes.OrangeRed;
                 sweepResult = false;
             }
 
-            //double ibmSlope = TestCalculations.FindSlope(sweepData.powers, sweepData.ibms, device.P_)
+            double pmin = sweepData.powers.ElementAt(sweepData.setcurrents.IndexOf(device.I_OP_Min));
+            double pmax = sweepData.powers.ElementAt(sweepData.setcurrents.IndexOf(device.I_OP_Max));
+
+
+            double ibmslope = TestCalculations.FindSlope(sweepData.powers, sweepData.ibms, pmin, pmax);
+            ibmSlope.Text = ibmslope.ToString("F") + " A/W";
+            output.I_BM_Slope = ibmslope;
+
+            double ibmtrack = TestCalculations.IBM_Track(sweepData, device.I_OP_Min, device.I_OP_Max);
+            ibmTrack.Text = ibmtrack.ToString("F");
+            bool IBM_Track_Pass = (ibmtrack >= device.IBM_Tracking_Min && ibmtrack <= device.IBM_Tracking_Max);
+
+            output.IBM_Track = ibmtrack;
+            output.I_BM_Track_Pass = IBM_Track_Pass;
+
+            if (!IBM_Track_Pass)
+            {
+                ibmTrack.Foreground = Brushes.OrangeRed;
+                sweepResult = false;
+            }
+
+            measurementPanel.Visibility = Visibility.Visible;
 
             if (sweepResult)
             {

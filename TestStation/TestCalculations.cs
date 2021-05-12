@@ -41,7 +41,7 @@ namespace TestStation
                     double v = Instruments.Instance.GetVoltage(1);
                     //Debug.Print("Voltage: {0}", v);
 
-                    sweepData.setcurrents.Add(current_Iterator);
+                    sweepData.setcurrents.Add(Math.Round(current_Iterator, 3));
                     sweepData.currents.Add(c * 1000);
                     sweepData.voltages.Add(v);
 
@@ -85,7 +85,7 @@ namespace TestStation
             {
                 for (int i = 0; i <= ms; i += increment)
                 {
-                    powers.Add(Instruments.Instance.GetCurrent(3));
+                    powers.Add(Instruments.Instance.GetCurrent(3) * 1000 / RESPONSIVITY);
                     Thread.Sleep(increment);
                     ((IProgress<double>)progress).Report(100 * ((double)i / (double)ms));
                 }
@@ -231,6 +231,16 @@ namespace TestStation
             double PBM = sweepData.powers.Aggregate((cur, next) => Math.Abs(P_Test - cur) < Math.Abs(P_Test - next) ? cur : next);
             int i = sweepData.powers.IndexOf(PBM);
             return sweepData.ibms.ElementAt(i);
+        }
+
+        public static double IBM_Track(SweepData sweepData, double I_OP_Min, double I_OP_Max)
+        {
+            int min = sweepData.setcurrents.IndexOf(I_OP_Min);
+            int max = sweepData.setcurrents.IndexOf(I_OP_Max);
+            double num = sweepData.ibms.ElementAt(min)/sweepData.powers.ElementAt(min);
+            double denom = sweepData.ibms.ElementAt(max) / sweepData.powers.ElementAt(max);
+
+            return num / denom;
         }
 
     }

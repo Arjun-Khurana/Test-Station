@@ -50,7 +50,7 @@
             <StackPanel 
                 Orientation="Vertical"
                 x:Name="measurementPanel"
-                Visibility="Visible">
+                Visibility="Collapsed">
                 
                 <StackPanel Orientation="Horizontal">
                     <Label>Resistance:</Label>

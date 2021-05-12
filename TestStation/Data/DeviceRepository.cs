@@ -59,7 +59,8 @@ namespace TestStation.Data
                     Ith_Max             double not null,
                     Wiggle_Time         double not null,
                     Pwiggle_Max         double not null,
-                    IBR_Max             double not null
+                    IBR_Max             double not null,
+                    POPCT_Wiggle_Min    double not null
                 )");
                 cnn.Execute(
                     @"create table ROSADevice
@@ -110,7 +111,8 @@ namespace TestStation.Data
                     I_BM_Track_Pass         boolean not null,
                     POPCT_Wiggle_Min        double not null,
                     POPCT_Wiggle_Min_Pass   boolean not null,
-                    Wiggle_dB               double not null
+                    Wiggle_dB               double not null,
+                    Wiggle_dB_Pass          boolean not null
                 )");
                 cnn.Execute(
                     @"create table ROSAOutput
@@ -166,38 +168,40 @@ namespace TestStation.Data
                     Ith_Max,
                     Wiggle_Time,
                     Pwiggle_Max,
-                    IBR_Max    
+                    IBR_Max,
+                    POPCT_Wiggle_Min
                 ) values (
-                    'Device 1',         
-                    .1,
-                    .1,
-                    12,
+                    'HFE4192-911',         
+                    2,
+                    .5,
+                    10,
                     7,
                     .1,
-                    .5,
-                    1.5,
-                    1.8,
+                    .3,
+                    1,
+                    1,
                     2,
                     -5,
                     .1,
-                    .5,
-                    .5,
-                    1.5,
+                    1,
+                    .1,
+                    .7,
                     6,
                     8,
-                    1,
-                    .65,
+                    .4,
+                    .7,
                     .8,
-                    .2,
-                    40,
-                    100,
-                    .1,
-                    .6,
-                    .8,
+                    1.2,
+                    25,
+                    50,
+                    .05,
+                    .15,
+                    .5,
                     2,
-                    10,
+                    30,
                     1,
-                    10
+                    10,
+                    .55
                 )
                 ");
             }
@@ -338,7 +342,8 @@ namespace TestStation.Data
                     Ith_Max,
                     Wiggle_Time,
                     Pwiggle_Max,
-                    IBR_Max    
+                    IBR_Max,
+                    POPCT_Wiggle_Min,
                 ) values (
                     @Part_Number,
                     @I_Start,
@@ -368,7 +373,8 @@ namespace TestStation.Data
                     @Ith_Max,
                     @Wiggle_Time,
                     @Pwiggle_Max,
-                    @IBR_Max   
+                    @IBR_Max,
+                    @POPCT_Wiggle_Min
                 )
                 ",
                     new
@@ -401,7 +407,8 @@ namespace TestStation.Data
                         Ith_Max = tosa.Ith_Max,
                         Wiggle_Time = tosa.Wiggle_Time,
                         Pwiggle_Max = tosa.Pwiggle_Max,
-                        IBR_Max = tosa.IBR_Max
+                        IBR_Max = tosa.IBR_Max,
+                        POPCT_Wiggle_Min = tosa.POPCT_Wiggle_Min
                     }
                 );
             }

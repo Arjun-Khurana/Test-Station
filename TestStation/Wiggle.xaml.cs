@@ -65,7 +65,62 @@ namespace TestStation
 
             WiggleData wiggleData = await TestCalculations.WiggleTest((int)device.Wiggle_Time, wiggleProgress);
 
-            Debug.Print("min: {0} max: {1} avg: {2}", wiggleData.min, wiggleData.max, wiggleData.avg);
+            wiggleMin.Text = wiggleData.min.ToString("F") + " mW";
+            wiggleMax.Text = wiggleData.max.ToString("F") + " mW";
+            wiggleAvg.Text = wiggleData.avg.ToString("F") + " mW";
+
+            double popct_wiggle = wiggleData.min / output.P_Test_OB;
+            popctWiggle.Text = (100 * popct_wiggle).ToString("F") + " %";
+            bool POPCT_Wiggle_Pass = (popct_wiggle >= device.POPCT_Wiggle_Min);
+
+            output.POPCT_Wiggle_Min = popct_wiggle;
+            output.POPCT_Wiggle_Min_Pass = POPCT_Wiggle_Pass;
+
+            if (!POPCT_Wiggle_Pass)
+            {
+                popctWiggle.Foreground = Brushes.OrangeRed;
+                wiggleTestResult = false;
+            }
+
+            double pwiggle = 10 * Math.Log10(wiggleData.max / wiggleData.min);
+            wiggleDb.Text = pwiggle.ToString("F") + " dB";
+            bool Pwiggle_Pass = (pwiggle <= device.Pwiggle_Max);
+
+            output.Wiggle_dB = pwiggle;
+            output.Wiggle_dB_Pass = Pwiggle_Pass;
+
+            if (!Pwiggle_Pass)
+            {
+                wiggleDb.Foreground = Brushes.OrangeRed;
+                wiggleTestResult = false;
+            }
+
+            measurementPanel.Visibility = Visibility.Visible;
+
+            if (wiggleTestResult)
+            {
+                passed = true;
+                testMessage.Text = "Test Passed";
+                testMessage.Foreground = Brushes.ForestGreen;
+                StartTestButton.Content = "Next step";
+                var w = Window.GetWindow(this) as MainWindow;
+                d = device;
+                w.device = d;
+            }
+            else
+            {
+                testMessage.Text = "Test Failed";
+                testMessage.Foreground = Brushes.OrangeRed;
+                if (numTries >= 3)
+                {
+                    StartTestButton.Content = "Go home";
+                }
+                else
+                {
+                    StartTestButton.Content = "Retry test";
+                }
+            }
+
         }
     }
 }

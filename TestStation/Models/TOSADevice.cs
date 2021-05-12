@@ -94,5 +94,8 @@ namespace TestStation.Models
         
         // Maximum reverse breakdown current at VBR_Test
         public double IBR_Max { get; set; }
+
+        // Minimum coupling efficiency including wiggle
+        public double POPCT_Wiggle_Min { get; set; }
     }
 }

@@ -70,6 +70,11 @@ namespace TestStation
             bool openBoreResult = true;
 
             OBData ob = TestCalculations.OpenBoreTest(device.I_Test, device.VBR_Test);
+
+            foreach(TextBlock tb in FindVisualChildren<TextBlock>(measurementPanel))
+            {
+                tb.Foreground = Brushes.White;
+            }
            
             testCurrent.Text = ob.i_test.ToString("F") + " mA";
             output.I_Test = ob.i_test;
@@ -165,6 +170,25 @@ namespace TestStation
         private void ROSAStep1()
         {
 
+        }
+        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T)
+                    {
+                        yield return (T)child;
+                    }
+
+                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                    {
+                        yield return childOfChild;
+                    }
+                }
+            }
         }
     }
 }
