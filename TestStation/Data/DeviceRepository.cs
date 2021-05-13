@@ -321,9 +321,70 @@ namespace TestStation.Data
             }
         }
 
-        public void SaveROSAOutput(ROSAOutput result)
+        public void SaveROSAOutput(ROSAOutput output)
         {
-            throw new NotImplementedException();
+            if (!File.Exists(DbFile)) return;
+
+            using (var cnn = DataFileConnection())
+            {
+                cnn.Open();
+                cnn.Execute(
+                    @"insert into ROSAOutput
+                (
+                    Part_Number,             
+                    Job_Number,            
+                    Unit_Number,             
+                    Operator,                
+                    Timestamp,               
+                    Repeat_Number,
+                    V_Test,
+                    P_Laser, 
+                    I_TIA,
+                    I_PD,
+                    Responsivity,
+                    I_Dark,
+                    I_TIA_Pass,
+                    RESP_Pass,
+                    Wiggle_Pass,
+                    Result
+                ) values (
+                    @Part_Number,             
+                    @Job_Number,            
+                    @Unit_Number,             
+                    @Operator,                
+                    @Timestamp,               
+                    @Repeat_Number,
+                    @V_Test,
+                    @P_Laser, 
+                    @I_TIA,
+                    @I_PD,
+                    @Responsivity,
+                    @I_Dark,
+                    @I_TIA_Pass,
+                    @RESP_Pass,
+                    @Wiggle_Pass,
+                    @Result
+                )", new
+                    {
+                        Part_Number = output.Part_Number,
+                        Job_Number = output.Job_Number,
+                        Unit_Number = output.Unit_Number,
+                        Operator = output.Operator,
+                        Timestamp = output.Timestamp,
+                        Repeat_Number = output.Repeat_Number,
+                        V_Test = output.V_Test,
+                        P_Laser = output.P_Laser,
+                        I_TIA = output.I_TIA,
+                        I_PD = output.I_PD,
+                        Responsivity = output.Responsivity,
+                        I_Dark = output.I_Dark,
+                        I_TIA_Pass = output.I_TIA_Pass,
+                        RESP_Pass = output.RESP_Pass,
+                        Wiggle_Pass = output.Wiggle_Pass,
+                        Result = output.Result
+                    }
+                );
+            }
         }
 
         public void SaveTOSADevice(TOSADevice tosa)

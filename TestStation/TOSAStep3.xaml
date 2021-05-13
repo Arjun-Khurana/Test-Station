@@ -1,4 +1,4 @@
-﻿<Page x:Class="TestStation.Sweep"
+﻿<Page x:Class="TestStation.TOSAStep3"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:Background="{StaticResource DarkBg}"
       d:DesignHeight="450" d:DesignWidth="400"
-      Title="Step1">
+      Title="TOSAStep3">
 
     <Grid Background="{StaticResource DarkBg}">
         <Grid.RowDefinitions>
@@ -19,7 +19,7 @@
                 FontSize="26"
                 FontWeight="Light"
                 Margin="0,0,0,15" 
-                Text="Step 2"></TextBlock>
+                Text="Step 3"></TextBlock>
 
             <Border 
                 Padding="10"
@@ -37,61 +37,47 @@
                         Margin="0,0,0,0"
                         TextWrapping="Wrap"
                         FontSize="15"
-                        Text="(1) Connect fiber">
+                        Text="(1) Insert part into wiggle fixture">
                     </TextBlock>
                 </StackPanel>
             </Border>
-            
+
             <StackPanel Orientation="Horizontal">
-                <Label>Sweep progress</Label>
-                <ProgressBar x:Name="sweepProgress" Width="250" Height="10" Foreground="DarkRed" Value="0"></ProgressBar>
+                <Label>Wiggle test progress</Label>
+                <ProgressBar x:Name="wiggleProgress" Width="250" Height="10" Foreground="DarkRed" Value="0"></ProgressBar>
             </StackPanel>
-            
+
             <StackPanel 
                 Orientation="Vertical"
                 x:Name="measurementPanel"
                 Visibility="Collapsed">
-                
                 <StackPanel Orientation="Horizontal">
-                    <Label>Resistance:</Label>
-                    <TextBlock x:Name="resistance" VerticalAlignment="Center"></TextBlock>
+                    <Label>Wiggle test minimum power:</Label>
+                    <TextBlock x:Name="wiggleMin" VerticalAlignment="Center">0 mW</TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label>Slope efficiency:</Label>
-                    <TextBlock x:Name="slopeEfficiency" VerticalAlignment="Center"></TextBlock>
+                    <Label>Wiggle test maximum power:</Label>
+                    <TextBlock x:Name="wiggleMax" VerticalAlignment="Center">0 mW</TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label>Threshold current:</Label>
-                    <TextBlock x:Name="thresholdCurrent" VerticalAlignment="Center"></TextBlock>
+                    <Label>Wiggle test average power:</Label>
+                    <TextBlock x:Name="wiggleAvg" VerticalAlignment="Center">0 mW</TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label>Test Power:</Label>
-                    <TextBlock x:Name="testPower" VerticalAlignment="Center"></TextBlock>
+                    <Label>Wiggle minimum coupling:</Label>
+                    <TextBlock x:Name="popctWiggle" VerticalAlignment="Center">0 mW</TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Label>POPCT:</Label>
-                    <TextBlock x:Name="POPCT" VerticalAlignment="Center"></TextBlock>
+                    <Label>Wiggle deviation:</Label>
+                    <TextBlock x:Name="wiggleDb" VerticalAlignment="Center">0 mW</TextBlock>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label>Monitor current:</Label>
-                    <TextBlock x:Name="monitorCurrent" VerticalAlignment="Center"></TextBlock>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label>Monitor current slope:</Label>
-                    <TextBlock x:Name="ibmSlope" VerticalAlignment="Center"></TextBlock>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label>Monitor current track:</Label>
-                    <TextBlock x:Name="ibmTrack" VerticalAlignment="Center"></TextBlock>
-                </StackPanel>
-                
                 <TextBlock x:Name="testMessage" FontSize="18">Test Status</TextBlock>
             </StackPanel>
 
             <StackPanel
                 Orientation="Vertical"
                 x:Name="errorPanel"
-                Visibility="Collapsed"
+                Visibility="Visible"
                 >
             </StackPanel>
 

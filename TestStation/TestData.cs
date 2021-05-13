@@ -57,4 +57,21 @@ namespace TestStation
         }
     }
 
+    class DLData
+    { 
+        public double i_tia { get; set; }
+        public double i_pd { get; set; }
+        public double responsivity { get; set; }
+        public double i_dark { get; set; }
+
+        public DLData()
+        {
+            i_tia = 0;
+            i_pd = 0;
+            responsivity = 0;
+            i_dark = 0;
+        }
+    }
+    
+
 }

@@ -20,7 +20,7 @@ namespace TestStation
     /// <summary>
     /// Interaction logic for OpenBore.xaml
     /// </summary>
-    public partial class OpenBore : Page
+    public partial class TOSAStep1 : Page
     {
         private int numTries;
         private bool passed;
@@ -29,7 +29,7 @@ namespace TestStation
 
         //public event EventHandler Initialized;
 
-        public OpenBore()
+        public TOSAStep1()
         {
             InitializeComponent();
             numTries = 0;
@@ -53,16 +53,16 @@ namespace TestStation
             }
             else if (numTries <= 3 && passed)
             {
-                NavigationService.Navigate(new Sweep());
+                NavigationService.Navigate(new TOSAStep2());
                 return;
             }
 
             numTries++;
-            TOSAOpenBore();
+            OpenBoreTest();
             
         }
 
-        private void TOSAOpenBore()
+        private void OpenBoreTest()
         {
             TOSADevice device = d as TOSADevice;
             TOSAOutput output = o as TOSAOutput;
@@ -71,7 +71,7 @@ namespace TestStation
 
             OBData ob = TestCalculations.OpenBoreTest(device.I_Test, device.VBR_Test);
 
-            foreach(TextBlock tb in FindVisualChildren<TextBlock>(measurementPanel))
+            foreach(TextBlock tb in Utils.FindVisualChildren<TextBlock>(measurementPanel))
             {
                 tb.Foreground = Brushes.White;
             }
@@ -171,28 +171,6 @@ namespace TestStation
             }
         }
 
-        private void ROSAStep1()
-        {
-
-        }
-        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
-        {
-            if (depObj != null)
-            {
-                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-                {
-                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                    if (child != null && child is T)
-                    {
-                        yield return (T)child;
-                    }
-
-                    foreach (T childOfChild in FindVisualChildren<T>(child))
-                    {
-                        yield return childOfChild;
-                    }
-                }
-            }
-        }
+        
     }
 }

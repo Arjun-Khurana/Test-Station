@@ -20,13 +20,13 @@ namespace TestStation
     /// <summary>
     /// Interaction logic for Sweep.xaml
     /// </summary>
-    public partial class Sweep : Page
+    public partial class TOSAStep2 : Page
     {
         private Device d;
         private Output o;
         private int numTries;
         private bool passed;
-        public Sweep()
+        public TOSAStep2()
         {
             InitializeComponent();
             numTries = 0;
@@ -49,15 +49,16 @@ namespace TestStation
             }
             else if (numTries <= 3 && passed)
             {
-                NavigationService.Navigate(new Wiggle());
+                NavigationService.Navigate(new TOSAStep3());
                 return;
             }
 
             numTries++;
-            TOSASweep();
+
+            Sweep();
         }
 
-        private async void TOSASweep()
+        private async void Sweep()
         {
             TOSADevice device = d as TOSADevice;
             TOSAOutput output = o as TOSAOutput;
@@ -199,19 +200,5 @@ namespace TestStation
             }
         }
 
-        private void ROSAStep1()
-        {
-
-        }
-
-        private void ShowErrorPanel()
-        {
-            errorPanel.Visibility = Visibility.Visible;
-        }
-
-        private void HideErrorPanel()
-        {
-            errorPanel.Visibility = Visibility.Collapsed;
-        }
     }
 }

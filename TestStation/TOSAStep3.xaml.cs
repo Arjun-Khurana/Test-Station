@@ -20,13 +20,13 @@ namespace TestStation
     /// <summary>
     /// Interaction logic for Wiggle.xaml
     /// </summary>
-    public partial class Wiggle : Page
+    public partial class TOSAStep3 : Page
     {
         private Device d;
         private Output o;
         private int numTries;
         private bool passed;
-        public Wiggle()
+        public TOSAStep3()
         {
             InitializeComponent();
             numTries = 0;
@@ -53,17 +53,17 @@ namespace TestStation
             }
 
             numTries++;
-            TOSAStep3();
+            Wiggle();
         }
 
-        private async void TOSAStep3()
+        private async void Wiggle()
         {
             TOSADevice device = d as TOSADevice;
             TOSAOutput output = o as TOSAOutput;
 
             bool wiggleTestResult = true;
 
-            WiggleData wiggleData = await TestCalculations.WiggleTest((int)device.Wiggle_Time, wiggleProgress);
+            WiggleData wiggleData = await TestCalculations.TOSAWiggleTest((int)device.Wiggle_Time, wiggleProgress);
 
             wiggleMin.Text = wiggleData.min.ToString("F") + " mW";
             wiggleMax.Text = wiggleData.max.ToString("F") + " mW";

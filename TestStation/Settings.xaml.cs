@@ -150,7 +150,7 @@ namespace TestStation
         {
             bool nullsFound = false;
 
-            foreach (TextBox tb in FindVisualChildren<TextBox>(newROSAPanel))
+            foreach (TextBox tb in Utils.FindVisualChildren<TextBox>(newROSAPanel))
             {
                 if (String.IsNullOrEmpty(tb.Text))
                 {
@@ -181,7 +181,7 @@ namespace TestStation
 
         private void Cancel_Rosa_Click(object sender, RoutedEventArgs e)
         {
-            foreach (TextBox tb in FindVisualChildren<TextBox>(newROSAPanel))
+            foreach (TextBox tb in Utils.FindVisualChildren<TextBox>(newROSAPanel))
             {
                 tb.Text = null;
                 tb.Style = (Style)Application.Current.Resources["RegularTextField"];
@@ -196,7 +196,7 @@ namespace TestStation
         {
             bool nullsFound = false; 
 
-            foreach (TextBox tb in FindVisualChildren<TextBox>(newTOSAPanel))
+            foreach (TextBox tb in Utils.FindVisualChildren<TextBox>(newTOSAPanel))
             {
                 if (String.IsNullOrEmpty(tb.Text))
                 {
@@ -250,7 +250,7 @@ namespace TestStation
 
         private void Cancel_Tosa_Click(object sender, RoutedEventArgs e)
         {
-            foreach (TextBox tb in FindVisualChildren<TextBox>(newTOSAPanel))
+            foreach (TextBox tb in Utils.FindVisualChildren<TextBox>(newTOSAPanel))
             {
                 tb.Text = null;
                 tb.Style = (Style)Application.Current.Resources["RegularTextField"];
@@ -290,25 +290,6 @@ namespace TestStation
             else
             {
                 t.Style = (Style)Application.Current.Resources["ErrorTextField"];
-            }
-        }
-        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
-        {
-            if (depObj != null)
-            {
-                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-                {
-                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                    if (child != null && child is T)
-                    {
-                        yield return (T)child;
-                    }
-
-                    foreach (T childOfChild in FindVisualChildren<T>(child))
-                    {
-                        yield return childOfChild;
-                    }
-                }
             }
         }
     }
