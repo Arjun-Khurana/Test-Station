@@ -32,6 +32,13 @@ namespace TestStation
             numTries = 0;
             passed = false;
         }
+
+        void OnLoad(object sender, RoutedEventArgs e)
+        {
+            var w = MainWindow.GetWindow(this) as MainWindow;
+            UnitNumberText.Text = $"Unit number: {w.output.Unit_Number}";
+        }
+
         private void Start_Test_Button_Click(object sender, RoutedEventArgs e)
         {
             if (numTries == 0)
@@ -103,7 +110,7 @@ namespace TestStation
                 passed = true;
                 testMessage.Text = "Test Passed";
                 testMessage.Foreground = Brushes.ForestGreen;
-                StartTestButton.Content = "Next step";
+                StartTestButton.Content = "End job";
                 output.Result = true;
                 MainWindow.Conn.SaveTOSAOutput(output);
                 d = device;
@@ -127,6 +134,27 @@ namespace TestStation
                 }
             }
 
+            NextDeviceButton.Visibility = Visibility.Visible;
+        }
+
+        private void Next_Device_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var w = Window.GetWindow(this) as MainWindow;
+
+            var d = w.device as TOSADevice;
+            var currentOutput = w.output as TOSAOutput;
+            var job = currentOutput.Job_Number;
+
+            w.output = new TOSAOutput
+            {
+                Part_Number = d.Part_Number,
+                Job_Number = job,
+                Operator = currentOutput.Operator,
+                Unit_Number = currentOutput.Unit_Number + 1,
+                Timestamp = DateTime.Now
+            };
+
+            NavigationService.Navigate(new TOSAStep1());
         }
     }
 }

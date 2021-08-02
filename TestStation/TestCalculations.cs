@@ -12,7 +12,7 @@ namespace TestStation
 {
     class TestCalculations
     {
-        private const double RESPONSIVITY = 0.52;
+        private const double RESPONSIVITY = 0.055;
         public async static Task<SweepData> SweepTest(double I_Start, double I_Stop, double I_Step, ProgressBar pb)
         {
             var progress = new Progress<double>(value => pb.Value = value);

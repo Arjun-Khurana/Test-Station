@@ -43,8 +43,8 @@ namespace TestStation
         public void TOSALimits()
         {
             WriteSMU("CURR:RANG R120mA, (@1)");
-            WriteSMU("CURR:RANG R10mA, (@2)");
-            WriteSMU("CURR:RANG R10mA, (@3)");
+            WriteSMU("CURR:RANG R1mA, (@2)");
+            WriteSMU("CURR:RANG R100uA, (@3)");
 
             WriteSMU("VOLT:RANG R20V, (@1)");
             WriteSMU("VOLT:RANG R2V, (@2)");

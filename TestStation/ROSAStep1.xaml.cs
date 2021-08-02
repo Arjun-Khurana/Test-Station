@@ -34,6 +34,12 @@ namespace TestStation
             passed = false;
         }
 
+        void OnLoad(object sender, RoutedEventArgs e)
+        {
+            var w = MainWindow.GetWindow(this) as MainWindow;
+            UnitNumberText.Text = $"Unit number: {w.output.Unit_Number}";
+        }
+
         private void Start_Test_Button_Click(object sender, RoutedEventArgs e)
         {
             if (numTries == 0)

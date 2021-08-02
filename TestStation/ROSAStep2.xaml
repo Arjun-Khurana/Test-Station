@@ -7,6 +7,7 @@
       mc:Ignorable="d" 
       d:Background="{StaticResource DarkBg}"
       d:DesignHeight="450" d:DesignWidth="400"
+      Loaded="OnLoad"
       Title="ROSAStep2">
 
     <Grid Background="{StaticResource DarkBg}">
@@ -42,6 +43,12 @@
                 </StackPanel>
             </Border>
 
+            <StackPanel>
+                <TextBlock 
+                    x:Name="UnitNumberText"
+                    Text=""></TextBlock>
+            </StackPanel>
+            
             <StackPanel Orientation="Horizontal">
                 <Label>Wiggle test progress</Label>
                 <ProgressBar x:Name="wiggleProgress" Width="250" Height="10" Foreground="DarkRed" Value="0"></ProgressBar>
@@ -78,14 +85,28 @@
                 >
             </StackPanel>
 
-            <Button
+            <StackPanel
+                Orientation="Horizontal"
+                >
+                <Button
                 HorizontalAlignment="Left"
                 Click="Start_Test_Button_Click"
                 Content="Start test"
                 Margin="0,25,0,15" 
                 x:Name="StartTestButton"
                 >
-            </Button>
+                </Button>
+
+                <Button
+                HorizontalAlignment="Left"
+                Click="Next_Device_Button_Click"
+                Content="Next Device"
+                Margin="5,25,0,15" 
+                x:Name="NextDeviceButton"
+                Visibility="Collapsed"
+                >
+                </Button>
+            </StackPanel>
 
         </StackPanel>
 

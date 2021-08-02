@@ -7,6 +7,7 @@
       mc:Ignorable="d" 
       d:Background="{StaticResource DarkBg}"
       d:DesignHeight="450" d:DesignWidth="400"
+      Loaded="OnLoad"
       Title="TOSAStep2">
 
     <Grid Background="{StaticResource DarkBg}">
@@ -41,7 +42,13 @@
                     </TextBlock>
                 </StackPanel>
             </Border>
-            
+
+            <StackPanel>
+                <TextBlock 
+                    x:Name="UnitNumberText"
+                    Text=""></TextBlock>
+            </StackPanel>
+
             <StackPanel Orientation="Horizontal">
                 <Label>Sweep progress</Label>
                 <ProgressBar x:Name="sweepProgress" Width="250" Height="10" Foreground="DarkRed" Value="0"></ProgressBar>
@@ -95,14 +102,29 @@
                 >
             </StackPanel>
 
-            <Button
+            <StackPanel
+                Orientation="Horizontal"
+                >
+                <Button
                 HorizontalAlignment="Left"
                 Click="Start_Test_Button_Click"
                 Content="Start test"
                 Margin="0,25,0,15" 
                 x:Name="StartTestButton"
                 >
-            </Button>
+                </Button>
+
+                <Button
+                HorizontalAlignment="Left"
+                Click="Save_LI_Button_Click"
+                Content="Save LIV Data"
+                Margin="5,25,0,15" 
+                x:Name="SaveLIButton"
+                Visibility="Collapsed"
+                >
+                </Button>
+            </StackPanel>
+
 
         </StackPanel>
 
