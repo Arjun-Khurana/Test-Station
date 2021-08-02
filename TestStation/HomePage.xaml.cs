@@ -36,7 +36,14 @@ namespace TestStation
 
         private void StartButton(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new OpenBore());
+            if ((bool)TOSARadio.IsChecked)
+            {
+                NavigationService.Navigate(new TOSAStep1());
+            }
+            else
+            {
+                NavigationService.Navigate(new ROSAStep1());
+            }
         }
 
         private void DeviceSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -51,7 +58,7 @@ namespace TestStation
                     Part_Number = d.Part_Number,
                     Job_Number = jobNumber.Text,
                     Operator = operatorName.Text,
-                    Unit_Number = MainWindow.Conn.GetMaxTOSAUnitNumber(jobNumber.Text),
+                    Unit_Number = MainWindow.Conn.GetMaxTOSAUnitNumber(jobNumber.Text)+1,
                     Timestamp = DateTime.Now
                 };
             }
@@ -62,7 +69,7 @@ namespace TestStation
                     Part_Number = d.Part_Number,
                     Job_Number = jobNumber.Text,
                     Operator = operatorName.Text,
-                    Unit_Number = MainWindow.Conn.GetMaxTOSAUnitNumber(jobNumber.Text),
+                    Unit_Number = MainWindow.Conn.GetMaxTOSAUnitNumber(jobNumber.Text)+1,
                     Timestamp = DateTime.Now
                 };
             }

@@ -12,10 +12,12 @@ namespace TestStation
 {
     class TestCalculations
     {
-        private const double RESPONSIVITY = 0.52;
+        private const double RESPONSIVITY = 0.055;
         public async static Task<SweepData> SweepTest(double I_Start, double I_Stop, double I_Step, ProgressBar pb)
         {
             var progress = new Progress<double>(value => pb.Value = value);
+
+            Instruments.Instance.TOSALimits();
 
             Instruments.Instance.ChannelPower(1, true);
             Instruments.Instance.ChannelPower(2, true);
@@ -68,11 +70,13 @@ namespace TestStation
             return sweepData;
         }
 
-        public async static Task<WiggleData> WiggleTest(int sec, ProgressBar pb)
+        public async static Task<WiggleData> TOSAWiggleTest(int sec, ProgressBar pb)
         {
             var progress = new Progress<double>(value => pb.Value = value);
             int ms = sec * 1000;
             int increment = 100;
+
+            Instruments.Instance.TOSALimits();
 
             Instruments.Instance.ChannelPower(1, true);
             Instruments.Instance.ChannelPower(3, true);
@@ -90,7 +94,10 @@ namespace TestStation
                     ((IProgress<double>)progress).Report(100 * ((double)i / (double)ms));
                 }
             });
-            
+
+            Instruments.Instance.ChannelPower(1, false);
+            Instruments.Instance.ChannelPower(3, false);
+
 
             return new WiggleData
             {
@@ -100,9 +107,55 @@ namespace TestStation
             };
         }
 
+        public async static Task<WiggleData> ROSAWiggleTest(double V_Test, bool VPD, int sec, ProgressBar pb)
+        {
+            var progress = new Progress<double>(value => pb.Value = value);
+            int ms = sec * 1000;
+            int increment = 100;
+
+            List<double> currents = new();
+
+            Instruments.Instance.ROSALimits();
+
+            Instruments.Instance.ChannelPower(1, true);
+            Instruments.Instance.ChannelPower(2, true);
+
+            Instruments.Instance.SourceVoltage(1, V_Test);
+            if (VPD)
+            {
+                Instruments.Instance.SourceVoltage(2, V_Test - 1);
+            }
+            else
+            {
+                Instruments.Instance.SourceVoltage(2, 0);
+            }
+
+            await Task.Run(() =>
+            {
+                for (int i = 0; i <= ms; i += increment)
+                {
+                    currents.Add(Instruments.Instance.GetCurrent(2) * 1000);
+                    Thread.Sleep(increment);
+                    ((IProgress<double>)progress).Report(100 * ((double)i / (double)ms));
+                }
+            });
+
+            Instruments.Instance.ChannelPower(2, false);
+            Instruments.Instance.ChannelPower(2, false);
+
+            return new WiggleData
+            {
+                min = currents.Min(),
+                max = currents.Max(),
+                avg = currents.Average()
+            };
+        }
+
         public static OBData OpenBoreTest(double I_Test, double VBR_Test)
         {
             OBData ob = new OBData();
+
+            Instruments.Instance.TOSALimits();
 
             Instruments.Instance.ChannelPower(1, true);
             Instruments.Instance.ChannelPower(2, true);
@@ -129,9 +182,43 @@ namespace TestStation
 
             Instruments.Instance.ChannelPower(1, false);
 
-            Instruments.Instance.SetLimits();
+            Instruments.Instance.TOSALimits();
 
             return ob;
+        }
+
+        public static DLData DarkLightTest(double V_Test, bool VPD)
+        {
+            DLData dl = new DLData();
+
+            Instruments.Instance.ROSALimits();
+
+            Instruments.Instance.ChannelPower(1, true);
+            Instruments.Instance.ChannelPower(2, true);
+
+            Instruments.Instance.SourceVoltage(1, V_Test);
+            if (VPD)
+            {
+                Instruments.Instance.SourceVoltage(2, V_Test - 0.1);
+            }
+            else
+            {
+                Instruments.Instance.SourceVoltage(2, 0);
+            }
+
+            dl.i_tia = Instruments.Instance.GetCurrent(1) * 1000;
+            dl.i_dark = Instruments.Instance.GetCurrent(2) * 1000;
+
+            // TURN ON SWITCH
+
+            dl.i_pd = Instruments.Instance.GetCurrent(2) * 1000;
+
+            // CALCULATE RESPONSIVITY WITH LASER POWER
+
+            Instruments.Instance.ChannelPower(1, false);
+            Instruments.Instance.ChannelPower(2, false);
+
+            return dl;
         }
 
         public static double FindSlope(List<double> x, List<double> y, double min, double max)

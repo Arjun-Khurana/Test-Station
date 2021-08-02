@@ -14,23 +14,33 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TestStation.Models;
 using System.Diagnostics;
+using Microsoft.Win32;
+using System.Numerics;
+using System.IO;
 
 namespace TestStation
 {
     /// <summary>
     /// Interaction logic for Sweep.xaml
     /// </summary>
-    public partial class Sweep : Page
+    public partial class TOSAStep2 : Page
     {
         private Device d;
         private Output o;
         private int numTries;
         private bool passed;
-        public Sweep()
+        SweepData sd;
+        public TOSAStep2()
         {
             InitializeComponent();
             numTries = 0;
             passed = false;
+        }
+
+        void OnLoad(object sender, RoutedEventArgs e)
+        {
+            var w = MainWindow.GetWindow(this) as MainWindow;
+            UnitNumberText.Text = $"Unit number: {w.output.Unit_Number}";
         }
 
         private void Start_Test_Button_Click(object sender, RoutedEventArgs e)
@@ -49,15 +59,16 @@ namespace TestStation
             }
             else if (numTries <= 3 && passed)
             {
-                NavigationService.Navigate(new Wiggle());
+                NavigationService.Navigate(new TOSAStep3());
                 return;
             }
 
             numTries++;
-            TOSASweep();
+
+            Sweep();
         }
 
-        private async void TOSASweep()
+        private async void Sweep()
         {
             TOSADevice device = d as TOSADevice;
             TOSAOutput output = o as TOSAOutput;
@@ -65,6 +76,7 @@ namespace TestStation
             bool sweepResult = true;
 
             SweepData sweepData = await TestCalculations.SweepTest(device.I_Start, device.I_Stop, device.I_Step, sweepProgress);
+            sd = sweepData;
 
             double r = TestCalculations.FindSlope(sweepData.currents, sweepData.voltages, device.I_OP_Min, device.I_OP_Max) * 1000;
             resistance.Text = r.ToString("F") + " Ω";
@@ -197,21 +209,33 @@ namespace TestStation
                     StartTestButton.Content = "Retry test";
                 }
             }
+
+            SaveLIButton.Visibility = Visibility.Visible;
         }
 
-        private void ROSAStep1()
+        private void Save_LI_Button_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void ShowErrorPanel()
-        {
-            errorPanel.Visibility = Visibility.Visible;
-        }
-
-        private void HideErrorPanel()
-        {
-            errorPanel.Visibility = Visibility.Collapsed;
+            var w = MainWindow.GetWindow(this) as MainWindow;
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.OverwritePrompt = false;
+            saveFileDialog.Filter = "CSV|*.csv";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                var stream = File.Open(saveFileDialog.FileName, FileMode.Append);
+                using (StreamWriter file = new StreamWriter(stream))
+                {
+                    file.WriteLine("Unit Number,Set Current,Current,Voltage,Power,Monitor Current");
+                    for (int i = 0; i < sd.setcurrents.Count; i++)
+                    {
+                        file.WriteLine("{0},{1},{2},{3},{4},{5}", w.output.Unit_Number, sd.setcurrents[i], sd.currents[i], sd.voltages[i], sd.powers[i], sd.ibms[i]);
+                    }
+                }
+            }
+            //string setcurrents = String.Join(",", sd.setcurrents.Select(x => x.ToString()).ToArray());
+            //string currents = String.Join(",", sd.currents.Select(x => x.ToString()).ToArray());
+            //string voltages = String.Join(",", sd.voltages.Select(x => x.ToString()).ToArray());
+            //string powers = String.Join(",", sd.powers.Select(x => x.ToString()).ToArray());
+            //string ibms = String.Join(",", sd.ibms.Select(x => x.ToString()).ToArray());
         }
     }
 }

@@ -69,10 +69,10 @@ namespace TestStation.Data
                     Part_Number         varchar(255) not null,
                     V_Test              double not null,
                     RESP_Min            double not null,
-                    ICC_Max             double not null,
-                    I_Wiggle_Max        double not null,
+                    I_TIA_Max             double not null,
+                    PD_Wiggle_Max        double not null,
                     Wiggle_Time         double not null,
-                    RSSSI_VPD           double not null
+                    RSSI_VPD            varchar(255) not null
                 )");
                 cnn.Execute(
                     @"create table TOSAOutput
@@ -199,12 +199,33 @@ namespace TestStation.Data
                     .15,
                     .5,
                     2,
-                    30,
+                    5,
                     1,
                     10,
                     .55
                 )
                 ");
+                cnn.Execute(
+                    @"insert into ROSADevice
+                (
+                    Part_Number,         
+                    V_Test,              
+                    RESP_Min,            
+                    I_TIA_Max,           
+                    PD_Wiggle_Max,        
+                    Wiggle_Time,         
+                    RSSI_VPD            
+                ) values (
+                    'VPD-4G',
+                    3.3,
+                    0.4,
+                    35,
+                    1,
+                    5,
+                    'VPD'
+                )
+                "
+                );
             }
         }
 
@@ -271,38 +292,99 @@ namespace TestStation.Data
                         Part_Number,
 	                    V_Test,
 	                    RESP_Min,
-	                    ICC_Max,
-	                    I_Wiggle_Max,
+	                    I_TIA_Max,
+	                    PD_Wiggle_Max,
 	                    Wiggle_Time,
-	                    RSSSI_VPD
+	                    RSSI_VPD
                     )
                     values
                     (
                         @Part_Number,
 	                    @V_Test,
 	                    @RESP_Min,
-	                    @ICC_Max,
-	                    @I_Wiggle_Max,
+	                    @I_TIA_Max,
+	                    @PD_Wiggle_Max,
 	                    @Wiggle_Time,
-	                    @RSSSI_VPD
+	                    @RSSI_VPD
                     )",
                     new
                     {
                         Part_Number = rosa.Part_Number,
                         V_Test = rosa.V_Test,
                         RESP_Min = rosa.RESP_Min,
-                        ICC_Max = rosa.ICC_Max,
-                        I_Wiggle_Max = rosa.I_Wiggle_Max,
+                        I_TIA_Max = rosa.I_TIA_Max,
+                        PD_Wiggle_Max = rosa.PD_Wiggle_Max,
                         Wiggle_Time = rosa.Wiggle_Time,
-                        RSSSI_VPD = rosa.RSSSI_VPD
+                        RSSI_VPD = rosa.RSSI_VPD
                     }
                 );
             }
         }
 
-        public void SaveROSAOutput(ROSAOutput result)
+        public void SaveROSAOutput(ROSAOutput output)
         {
-            throw new NotImplementedException();
+            if (!File.Exists(DbFile)) return;
+
+            using (var cnn = DataFileConnection())
+            {
+                cnn.Open();
+                cnn.Execute(
+                    @"insert into ROSAOutput
+                (
+                    Part_Number,             
+                    Job_Number,            
+                    Unit_Number,             
+                    Operator,                
+                    Timestamp,               
+                    Repeat_Number,
+                    V_Test,
+                    P_Laser, 
+                    I_TIA,
+                    I_PD,
+                    Responsivity,
+                    I_Dark,
+                    I_TIA_Pass,
+                    RESP_Pass,
+                    Wiggle_Pass,
+                    Result
+                ) values (
+                    @Part_Number,             
+                    @Job_Number,            
+                    @Unit_Number,             
+                    @Operator,                
+                    @Timestamp,               
+                    @Repeat_Number,
+                    @V_Test,
+                    @P_Laser, 
+                    @I_TIA,
+                    @I_PD,
+                    @Responsivity,
+                    @I_Dark,
+                    @I_TIA_Pass,
+                    @RESP_Pass,
+                    @Wiggle_Pass,
+                    @Result
+                )", new
+                    {
+                        Part_Number = output.Part_Number,
+                        Job_Number = output.Job_Number,
+                        Unit_Number = output.Unit_Number,
+                        Operator = output.Operator,
+                        Timestamp = output.Timestamp,
+                        Repeat_Number = output.Repeat_Number,
+                        V_Test = output.V_Test,
+                        P_Laser = output.P_Laser,
+                        I_TIA = output.I_TIA,
+                        I_PD = output.I_PD,
+                        Responsivity = output.Responsivity,
+                        I_Dark = output.I_Dark,
+                        I_TIA_Pass = output.I_TIA_Pass,
+                        RESP_Pass = output.RESP_Pass,
+                        Wiggle_Pass = output.Wiggle_Pass,
+                        Result = output.Result
+                    }
+                );
+            }
         }
 
         public void SaveTOSADevice(TOSADevice tosa)

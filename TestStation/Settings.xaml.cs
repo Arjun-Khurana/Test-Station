@@ -150,7 +150,7 @@ namespace TestStation
         {
             bool nullsFound = false;
 
-            foreach (TextBox tb in FindVisualChildren<TextBox>(newROSAPanel))
+            foreach (TextBox tb in Utils.FindVisualChildren<TextBox>(newROSAPanel))
             {
                 if (String.IsNullOrEmpty(tb.Text))
                 {
@@ -166,10 +166,10 @@ namespace TestStation
                 Part_Number = ROSA_Part_Number_Input.Text,
                 V_Test = Double.Parse(ROSA_V_Test_Input.Text),
                 RESP_Min = Double.Parse(ROSA_RESP_Min_Input.Text),
-                ICC_Max = Double.Parse(ROSA_ICC_Max_Input.Text),
-                I_Wiggle_Max = Double.Parse(ROSA_I_Wiggle_Max_Input.Text),
+                I_TIA_Max = Double.Parse(ROSA_ICC_Max_Input.Text),
+                PD_Wiggle_Max = Double.Parse(ROSA_PD_Wiggle_Max_Input.Text),
                 Wiggle_Time = Double.Parse(ROSA_Wiggle_Time_Input.Text),
-                RSSSI_VPD = Double.Parse(ROSA_RSSSI_VPD_Input.Text)
+                RSSI_VPD = ROSA_RSSI_VPD_Input.Text
             };
 
             MainWindow.Conn.SaveROSADevice(rosa);
@@ -181,7 +181,7 @@ namespace TestStation
 
         private void Cancel_Rosa_Click(object sender, RoutedEventArgs e)
         {
-            foreach (TextBox tb in FindVisualChildren<TextBox>(newROSAPanel))
+            foreach (TextBox tb in Utils.FindVisualChildren<TextBox>(newROSAPanel))
             {
                 tb.Text = null;
                 tb.Style = (Style)Application.Current.Resources["RegularTextField"];
@@ -196,7 +196,7 @@ namespace TestStation
         {
             bool nullsFound = false; 
 
-            foreach (TextBox tb in FindVisualChildren<TextBox>(newTOSAPanel))
+            foreach (TextBox tb in Utils.FindVisualChildren<TextBox>(newTOSAPanel))
             {
                 if (String.IsNullOrEmpty(tb.Text))
                 {
@@ -250,7 +250,7 @@ namespace TestStation
 
         private void Cancel_Tosa_Click(object sender, RoutedEventArgs e)
         {
-            foreach (TextBox tb in FindVisualChildren<TextBox>(newTOSAPanel))
+            foreach (TextBox tb in Utils.FindVisualChildren<TextBox>(newTOSAPanel))
             {
                 tb.Text = null;
                 tb.Style = (Style)Application.Current.Resources["RegularTextField"];
@@ -290,25 +290,6 @@ namespace TestStation
             else
             {
                 t.Style = (Style)Application.Current.Resources["ErrorTextField"];
-            }
-        }
-        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
-        {
-            if (depObj != null)
-            {
-                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-                {
-                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                    if (child != null && child is T)
-                    {
-                        yield return (T)child;
-                    }
-
-                    foreach (T childOfChild in FindVisualChildren<T>(child))
-                    {
-                        yield return childOfChild;
-                    }
-                }
             }
         }
     }

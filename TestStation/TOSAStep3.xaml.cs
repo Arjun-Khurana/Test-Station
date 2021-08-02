@@ -20,18 +20,25 @@ namespace TestStation
     /// <summary>
     /// Interaction logic for Wiggle.xaml
     /// </summary>
-    public partial class Wiggle : Page
+    public partial class TOSAStep3 : Page
     {
         private Device d;
         private Output o;
         private int numTries;
         private bool passed;
-        public Wiggle()
+        public TOSAStep3()
         {
             InitializeComponent();
             numTries = 0;
             passed = false;
         }
+
+        void OnLoad(object sender, RoutedEventArgs e)
+        {
+            var w = MainWindow.GetWindow(this) as MainWindow;
+            UnitNumberText.Text = $"Unit number: {w.output.Unit_Number}";
+        }
+
         private void Start_Test_Button_Click(object sender, RoutedEventArgs e)
         {
             if (numTries == 0)
@@ -53,17 +60,17 @@ namespace TestStation
             }
 
             numTries++;
-            TOSAStep3();
+            Wiggle();
         }
 
-        private async void TOSAStep3()
+        private async void Wiggle()
         {
             TOSADevice device = d as TOSADevice;
             TOSAOutput output = o as TOSAOutput;
 
             bool wiggleTestResult = true;
 
-            WiggleData wiggleData = await TestCalculations.WiggleTest((int)device.Wiggle_Time, wiggleProgress);
+            WiggleData wiggleData = await TestCalculations.TOSAWiggleTest((int)device.Wiggle_Time, wiggleProgress);
 
             wiggleMin.Text = wiggleData.min.ToString("F") + " mW";
             wiggleMax.Text = wiggleData.max.ToString("F") + " mW";
@@ -103,7 +110,7 @@ namespace TestStation
                 passed = true;
                 testMessage.Text = "Test Passed";
                 testMessage.Foreground = Brushes.ForestGreen;
-                StartTestButton.Content = "Next step";
+                StartTestButton.Content = "End job";
                 output.Result = true;
                 MainWindow.Conn.SaveTOSAOutput(output);
                 d = device;
@@ -127,6 +134,27 @@ namespace TestStation
                 }
             }
 
+            NextDeviceButton.Visibility = Visibility.Visible;
+        }
+
+        private void Next_Device_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var w = Window.GetWindow(this) as MainWindow;
+
+            var d = w.device as TOSADevice;
+            var currentOutput = w.output as TOSAOutput;
+            var job = currentOutput.Job_Number;
+
+            w.output = new TOSAOutput
+            {
+                Part_Number = d.Part_Number,
+                Job_Number = job,
+                Operator = currentOutput.Operator,
+                Unit_Number = currentOutput.Unit_Number + 1,
+                Timestamp = DateTime.Now
+            };
+
+            NavigationService.Navigate(new TOSAStep1());
         }
     }
 }

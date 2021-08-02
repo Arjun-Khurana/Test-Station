@@ -27,7 +27,6 @@ namespace TestStation
                 }
 
                 SourceMeasureUnit = (UsbSession)resourceManager.Open(name);
-                SetLimits();
             }
         }
 
@@ -41,11 +40,11 @@ namespace TestStation
             get { return lazy.Value; }
         }
 
-        public void SetLimits()
+        public void TOSALimits()
         {
             WriteSMU("CURR:RANG R120mA, (@1)");
-            WriteSMU("CURR:RANG R10mA, (@2)");
-            WriteSMU("CURR:RANG R10mA, (@3)");
+            WriteSMU("CURR:RANG R1mA, (@2)");
+            WriteSMU("CURR:RANG R100uA, (@3)");
 
             WriteSMU("VOLT:RANG R20V, (@1)");
             WriteSMU("VOLT:RANG R2V, (@2)");
@@ -58,6 +57,21 @@ namespace TestStation
             WriteSMU("VOLT:LIM 4, (@1)");
             WriteSMU("VOLT:LIM 1, (@2)");
             WriteSMU("VOLT:LIM 1, (@3)");
+        }
+
+        public void ROSALimits()
+        {
+            WriteSMU("CURR:RANG R120mA, (@1)");
+            WriteSMU("CURR:RANG R1mA, (@2)");
+
+            WriteSMU("VOLT:RANG R20V, (@1)");
+            WriteSMU("VOLT:RANG R20V, (@2)");
+
+            WriteSMU("CURR:LIM .06, (@1)");
+            WriteSMU("CURR:LIM .001, (@2)");
+
+            WriteSMU("VOLT:LIM 4, (@1)");
+            WriteSMU("VOLT:LIM 4, (@2)");
         }
 
         public void BreakdownLimits()
